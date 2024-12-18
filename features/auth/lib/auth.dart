@@ -11,7 +11,6 @@ class AuthScreenRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
     AutoRoute(
-      initial: true,
       page: AuthRoute.page,
     ),
   ];

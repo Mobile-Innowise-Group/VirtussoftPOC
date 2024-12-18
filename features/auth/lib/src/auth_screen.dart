@@ -20,9 +20,12 @@ class AuthScreen extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Auth screen'),
+    return Scaffold(
+      body: Container(
+        color: Colors.red,
+        child: const Center(
+          child: Text('Auth Screen'),
+        ),
       ),
     );
   }
