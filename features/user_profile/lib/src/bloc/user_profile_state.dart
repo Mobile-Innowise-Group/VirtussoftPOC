@@ -1,6 +1,24 @@
 part of 'user_profile_bloc.dart';
 
 @immutable
-sealed class UserProfileState {}
+class UserProfileState {
+  final bool isLoading;
 
-final class UserProfileInitial extends UserProfileState {}
+  const UserProfileState({
+    required this.isLoading,
+  });
+
+  factory UserProfileState.initial() {
+    return const UserProfileState(
+      isLoading: false,
+    );
+  }
+
+  UserProfileState copyWith({
+    bool? isLoading,
+  }) {
+    return UserProfileState(
+      isLoading: isLoading ?? this.isLoading,
+    );
+  }
+}

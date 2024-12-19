@@ -21,6 +21,10 @@ class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Scanner'),
+        automaticallyImplyLeading: false,
+      ),
       body: Center(
         child: const Text('Scanner page'),
       ),

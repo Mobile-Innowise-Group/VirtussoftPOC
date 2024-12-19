@@ -37,12 +37,17 @@ abstract class DataDI {
     locator.registerLazySingleton<CategoryRemoteDataSource>(
       CategoryRemoteDataSourceImpl.new,
     );
+
+    locator.registerLazySingleton<CategoryLocalDataSource>(
+      CategoryLocalDataSourceImpl.new,
+    );
   }
 
   static void _initRepositories(GetIt locator) {
     locator.registerLazySingleton<CategoryRepository>(
       () => CategoryRepositoryImpl(
         categoryRemoteDataSource: locator<CategoryRemoteDataSource>(),
+        categoryLocalDataSource: locator<CategoryLocalDataSource>(),
       ),
     );
   }

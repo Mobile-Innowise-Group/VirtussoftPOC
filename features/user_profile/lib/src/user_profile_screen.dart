@@ -21,6 +21,10 @@ class UserProfileScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('User profile'),
+        automaticallyImplyLeading: false,
+      ),
       body: Center(
         child: const Text('User profile page'),
       ),
