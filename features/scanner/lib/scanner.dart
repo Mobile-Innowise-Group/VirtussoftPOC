@@ -10,8 +10,8 @@ export 'scanner.gr.dart';
 class ScannerScreenRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      page: ScannerRoute.page,
-    ),
-  ];
+        AutoRoute(
+          page: ScannerRoute.page,
+        ),
+      ];
 }

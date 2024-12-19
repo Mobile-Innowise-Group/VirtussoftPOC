@@ -46,7 +46,7 @@ class AppNotifications extends StatelessWidget {
     }
     switch (appEvent.runtimeType) {
       case SnackBarErrorNotification:
-       return const SizedBox();
+        return const SizedBox();
       case SnackBarSuccessNotification:
         return const SizedBox();
       case SnackBarWarningNotification:

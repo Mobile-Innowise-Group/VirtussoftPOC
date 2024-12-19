@@ -10,13 +10,13 @@ export 'home_page.gr.dart';
 class HomeScreenRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      page: HomeRoute.page,
-      children: <AutoRoute>[
-        ...UserProfileScreenRouter().routes,
-        ...UserCategoriesScreenRouter().routes,
-        ...ScannerScreenRouter().routes,
-      ],
-    ),
-  ];
+        AutoRoute(
+          page: HomeRoute.page,
+          children: <AutoRoute>[
+            ...UserProfileScreenRouter().routes,
+            ...UserCategoriesScreenRouter().routes,
+            ...ScannerScreenRouter().routes,
+          ],
+        ),
+      ];
 }

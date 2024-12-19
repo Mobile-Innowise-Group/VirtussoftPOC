@@ -35,16 +35,19 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.qr_code),
+                label: 'Scanner',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.category),
+                label: 'Categories',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
+                label: 'Profile',
               ),
             ],
             onTap: tabsRouter.setActiveIndex,
-           // selectedIndex: tabsRouter.activeIndex,
+            currentIndex: tabsRouter.activeIndex,
           ),
         );
       },

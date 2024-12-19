@@ -10,9 +10,9 @@ export 'user_categories.gr.dart';
 class UserCategoriesScreenRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      initial: true,
-      page: UserCategoriesRoute.page,
-    ),
-  ];
+        AutoRoute(
+          initial: true,
+          page: UserCategoriesRoute.page,
+        ),
+      ];
 }

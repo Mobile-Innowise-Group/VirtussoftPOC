@@ -10,8 +10,8 @@ export 'user_profile.gr.dart';
 class UserProfileScreenRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      page: UserProfileRoute.page,
-    ),
-  ];
+        AutoRoute(
+          page: UserProfileRoute.page,
+        ),
+      ];
 }

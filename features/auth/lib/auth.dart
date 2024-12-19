@@ -10,9 +10,9 @@ export 'auth.gr.dart';
 class AuthScreenRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      page: AuthRoute.page,
-    ),
-  ];
+        AutoRoute(
+          initial: true,
+          page: AuthRoute.page,
+        ),
+      ];
 }
-
