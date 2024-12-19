@@ -1,5 +1,18 @@
 {
-  "common" : {
-    "example_key" : "Example Value"
+  "auth" : {
+    "signUp" : "Sign up",
+    "login" : "Login",
+    "email" : "email",
+    "password" : "password",
+    "enterEmail": "Enter your email, please",
+    "enterPassword" : "Enter your password, please",
+    "createAccount" : "Create account",
+    "alreadyCreatedAccount" : "Already have an account?",
+    "doNotHaveAccount" : "Don't have an account?",
+    "loginButton" : "Login",
+    "signUpButton" : "Sign up"
+  },
+  "biometrics": {
+    "pleaseAuthenticate": "Please authenticate to access this feature"
   }
 }
