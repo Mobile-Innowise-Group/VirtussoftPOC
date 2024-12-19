@@ -21,10 +21,13 @@ class AuthScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.red,
-        child: const Center(
-          child: Text('Auth Screen'),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            final AppRouter appRouter = appLocator<AppRouter>();
+            appRouter.replace(const HomeRoute());
+          },
+          child: const Text('Go to Home page'),
         ),
       ),
     );
