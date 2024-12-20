@@ -1,5 +1,4 @@
 import '../../../domain.dart';
-import '../auth.dart';
 
 class SignInWithCredentialsUseCase
     implements FutureUseCase<SignInPayloadModel, UserModel?> {

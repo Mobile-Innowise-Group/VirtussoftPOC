@@ -12,11 +12,14 @@ import '../auth/exceptions/mappers/mappers.dart';
 import '../categories/categories.dart';
 
 abstract class DataDI {
-  static void initDependencies(GetIt locator) {
+  static void initDependencies({
+    required GetIt locator,
+    required ProviderInstance provider,
+  }) {
     _initSupabaseAuth(locator);
     _initApi(locator);
     _initProviders(locator);
-    _initRepositories(locator);
+    _initRepositories(locator: locator, provider: provider);
     _initExceptionMappers(locator);
     _initExceptionHandlers(locator);
     _initServices(locator);
@@ -100,12 +103,28 @@ abstract class DataDI {
         supabaseExceptionHandler: locator.get<ExceptionsHandler>(
           instanceName: ProviderInstance.supabaseProviderInstanceName.name,
         ),
+        tokenProvider: locator.get<TokenProvider>(),
       ),
       instanceName: ProviderInstance.supabaseProviderInstanceName.name,
     );
+
+    locator.registerLazySingleton<TokenProvider>(
+      () => TokenProviderImpl(
+        storage: locator.get<FlutterSecureStorage>(),
+      ),
+    );
+
+    locator.registerLazySingleton<UserSessionProvider>(
+      () => UserSessionProviderImpl(
+        storage: locator.get<FlutterSecureStorage>(),
+      ),
+    );
   }
 
-  static void _initRepositories(GetIt locator) {
+  static void _initRepositories({
+    required GetIt locator,
+    required ProviderInstance provider,
+  }) {
     locator.registerLazySingleton<CategoryRepository>(
       () => CategoryRepositoryImpl(
         categoryRemoteDataSource: locator<CategoryRemoteDataSource>(),
@@ -115,7 +134,9 @@ abstract class DataDI {
 
     locator.registerLazySingleton<AuthorizationRepository>(
       () => AuthorizationRepositoryImpl(
-        authProvider: locator.get<AuthorizationProvider>(),
+        authProvider: locator.get<AuthorizationProvider>(
+          instanceName: provider.name,
+        ),
       ),
     );
   }

@@ -43,7 +43,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   TextField(
                     style: const TextStyle(color: Colors.black),
                     decoration: InputDecoration(
@@ -90,7 +90,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
                       Text(
                         'auth.alreadyCreatedAccount'.tr(),
                       ),

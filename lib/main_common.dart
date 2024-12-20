@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:biometrics/biometrics.dart';
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +30,11 @@ void _setupDI(Flavor flavor) {
   appLocator.pushNewScope(
     scopeName: unauthScope,
     init: (_) async {
-      BiometricsDI.initBiometrics(locator: appLocator);
       AppDI.initDependencies(appLocator, flavor);
-      DataDI.initDependencies(appLocator);
+      DataDI.initDependencies(
+        locator: appLocator,
+        provider: ProviderInstance.supabaseProviderInstanceName,
+      );
       DomainDI.initDependencies(appLocator);
       NavigationDI.initDependencies(appLocator);
     },

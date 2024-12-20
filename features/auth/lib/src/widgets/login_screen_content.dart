@@ -46,7 +46,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   TextField(
                     style: const TextStyle(color: Colors.black),
                     decoration: InputDecoration(
@@ -95,7 +95,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
                       Text(
                         'auth.doNotHaveAccount'.tr(),
                       ),

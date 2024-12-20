@@ -13,5 +13,5 @@ abstract class AuthorizationProvider {
 
   Future<void> signOut();
 
-  Future<UserEntity?> getCurrentUser();
+  UserEntity? getCurrentUser();
 }

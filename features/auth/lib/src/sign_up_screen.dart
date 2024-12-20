@@ -1,4 +1,3 @@
-import 'package:biometrics/biometrics.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,8 @@ class SignUpScreen extends StatelessWidget {
         signInWithCredentialsUseCase:
             appLocator.get<SignInWithCredentialsUseCase>(),
         signOutUseCase: appLocator.get<SignOutUseCase>(),
-        getCurrentUserUseCase: appLocator.get<GetCurrentUserUsecase>(),
+        getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
+        appEventNotifier: appLocator.get<AppEventNotifier>(),
       ),
       child: const SignUpScreenContent(),
     );

@@ -50,8 +50,8 @@ abstract class DomainDI {
       ),
     );
 
-    locator.registerLazySingleton<GetCurrentUserUsecase>(
-      () => GetCurrentUserUsecase(
+    locator.registerLazySingleton<GetCurrentUserUseCase>(
+      () => GetCurrentUserUseCase(
         authRepository: locator.get<AuthorizationRepository>(),
       ),
     );

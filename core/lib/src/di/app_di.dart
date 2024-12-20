@@ -22,5 +22,9 @@ abstract class AppDI {
     locator.registerLazySingleton<AppEventObserver>(
       appLocator<AppEventBus>,
     );
+
+    locator.registerLazySingleton<BiometricService>(
+      BiometricService.new,
+    );
   }
 }

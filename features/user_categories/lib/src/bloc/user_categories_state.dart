@@ -13,7 +13,7 @@ class UserCategoriesState {
   factory UserCategoriesState.initial() {
     return const UserCategoriesState(
       isLoading: true,
-      categories: [],
+      categories: <CategoryModel>[],
     );
   }
 

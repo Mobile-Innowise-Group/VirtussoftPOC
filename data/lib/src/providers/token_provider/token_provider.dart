@@ -1,5 +1,7 @@
 abstract class TokenProvider {
-  Future<String?> readAccessToken();
+  Future<String?> readToken();
 
-  Future<void> updateTokens();
+  Future<void> writeToken({required String token});
+
+  Future<void> clearToken();
 }

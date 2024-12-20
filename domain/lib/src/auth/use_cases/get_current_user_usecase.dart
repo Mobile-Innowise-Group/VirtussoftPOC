@@ -1,15 +1,14 @@
 import '../../../domain.dart';
-import '../auth.dart';
 
-class GetCurrentUserUsecase implements FutureUseCase<NoParams, UserModel?> {
+class GetCurrentUserUseCase implements UseCase<NoParams, UserModel?> {
   final AuthorizationRepository _authRepository;
 
-  GetCurrentUserUsecase({
+  GetCurrentUserUseCase({
     required AuthorizationRepository authRepository,
   }) : _authRepository = authRepository;
 
   @override
-  Future<UserModel?> execute(NoParams input) async {
-    return await _authRepository.getCurrentUser();
+  UserModel? execute(NoParams input) {
+    return _authRepository.getCurrentUser();
   }
 }

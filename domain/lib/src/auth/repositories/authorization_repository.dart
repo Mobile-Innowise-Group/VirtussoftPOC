@@ -13,5 +13,5 @@ abstract class AuthorizationRepository {
 
   Future<void> signOut();
 
-  Future<UserModel?> getCurrentUser();
+  UserModel? getCurrentUser();
 }

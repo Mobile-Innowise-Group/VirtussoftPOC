@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:core/core.dart';
 import 'package:meta/meta.dart';
 

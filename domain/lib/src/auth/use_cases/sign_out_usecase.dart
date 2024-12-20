@@ -1,5 +1,4 @@
 import '../../../domain.dart';
-import '../auth.dart';
 
 class SignOutUseCase implements FutureUseCase<NoParams, NoParams> {
   final AuthorizationRepository _authRepository;
