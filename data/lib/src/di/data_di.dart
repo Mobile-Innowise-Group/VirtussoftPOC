@@ -1,6 +1,8 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 
 import '../../data.dart';
+import '../categories/categories.dart';
 
 abstract class DataDI {
   static void initDependencies(GetIt locator) {
@@ -24,12 +26,29 @@ abstract class DataDI {
 
     locator.registerLazySingleton<ApiProvider>(
       () => ApiProvider(
-        locator<DioConfig>().dio,
+        tokenProvider: locator<TokenProvider>(),
+        dio: locator<DioConfig>().dio,
+        errorHandler: locator<ErrorHandler>(),
       ),
     );
   }
 
-  static void _initProviders(GetIt locator) {}
+  static void _initProviders(GetIt locator) {
+    locator.registerLazySingleton<CategoryRemoteDataSource>(
+      CategoryRemoteDataSourceImpl.new,
+    );
 
-  static void _initRepositories(GetIt locator) {}
+    locator.registerLazySingleton<CategoryLocalDataSource>(
+      CategoryLocalDataSourceImpl.new,
+    );
+  }
+
+  static void _initRepositories(GetIt locator) {
+    locator.registerLazySingleton<CategoryRepository>(
+      () => CategoryRepositoryImpl(
+        categoryRemoteDataSource: locator<CategoryRemoteDataSource>(),
+        categoryLocalDataSource: locator<CategoryLocalDataSource>(),
+      ),
+    );
+  }
 }

@@ -15,6 +15,14 @@ dependencies:
     path: ../core_ui
   auth:
     path: ../features/auth
+  home_page:
+    path: ../features/home_page
+  user_categories:
+    path: ../features/user_categories
+  user_profile:
+    path: ../features/user_profile
+  scanner:
+    path: ../features/scanner
 
   auto_route: ^9.2.2
 

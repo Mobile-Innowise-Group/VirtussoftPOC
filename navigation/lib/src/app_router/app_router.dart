@@ -18,8 +18,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: SignUpRoute.page,
         ),
-        AutoRoute(
-          page: DemoHomeRoute.page,
-        ),
+        ...AuthScreenRouter().routes,
+        ...HomeScreenRouter().routes,
       ];
 }

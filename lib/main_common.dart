@@ -71,7 +71,7 @@ class App extends StatelessWidget {
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
-              theme: lightTheme,
+              //theme: lightTheme,
               builder: (BuildContext context, Widget? child) {
                 return AppNotifications(
                   child: child ?? const SizedBox(),
