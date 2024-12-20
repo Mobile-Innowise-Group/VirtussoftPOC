@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'package:auth/auth.dart';
+import 'package:biometrics/biometrics.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:navigation/navigation.dart';
+
 import 'error_handler/provider/app_error_handler_provider.dart';
 import 'notifications/widget/app_notifications.dart';
 
@@ -13,6 +17,7 @@ Future<void> mainCommon(Flavor flavor) async {
   await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await EasyLocalization.ensureInitialized();
+    await dotenv.load(fileName: ".env");
 
     _setupDI(flavor);
     Bloc.observer = AppBlocObserver();
@@ -27,7 +32,12 @@ Future<void> mainCommon(Flavor flavor) async {
 void _setupDI(Flavor flavor) {
   appLocator.pushNewScope(
     scopeName: unauthScope,
-    init: (_) {
+    init: (_) async {
+      await AuthDI.initDependencies(
+        locator: appLocator,
+        provider: ProviderInstance.supabaseProviderInstanceName,
+      );
+      BiometricsDI.initBiometrics(locator: appLocator);
       AppDI.initDependencies(appLocator, flavor);
       DataDI.initDependencies(appLocator);
       DomainDI.initDependencies(appLocator);
@@ -51,8 +61,7 @@ class App extends StatelessWidget {
         builder: (BuildContext context) {
           return AppErrorHandlerProvider(
             child: MaterialApp.router(
-              onGenerateTitle: (BuildContext context) =>
-                  'Title',
+              onGenerateTitle: (BuildContext context) => 'Title',
               debugShowCheckedModeBanner: false,
               routerConfig: appRouter.config(
                 navigatorObservers: () => <NavigatorObserver>[

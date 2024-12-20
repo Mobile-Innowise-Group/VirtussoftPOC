@@ -5,14 +5,20 @@ import '../../core_ui.dart';
 const LightColors _appColors = LightColors();
 
 final ThemeData lightTheme = ThemeData.light().copyWith(
-  // appBarTheme: _getAppBarTheme(),
-  scaffoldBackgroundColor: _appColors.white,
+  appBarTheme: AppBarTheme().copyWith(color: _appColors.primaryBg),
+  scaffoldBackgroundColor: _appColors.primaryBg,
   textTheme: _getTextTheme(),
   inputDecorationTheme: _getInputDecorationTheme(),
-  primaryColor: _appColors.primaryBg,
+  primaryColor: _appColors.primary,
+  buttonTheme: ButtonThemeData().copyWith(
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      secondary: _appColors.secondary,
+      primary: _appColors.primary,
+    ),
+  ),
   colorScheme: ColorScheme.fromSwatch().copyWith(
-    secondary: _appColors.primaryBg,
-    primary: _appColors.primaryBg,
+    secondary: _appColors.secondary,
+    primary: _appColors.primary,
   ),
 );
 
@@ -21,20 +27,26 @@ TextTheme _getTextTheme() {
     titleMedium: AppFonts.normal13,
     bodyMedium: AppFonts.normal13,
   ).apply(
-    bodyColor: _appColors.primaryBg,
-    displayColor: _appColors.primaryBg,
+    bodyColor: _appColors.textColor,
+    displayColor: _appColors.textColor,
   );
 }
 
 InputDecorationTheme _getInputDecorationTheme() {
   return InputDecorationTheme(
-    hintStyle: AppFonts.normal13.copyWith(color: _appColors.primaryBg),
+    hintStyle: AppFonts.normal13.copyWith(color: _appColors.hintGray),
     border: OutlineInputBorder(
       borderRadius: const BorderRadius.all(
         Radius.circular(AppDimens.BORDER_RADIUS_12),
       ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(AppDimens.BORDER_RADIUS_12),
+      ),
       borderSide: BorderSide(
-        color: _appColors.primaryBg,
+        color: _appColors.lightBorder,
+        width: 1.5,
       ),
     ),
     focusedBorder: OutlineInputBorder(
@@ -42,7 +54,7 @@ InputDecorationTheme _getInputDecorationTheme() {
         Radius.circular(AppDimens.BORDER_RADIUS_12),
       ),
       borderSide: BorderSide(
-        color: _appColors.primaryBg,
+        color: _appColors.primary,
         width: 2,
       ),
     ),
@@ -51,10 +63,10 @@ InputDecorationTheme _getInputDecorationTheme() {
         Radius.circular(AppDimens.BORDER_RADIUS_6),
       ),
       borderSide: BorderSide(
-        color: _appColors.primaryBg,
+        color: _appColors.error,
         width: 2,
       ),
     ),
-    labelStyle: AppFonts.normal13.copyWith(color: _appColors.primaryBg),
+    labelStyle: AppFonts.normal13.copyWith(color: _appColors.hintGray),
   );
 }
