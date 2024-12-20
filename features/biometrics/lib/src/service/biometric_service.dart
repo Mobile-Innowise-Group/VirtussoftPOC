@@ -7,7 +7,8 @@ class BiometricService {
 
   Future<bool> authenticateWithBiometrics() async {
     bool isAuthenticated = false;
-    final bool canAuthenticateWithBiometrics = await _localAuth.canCheckBiometrics;
+    final bool canAuthenticateWithBiometrics =
+        await _localAuth.canCheckBiometrics;
 
     if (!canAuthenticateWithBiometrics) {
       return isAuthenticated;
@@ -17,7 +18,6 @@ class BiometricService {
       isAuthenticated = await _localAuth.authenticate(
         localizedReason: 'biometrics.pleaseAuthenticate'.tr(),
         options: const AuthenticationOptions(
-          useErrorDialogs: true,
           stickyAuth: true,
         ),
       );

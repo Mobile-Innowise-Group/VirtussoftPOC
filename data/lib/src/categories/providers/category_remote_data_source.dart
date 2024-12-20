@@ -12,10 +12,10 @@ abstract class CategoryRemoteDataSource {
   });
 
   Future<CategoryModel> editCategory({
-    required  EditCategoryRequest request,
+    required EditCategoryRequest request,
   });
 
   Future<bool> deleteCategory({
-    required  DeleteCategoryRequest request,
+    required DeleteCategoryRequest request,
   });
 }

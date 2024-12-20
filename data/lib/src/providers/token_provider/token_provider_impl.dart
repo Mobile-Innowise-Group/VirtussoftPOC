@@ -15,7 +15,5 @@ class TokenProviderImpl implements TokenProvider {
   }
 
   @override
-  Future<void> updateTokens() async {
-
-  }
+  Future<void> updateTokens() async {}
 }

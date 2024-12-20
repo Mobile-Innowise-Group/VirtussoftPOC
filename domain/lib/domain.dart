@@ -1,5 +1,6 @@
 library domain;
 
+export 'src/auth/auth.dart';
 export 'src/categories/categories.dart';
 export 'src/di/domain_di.dart';
 export 'src/events/domain_events.dart';

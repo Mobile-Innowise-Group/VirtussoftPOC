@@ -29,7 +29,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
     final String categoriesPath = '${directory.path}/categories';
     final Directory categoriesFolder = Directory(categoriesPath);
 
-    if(!categoriesFolder.existsSync()) {
+    if (!categoriesFolder.existsSync()) {
       await categoriesFolder.create();
     }
 

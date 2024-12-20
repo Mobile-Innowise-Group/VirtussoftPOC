@@ -1,2 +1,1 @@
-class CheckCategoriesDifferencePayload {
-}
+class CheckCategoriesDifferencePayload {}

@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 
-import '../categories/categories.dart';
+import '../../domain.dart';
 
 abstract class DomainDI {
   static void initDependencies(GetIt locator) {
@@ -9,26 +9,56 @@ abstract class DomainDI {
 
   static void _initUseCases(GetIt locator) {
     locator.registerLazySingleton<CreateCategoryUseCase>(
-          () => CreateCategoryUseCase(
+      () => CreateCategoryUseCase(
         categoryRepository: locator<CategoryRepository>(),
       ),
     );
 
     locator.registerLazySingleton<DeleteCategoryUseCase>(
-          () => DeleteCategoryUseCase(
+      () => DeleteCategoryUseCase(
         categoryRepository: locator<CategoryRepository>(),
       ),
     );
 
     locator.registerLazySingleton<EditCategoryUseCase>(
-          () => EditCategoryUseCase(
+      () => EditCategoryUseCase(
         categoryRepository: locator<CategoryRepository>(),
       ),
     );
 
     locator.registerLazySingleton<GetUserCategoriesUseCase>(
-          () => GetUserCategoriesUseCase(
+      () => GetUserCategoriesUseCase(
         categoryRepository: locator<CategoryRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<SignInWithCredentialsUseCase>(
+      () => SignInWithCredentialsUseCase(
+        authRepository: locator.get<AuthorizationRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<SignInWithSessionIdUseCase>(
+      () => SignInWithSessionIdUseCase(
+        authRepository: locator.get<AuthorizationRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<SignOutUseCase>(
+      () => SignOutUseCase(
+        authRepository: locator.get<AuthorizationRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<GetCurrentUserUsecase>(
+      () => GetCurrentUserUsecase(
+        authRepository: locator.get<AuthorizationRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<SignUpWithCredentialsUseCase>(
+      () => SignUpWithCredentialsUseCase(
+        authRepository: locator.get<AuthorizationRepository>(),
       ),
     );
   }

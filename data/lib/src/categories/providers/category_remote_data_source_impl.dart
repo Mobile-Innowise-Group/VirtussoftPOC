@@ -7,7 +7,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   Future<CategoryModel> createCategory({
     required CreateCategoryRequest request,
   }) {
-   return Future<CategoryModel>.value(CategoryModel(name: request.name));
+    return Future<CategoryModel>.value(CategoryModel(name: request.name));
   }
 
   @override

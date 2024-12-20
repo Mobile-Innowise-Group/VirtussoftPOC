@@ -1,7 +1,6 @@
 import '../../../domain.dart';
 
-class DeleteCategoryUseCase
-    extends FutureUseCase<DeleteCategoryPayload, bool> {
+class DeleteCategoryUseCase extends FutureUseCase<DeleteCategoryPayload, bool> {
   final CategoryRepository _categoryRepository;
 
   DeleteCategoryUseCase({

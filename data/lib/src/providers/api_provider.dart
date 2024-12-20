@@ -16,10 +16,10 @@ class ApiProvider {
         _tokenProvider = tokenProvider;
 
   Future<T> get<T>(
-      ApiQuery query, {
-        required Parser<T> parser,
-        Map<String, dynamic>? headers,
-      }) async {
+    ApiQuery query, {
+    required Parser<T> parser,
+    Map<String, dynamic>? headers,
+  }) async {
     try {
       return _safeRequest<T>(
         request: _dio.get(
@@ -37,10 +37,10 @@ class ApiProvider {
   }
 
   Future<T> post<T>(
-      ApiQuery query, {
-        required Parser<T> parser,
-        Map<String, dynamic>? headers,
-      }) async {
+    ApiQuery query, {
+    required Parser<T> parser,
+    Map<String, dynamic>? headers,
+  }) async {
     try {
       return _safeRequest<T>(
         request: _dio.post(
@@ -59,10 +59,10 @@ class ApiProvider {
   }
 
   Future<T> put<T>(
-      ApiQuery query, {
-        required Parser<T> parser,
-        Map<String, dynamic>? headers,
-      }) async {
+    ApiQuery query, {
+    required Parser<T> parser,
+    Map<String, dynamic>? headers,
+  }) async {
     try {
       return _safeRequest<T>(
         request: _dio.put(
@@ -81,10 +81,10 @@ class ApiProvider {
   }
 
   Future<T> patch<T>(
-      ApiQuery query, {
-        required Parser<T> parser,
-        Map<String, dynamic>? headers,
-      }) async {
+    ApiQuery query, {
+    required Parser<T> parser,
+    Map<String, dynamic>? headers,
+  }) async {
     try {
       return _safeRequest<T>(
         request: _dio.patch(
@@ -103,11 +103,11 @@ class ApiProvider {
   }
 
   Future<T> delete<T>(
-      ApiQuery query, {
-        required Parser<T> parser,
-        Map<String, dynamic>? headers,
-        bool isAuth = true,
-      }) async {
+    ApiQuery query, {
+    required Parser<T> parser,
+    Map<String, dynamic>? headers,
+    bool isAuth = true,
+  }) async {
     try {
       return _safeRequest<T>(
         request: _dio.delete(
