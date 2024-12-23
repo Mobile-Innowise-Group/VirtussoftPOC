@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
     return AutoTabsRouter.tabBar(
       routes: const <PageRouteInfo>[
         ScannerRoute(),
-        UserCategoriesRoute(),
+        UserDataRoute(),
         UserProfileRoute(),
       ],
       builder: (BuildContext context, Widget child, TabController controller) {
@@ -38,8 +38,8 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                 label: 'Scanner',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.category),
-                label: 'Categories',
+                icon: Icon(Icons.data_usage),
+                label: 'Data',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

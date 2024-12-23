@@ -34,10 +34,8 @@ class AuthorizationRepositoryImpl implements AuthorizationRepository {
   }
 
   @override
-  Future<UserModel?> getCurrentUser() async {
-    final UserEntity? userEntity = await _authProvider.getCurrentUser();
-
-    return UserMapper.fromEntity(userEntity);
+  UserModel? getCurrentUser() {
+    return UserMapper.fromEntity(_authProvider.getCurrentUser());
   }
 
   @override

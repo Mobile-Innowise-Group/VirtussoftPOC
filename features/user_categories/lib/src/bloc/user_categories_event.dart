@@ -10,5 +10,19 @@ class InitEvent extends UserCategoriesEvent {
 }
 
 class CreateCategoryEvent extends UserCategoriesEvent {
-  const CreateCategoryEvent();
+  final String categoryName;
+
+  const CreateCategoryEvent({
+    required this.categoryName,
+  });
+}
+
+class DeleteCategoryEvent extends UserCategoriesEvent {
+  final CategoryModel category;
+
+  const DeleteCategoryEvent(this.category);
+}
+
+class ToggleExpandedEvent extends UserCategoriesEvent {
+  const ToggleExpandedEvent();
 }

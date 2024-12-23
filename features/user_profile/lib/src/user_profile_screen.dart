@@ -25,8 +25,8 @@ class UserProfileScreen extends StatelessWidget implements AutoRouteWrapper {
         title: const Text('User profile'),
         automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: const Text('User profile page'),
+      body: const Center(
+        child: Text('User profile page'),
       ),
     );
   }

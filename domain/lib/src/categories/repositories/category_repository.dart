@@ -9,10 +9,6 @@ abstract class CategoryRepository {
     required CreateCategoryPayload payload,
   });
 
-  Future<CategoryModel> editCategory({
-    required EditCategoryPayload payload,
-  });
-
   Future<bool> deleteCategory({
     required DeleteCategoryPayload payload,
   });

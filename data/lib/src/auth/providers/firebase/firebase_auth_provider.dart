@@ -17,9 +17,9 @@ class FirebaseAuthProvider implements AuthorizationProvider {
         _firebaseExceptionsHandler = firebaseExceptionsHandler;
 
   @override
-  Future<UserEntity?> getCurrentUser() {
+  UserEntity? getCurrentUser() {
     final User? firebaseUser = _firebaseAuth.currentUser;
-    return Future<UserEntity?>.value(UserMapper.fromFirebaseUser(firebaseUser));
+    return UserMapper.fromFirebaseUser(firebaseUser);
   }
 
   @override

@@ -24,7 +24,7 @@ class SignInWithCredentials extends AuthEvent {
   });
 }
 
-class GetCurrentUser extends AuthEvent {}
+class InitBloc extends AuthEvent {}
 
 class NavigateToLogin extends AuthEvent {}
 

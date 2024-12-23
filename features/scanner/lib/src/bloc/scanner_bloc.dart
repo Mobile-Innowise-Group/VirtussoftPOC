@@ -6,7 +6,7 @@ part 'scanner_state.dart';
 
 class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   ScannerBloc() : super(ScannerInitial()) {
-    on<ScannerEvent>((event, emit) {
+    on<ScannerEvent>((ScannerEvent event, Emitter<ScannerState> emit) {
       // TODO: implement event handler
     });
   }

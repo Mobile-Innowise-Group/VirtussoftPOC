@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../data.dart';
 import '../../auth.dart';
 import '../../entities/entities.dart';
 import '../../exceptions/auth_exceptions.dart';
@@ -8,18 +9,20 @@ import '../../mappers/mappers.dart';
 
 class SupabaseAuthProvider implements AuthorizationProvider {
   final SupabaseClient _supabaseClient;
+  final TokenProvider _tokenProvider;
   final ExceptionsHandler _supabaseExceptionHandler;
 
   SupabaseAuthProvider({
     required SupabaseClient supabaseClient,
+    required TokenProvider tokenProvider,
     required ExceptionsHandler supabaseExceptionHandler,
   })  : _supabaseClient = supabaseClient,
+        _tokenProvider = tokenProvider,
         _supabaseExceptionHandler = supabaseExceptionHandler;
 
   @override
-  Future<UserEntity?> getCurrentUser() {
-    return Future<UserEntity?>.value(
-        UserMapper.fromSupabaseUser(_supabaseClient.auth.currentUser));
+  UserEntity? getCurrentUser() {
+    return UserMapper.fromSupabaseUser(_supabaseClient.auth.currentUser);
   }
 
   @override
@@ -69,9 +72,8 @@ class SupabaseAuthProvider implements AuthorizationProvider {
 
   @override
   Future<UserEntity?> signInWithSessionId() {
-    final User? supabaseUser = _supabaseClient.auth.currentUser;
-
-    return Future<UserEntity?>.value(UserMapper.fromSupabaseUser(supabaseUser));
+    // TODO Mikala Sihau - implement this method
+    return Future.value(null);
   }
 
   @override

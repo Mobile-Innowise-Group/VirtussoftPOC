@@ -25,8 +25,8 @@ class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
         title: const Text('Scanner'),
         automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: const Text('Scanner page'),
+      body: const Center(
+        child: Text('Scanner page'),
       ),
     );
   }

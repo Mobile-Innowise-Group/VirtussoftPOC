@@ -38,8 +38,6 @@ class AppErrorHandlerBloc
   ) async {
     switch (event.data) {
       case InternetConnectionLostEvent():
-      // TODO: Handle InternetConnectionLostEvent
-      default:
     }
   }
 
@@ -49,8 +47,6 @@ class AppErrorHandlerBloc
   ) async {
     switch (event.data) {
       case UnauthorizedEvent():
-      // TODO: Handle UnauthorizedEvent
-      default:
     }
   }
 

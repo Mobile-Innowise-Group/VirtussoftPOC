@@ -1,19 +1,30 @@
 import 'dart:async';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import '../../../data.dart';
 
 class TokenProviderImpl implements TokenProvider {
-  final LocalDataProvider _localDataProvider;
+  static const String _accessToken = 'accessToken';
+  final FlutterSecureStorage _storage;
 
   TokenProviderImpl({
-    required LocalDataProvider sharedPreferencesProvider,
-  }) : _localDataProvider = sharedPreferencesProvider;
+    required FlutterSecureStorage storage,
+  }) : _storage = storage;
 
   @override
-  Future<String?> readAccessToken() async {
-    return null;
+  Future<String?> readToken() async {
+    final Map<String, String> tokens = await _storage.readAll();
+    return tokens[_accessToken];
   }
 
   @override
-  Future<void> updateTokens() async {}
+  Future<void> writeToken({required String token}) async {
+    await _storage.write(key: _accessToken, value: token);
+  }
+
+  @override
+  Future<void> clearToken() {
+    return _storage.delete(key: _accessToken);
+  }
 }

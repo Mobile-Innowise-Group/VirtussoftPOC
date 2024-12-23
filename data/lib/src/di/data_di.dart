@@ -10,13 +10,17 @@ import '../auth/auth.dart';
 import '../auth/exceptions/handlers/handlers.dart';
 import '../auth/exceptions/mappers/mappers.dart';
 import '../categories/categories.dart';
+import '../folders/folders.dart';
 
 abstract class DataDI {
-  static void initDependencies(GetIt locator) {
+  static void initDependencies({
+    required GetIt locator,
+    required ProviderInstance provider,
+  }) {
     _initSupabaseAuth(locator);
     _initApi(locator);
     _initProviders(locator);
-    _initRepositories(locator);
+    _initRepositories(locator: locator, provider: provider);
     _initExceptionMappers(locator);
     _initExceptionHandlers(locator);
     _initServices(locator);
@@ -67,12 +71,13 @@ abstract class DataDI {
   }
 
   static void _initProviders(GetIt locator) {
-    locator.registerLazySingleton<CategoryRemoteDataSource>(
-      CategoryRemoteDataSourceImpl.new,
-    );
-
-    locator.registerLazySingleton<CategoryLocalDataSource>(
-      CategoryLocalDataSourceImpl.new,
+    locator.registerLazySingleton<CategoryProvider>(
+      () => CategoryProviderImpl(
+        supabaseClient: locator<SupabaseClient>(),
+        supabaseExceptionHandler: locator.get<ExceptionsHandler>(
+          instanceName: ProviderInstance.supabaseProviderInstanceName.name,
+        ),
+      ),
     );
 
     locator.registerLazySingleton<AuthorizationProvider>(
@@ -100,22 +105,54 @@ abstract class DataDI {
         supabaseExceptionHandler: locator.get<ExceptionsHandler>(
           instanceName: ProviderInstance.supabaseProviderInstanceName.name,
         ),
+        tokenProvider: locator.get<TokenProvider>(),
       ),
       instanceName: ProviderInstance.supabaseProviderInstanceName.name,
     );
+
+    locator.registerLazySingleton<TokenProvider>(
+      () => TokenProviderImpl(
+        storage: locator.get<FlutterSecureStorage>(),
+      ),
+    );
+
+    locator.registerLazySingleton<UserSessionProvider>(
+      () => UserSessionProviderImpl(
+        storage: locator.get<FlutterSecureStorage>(),
+      ),
+    );
+
+    locator.registerLazySingleton<FolderProvider>(
+      () => FolderProviderImpl(
+        supabaseClient: locator.get<SupabaseClient>(),
+        supabaseExceptionHandler: locator.get<ExceptionsHandler>(
+          instanceName: ProviderInstance.supabaseProviderInstanceName.name,
+        ),
+      ),
+    );
   }
 
-  static void _initRepositories(GetIt locator) {
+  static void _initRepositories({
+    required GetIt locator,
+    required ProviderInstance provider,
+  }) {
     locator.registerLazySingleton<CategoryRepository>(
       () => CategoryRepositoryImpl(
-        categoryRemoteDataSource: locator<CategoryRemoteDataSource>(),
-        categoryLocalDataSource: locator<CategoryLocalDataSource>(),
+        categoryProvider: locator<CategoryProvider>(),
       ),
     );
 
     locator.registerLazySingleton<AuthorizationRepository>(
       () => AuthorizationRepositoryImpl(
-        authProvider: locator.get<AuthorizationProvider>(),
+        authProvider: locator.get<AuthorizationProvider>(
+          instanceName: provider.name,
+        ),
+      ),
+    );
+
+    locator.registerLazySingleton<FolderRepository>(
+      () => FolderRepositoryImpl(
+        folderProvider: locator<FolderProvider>(),
       ),
     );
   }

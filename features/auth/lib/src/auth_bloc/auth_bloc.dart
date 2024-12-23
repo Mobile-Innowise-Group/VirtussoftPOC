@@ -1,7 +1,7 @@
-import 'package:biometrics/biometrics.dart';
+import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:navigation/navigation.dart';
 
 part 'auth_event.dart';
@@ -14,7 +14,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpWithCredentialsUseCase _signUpWithCredentialsUseCase;
   final SignInWithCredentialsUseCase _authoriseWithCredentialsUseCase;
   final SignOutUseCase _signOutUseCase;
-  final GetCurrentUserUsecase _getCurrentUserUseCase;
+  final GetCurrentUserUseCase _getCurrentUserUseCase;
+  final AppEventNotifier _appEventNotifier;
 
   AuthBloc({
     required AppRouter appRouter,
@@ -22,32 +23,40 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required SignUpWithCredentialsUseCase signUpWithCredentialsUseCase,
     required SignInWithCredentialsUseCase signInWithCredentialsUseCase,
     required SignOutUseCase signOutUseCase,
-    required GetCurrentUserUsecase getCurrentUserUseCase,
+    required GetCurrentUserUseCase getCurrentUserUseCase,
+    required AppEventNotifier appEventNotifier,
   })  : _signUpWithCredentialsUseCase = signUpWithCredentialsUseCase,
         _authoriseWithCredentialsUseCase = signInWithCredentialsUseCase,
         _signOutUseCase = signOutUseCase,
         _getCurrentUserUseCase = getCurrentUserUseCase,
         _appRouter = appRouter,
         _biometricService = biometricService,
+        _appEventNotifier = appEventNotifier,
         super(const AuthState.initial()) {
     on<SignUpWithCredentials>(_onSignUpWithCredentials);
     on<SignInWithCredentials>(_onSignInWithCredentials);
     on<NavigateToLogin>(_onNavigateToLogin);
     on<NavigateToSignUp>(_onNavigateToSignUp);
-    on<GetCurrentUser>(_onGetCurrentUser);
+    on<InitBloc>(_onInitBloc);
     on<SignOut>(_onSignOut);
+
+    add(InitBloc());
   }
 
   Future<void> _onSignUpWithCredentials(
     SignUpWithCredentials event,
     Emitter<AuthState> emit,
   ) async {
-    if (!_isCredentialsValid(
-      emit: emit,
+    final String? errorMessage = _isCredentialsValid(
       login: event.login,
       password: event.password,
-    )) {
-      // TODO():  Add unsupported formatting handling
+    );
+    if (errorMessage != null) {
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: errorMessage,
+        ),
+      );
       return;
     }
 
@@ -61,16 +70,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
         ),
       );
-      emit(state.copyWith(currentUser: createdUser));
 
       if (createdUser != null) {
-        // TODO():  Add some conditional redirection on successfully signed up logic
         debugPrint('User signed up event occurred!');
         await _appRouter.replace(const HomeRoute());
       }
     } on Exception catch (e) {
-      // TODO(): Add exception handling
-      debugPrint(e.toString());
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
     } finally {
       emit(state.copyWith(isLoading: false));
     }
@@ -80,12 +90,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SignInWithCredentials event,
     Emitter<AuthState> emit,
   ) async {
-    if (!_isCredentialsValid(
-      emit: emit,
+    final String? errorMessage = _isCredentialsValid(
       login: event.login,
       password: event.password,
-    )) {
-      // TODO():  Add unsupported formatting handling
+    );
+    if (errorMessage != null) {
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: errorMessage,
+        ),
+      );
       return;
     }
 
@@ -100,16 +114,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
 
-      emit(state.copyWith(currentUser: userModel));
-
       if (userModel != null) {
-        // TODO():  Add some conditional redirection on successfully logged in logic
         debugPrint('User logged in event occurred!');
         await _appRouter.replace(const HomeRoute());
       }
     } on Exception catch (e) {
-      // TODO(): Add exception handling
-      debugPrint(e.toString());
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
     } finally {
       emit(state.copyWith(isLoading: false));
     }
@@ -121,35 +135,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     await _signOutUseCase.execute(const NoParams());
 
-    emit(state.copyWith(currentUser: null));
+    emit(state.copyWith());
   }
 
-  Future<void> _onGetCurrentUser(
-    GetCurrentUser event,
+  Future<void> _onInitBloc(
+    InitBloc event,
     Emitter<AuthState> emit,
   ) async {
     try {
       final UserModel? currentUser =
-          await _getCurrentUserUseCase.execute(const NoParams());
+          _getCurrentUserUseCase.execute(const NoParams());
 
       if (currentUser == null) {
         return;
       }
 
-      bool isBiometricsVerified =
-          await _biometricService.authenticateWithBiometrics();
+      // final bool isBiometricsVerified =
+      //     await _biometricService.authenticateWithBiometrics();
+      //
+      // if (!isBiometricsVerified) {
+      //   await _signOutUseCase.execute(const NoParams());
+      //   return;
+      // }
 
-      if (!isBiometricsVerified) {
-        await _signOutUseCase.execute(const NoParams());
-
-        return;
-      }
-
-      emit(state.copyWith(currentUser: currentUser));
       await _appRouter.replace(const HomeRoute());
     } on Exception catch (e) {
-      // TODO(): Add exception handling
-      debugPrint(e.toString());
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
     }
   }
 
@@ -165,29 +180,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) =>
       _appRouter.replace(const SignUpRoute());
 
-  bool _isCredentialsValid({
+  String? _isCredentialsValid({
     required String login,
     required String password,
-    required Emitter<AuthState> emit,
   }) {
     if (!_isLoginValid(login)) {
-      emit(state.copyWith(isLoginInvalid: true));
-      return false;
+      // Todo Mikalai Sihau - add email validation error message
+      return 'Invalid email';
     }
 
     if (!_isPasswordValid(password)) {
-      emit(state.copyWith(isPasswordInvalid: true));
-      return false;
+      // Todo Mikalai Sihau - add password validation error message
+      return 'Invalid password';
     }
 
-    emit(
-      state.copyWith(
-        isLoginInvalid: false,
-        isPasswordInvalid: false,
-      ),
-    );
-
-    return true;
+    return null;
   }
 
   bool _isLoginValid(String email) {
