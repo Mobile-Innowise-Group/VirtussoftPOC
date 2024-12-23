@@ -7,9 +7,11 @@ class BiometricService {
 
   Future<bool> authenticateWithBiometrics() async {
     bool isAuthenticated = false;
-    final bool canAuthenticateWithBiometrics = await _localAuth.canCheckBiometrics;
 
-    if (!canAuthenticateWithBiometrics) {
+    final bool canAuthenticateWithBiometrics = await _localAuth.canCheckBiometrics;
+    final bool isDeviceSupported = await _localAuth.isDeviceSupported();
+
+    if (!canAuthenticateWithBiometrics || !isDeviceSupported) {
       return isAuthenticated;
     }
 
