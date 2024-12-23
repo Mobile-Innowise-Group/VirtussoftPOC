@@ -14,5 +14,8 @@
   },
   "biometrics": {
     "pleaseAuthenticate": "Please authenticate to access this feature"
+  },
+  "docScanner": {
+    "docScanner": "Doc Scanner"
   }
 }

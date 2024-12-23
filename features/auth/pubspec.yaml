@@ -31,6 +31,8 @@ dependencies:
     path: ../../navigation
   biometrics:
     path: ../biometrics
+  doc_scanner:
+    path: ../doc_scanner
 
 
 

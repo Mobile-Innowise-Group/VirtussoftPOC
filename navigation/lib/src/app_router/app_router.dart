@@ -1,3 +1,5 @@
+import 'package:doc_scanner/doc_scanner_navigation.dart';
+
 import '../../navigation.dart';
 
 part 'app_router.gr.dart';
@@ -20,6 +22,9 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: DemoHomeRoute.page,
+        ),
+        AutoRoute(
+          page: DocScannerRoute.page,
         ),
       ];
 }
