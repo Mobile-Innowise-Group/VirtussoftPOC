@@ -961,17 +961,17 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  user_folders:
+    dependency: transitive
+    description:
+      path: "features/user_folders"
+      relative: true
+    source: path
+    version: "0.0.0"
   user_profile:
     dependency: transitive
     description:
       path: "features/user_profile"
-      relative: true
-    source: path
-    version: "0.0.0"
-  user_tags:
-    dependency: transitive
-    description:
-      path: "features/user_tags"
       relative: true
     source: path
     version: "0.0.0"

@@ -3,83 +3,99 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
-import 'bloc/user_categories_bloc.dart';
-import 'widgets/category_card.dart';
-import 'widgets/create_category_dialog.dart';
+import 'bloc/user_categories/user_categories_bloc.dart';
+import 'bloc/user_folders_bloc/user_folders_bloc.dart';
+import 'widgets/create_folder_dialog.dart';
+import 'widgets/folder_card.dart';
 
 @RoutePage()
-class UserCategoriesScreen extends StatelessWidget implements AutoRouteWrapper {
-  const UserCategoriesScreen({
-    super.key,
-  });
+class UserCategoriesScreen extends StatefulWidget implements AutoRouteWrapper {
+  const UserCategoriesScreen({super.key});
+
+  @override
+  _UserCategoriesScreenState createState() => _UserCategoriesScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<UserCategoriesBloc>(
-      create: (_) => UserCategoriesBloc(
-        createCategoryUseCase: appLocator<CreateCategoryUseCase>(),
+    return BlocProvider<UserFoldersBloc>(
+      create: (_) => UserFoldersBloc(
+        createFolderUseCase: appLocator<CreateFolderUseCase>(),
         appEventNotifier: appLocator<AppEventNotifier>(),
-        deleteCategoryUseCase: appLocator<DeleteCategoryUseCase>(),
+        deleteFolderUseCase: appLocator<DeleteFolderUseCase>(),
+        getFoldersUseCase: appLocator<GetFoldersUseCase>(),
         appRouter: appLocator<AppRouter>(),
-        getUserCategoriesUseCase: appLocator<GetUserCategoriesUseCase>(),
       ),
       child: this,
     );
   }
+}
+
+class _UserCategoriesScreenState extends State<UserCategoriesScreen> {
+  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User categories'),
+        title: const Text('User Folders'),
         automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.tag),
-            onPressed: () => context
-                .read<UserCategoriesBloc>()
-                .add(const GoToUserTagsEvent()),
-          ),
-        ],
       ),
-      body: BlocBuilder<UserCategoriesBloc, UserCategoriesState>(
-        builder: (BuildContext context, UserCategoriesState state) {
+      body: BlocBuilder<UserFoldersBloc, UserFoldersState>(
+        builder: (BuildContext context, UserFoldersState state) {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return ListView.separated(
-              itemCount: state.categories.length,
-              itemBuilder: (BuildContext context, int index) {
-                return CategoryCard(
-                  category: state.categories[index],
-                  onTap: () {
-                    // Handle card tap
-                  },
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 16);
-              },
+            final List<FolderModel> folders =
+                _isExpanded ? state.folders : state.folders.take(3).toList();
+            return CustomScrollView(
+              slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      if (index < folders.length) {
+                        return FolderCard(folder: folders[index]);
+                      } else if (index == folders.length) {
+                        return TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _isExpanded = !_isExpanded;
+                            });
+                          },
+                          child: Text(_isExpanded ? 'Show Less' : 'Show More'),
+                        );
+                      } else {
+                        return null;
+                      }
+                    },
+                    childCount: folders.length + 1,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CreateFolderDialog(
+                              onCreate: (String folderName) {
+                                // context.read<UserCategoriesBloc>().add(
+                                //       CreateFolderEvent(folderName: folderName),
+                                //     );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: const Text('Add Folder'),
+                    ),
+                  ),
+                ),
+              ],
             );
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext _) {
-              return CreateCategoryDialog(
-                onCreate: (String categoryName) {
-                  context.read<UserCategoriesBloc>().add(
-                        CreateCategoryEvent(categoryName: categoryName),
-                      );
-                },
-              );
-            },
-          );
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }

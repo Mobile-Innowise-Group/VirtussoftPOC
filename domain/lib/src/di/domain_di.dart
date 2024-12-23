@@ -20,12 +20,6 @@ abstract class DomainDI {
       ),
     );
 
-    locator.registerLazySingleton<EditCategoryUseCase>(
-      () => EditCategoryUseCase(
-        categoryRepository: locator<CategoryRepository>(),
-      ),
-    );
-
     locator.registerLazySingleton<GetUserCategoriesUseCase>(
       () => GetUserCategoriesUseCase(
         categoryRepository: locator<CategoryRepository>(),
@@ -59,6 +53,24 @@ abstract class DomainDI {
     locator.registerLazySingleton<SignUpWithCredentialsUseCase>(
       () => SignUpWithCredentialsUseCase(
         authRepository: locator.get<AuthorizationRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<GetFoldersUseCase>(
+      () => GetFoldersUseCase(
+        folderRepository: locator.get<FolderRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<CreateFolderUseCase>(
+      () => CreateFolderUseCase(
+        folderRepository: locator.get<FolderRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<DeleteFolderUseCase>(
+      () => DeleteFolderUseCase(
+        folderRepository: locator.get<FolderRepository>(),
       ),
     );
   }

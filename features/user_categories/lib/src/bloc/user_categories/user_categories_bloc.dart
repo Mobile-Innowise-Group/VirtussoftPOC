@@ -31,7 +31,6 @@ class UserCategoriesBloc
         super(UserCategoriesState.initial()) {
     on<CreateCategoryEvent>(_onCreateCategory);
     on<DeleteCategoryEvent>(_onDeleteCategory);
-    on<GoToUserTagsEvent>(_onGoToUserTags);
 
     on<InitEvent>(_onInit);
 
@@ -121,12 +120,5 @@ class UserCategoriesBloc
         ),
       );
     }
-  }
-
-  FutureOr<void> _onGoToUserTags(
-    GoToUserTagsEvent event,
-    Emitter<UserCategoriesState> emit,
-  ) async {
-    await _appRouter.push(const UserTagsRoute());
   }
 }

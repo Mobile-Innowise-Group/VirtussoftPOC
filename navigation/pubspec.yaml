@@ -23,8 +23,8 @@ dependencies:
     path: ../features/user_profile
   scanner:
     path: ../features/scanner
-  user_tags:
-    path: ../features/user_tags
+  user_folders:
+    path: ../features/user_folders
 
   auto_route: ^9.2.2
 

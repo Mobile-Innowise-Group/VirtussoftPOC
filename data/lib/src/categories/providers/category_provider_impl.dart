@@ -3,12 +3,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
 import '../categories.dart';
+import 'category_provider.dart';
 
-class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
+class CategoryProviderImpl implements CategoryProvider {
   final ExceptionsHandler _supabaseExceptionHandler;
   final SupabaseClient _supabaseClient;
 
-  CategoryRemoteDataSourceImpl({
+  CategoryProviderImpl({
     required SupabaseClient supabaseClient,
     required ExceptionsHandler supabaseExceptionHandler,
   })  : _supabaseClient = supabaseClient,
@@ -21,7 +22,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final Map<String, dynamic> response = await _supabaseClient
-            .rpc('create_new_category', params: <String, dynamic>{
+            .rpc('create_category', params: <String, dynamic>{
           'category_name': request.name,
         });
 

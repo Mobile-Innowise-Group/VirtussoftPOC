@@ -1214,17 +1214,17 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  user_folders:
+    dependency: "direct main"
+    description:
+      path: "../features/user_folders"
+      relative: true
+    source: path
+    version: "0.0.0"
   user_profile:
     dependency: "direct main"
     description:
       path: "../features/user_profile"
-      relative: true
-    source: path
-    version: "0.0.0"
-  user_tags:
-    dependency: "direct main"
-    description:
-      path: "../features/user_tags"
       relative: true
     source: path
     version: "0.0.0"

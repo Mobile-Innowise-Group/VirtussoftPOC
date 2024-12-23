@@ -1213,10 +1213,10 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
-  user_tags:
+  user_folders:
     dependency: transitive
     description:
-      path: "../user_tags"
+      path: "../user_folders"
       relative: true
     source: path
     version: "0.0.0"

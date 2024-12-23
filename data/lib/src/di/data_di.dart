@@ -10,6 +10,7 @@ import '../auth/auth.dart';
 import '../auth/exceptions/handlers/handlers.dart';
 import '../auth/exceptions/mappers/mappers.dart';
 import '../categories/categories.dart';
+import '../folders/folders.dart';
 
 abstract class DataDI {
   static void initDependencies({
@@ -70,17 +71,13 @@ abstract class DataDI {
   }
 
   static void _initProviders(GetIt locator) {
-    locator.registerLazySingleton<CategoryRemoteDataSource>(
-      () => CategoryRemoteDataSourceImpl(
+    locator.registerLazySingleton<CategoryProvider>(
+      () => CategoryProviderImpl(
         supabaseClient: locator<SupabaseClient>(),
         supabaseExceptionHandler: locator.get<ExceptionsHandler>(
           instanceName: ProviderInstance.supabaseProviderInstanceName.name,
         ),
       ),
-    );
-
-    locator.registerLazySingleton<CategoryLocalDataSource>(
-      CategoryLocalDataSourceImpl.new,
     );
 
     locator.registerLazySingleton<AuthorizationProvider>(
@@ -124,6 +121,15 @@ abstract class DataDI {
         storage: locator.get<FlutterSecureStorage>(),
       ),
     );
+
+    locator.registerLazySingleton<FolderProvider>(
+      () => FolderProviderImpl(
+        supabaseClient: locator.get<SupabaseClient>(),
+        supabaseExceptionHandler: locator.get<ExceptionsHandler>(
+          instanceName: ProviderInstance.supabaseProviderInstanceName.name,
+        ),
+      ),
+    );
   }
 
   static void _initRepositories({
@@ -132,8 +138,7 @@ abstract class DataDI {
   }) {
     locator.registerLazySingleton<CategoryRepository>(
       () => CategoryRepositoryImpl(
-        categoryRemoteDataSource: locator<CategoryRemoteDataSource>(),
-        categoryLocalDataSource: locator<CategoryLocalDataSource>(),
+        categoryProvider: locator<CategoryProvider>(),
       ),
     );
 
@@ -142,6 +147,12 @@ abstract class DataDI {
         authProvider: locator.get<AuthorizationProvider>(
           instanceName: provider.name,
         ),
+      ),
+    );
+
+    locator.registerLazySingleton<FolderRepository>(
+      () => FolderRepositoryImpl(
+        folderProvider: locator<FolderProvider>(),
       ),
     );
   }
