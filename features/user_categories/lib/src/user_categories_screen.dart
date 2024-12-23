@@ -2,11 +2,14 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
+import 'package:nested/nested.dart';
 
 import 'bloc/user_categories/user_categories_bloc.dart';
 import 'bloc/user_folders_bloc/user_folders_bloc.dart';
-import 'widgets/create_folder_dialog.dart';
-import 'widgets/folder_card.dart';
+import 'widgets/categories/create_category_dialog.dart';
+import 'widgets/categories/user_categories.dart';
+import 'widgets/folders/create_folder_dialog.dart';
+import 'widgets/folders/user_folders.dart';
 
 @RoutePage()
 class UserCategoriesScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -17,85 +20,86 @@ class UserCategoriesScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<UserFoldersBloc>(
-      create: (_) => UserFoldersBloc(
-        createFolderUseCase: appLocator<CreateFolderUseCase>(),
-        appEventNotifier: appLocator<AppEventNotifier>(),
-        deleteFolderUseCase: appLocator<DeleteFolderUseCase>(),
-        getFoldersUseCase: appLocator<GetFoldersUseCase>(),
-        appRouter: appLocator<AppRouter>(),
-      ),
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<UserCategoriesBloc>(
+          create: (_) => UserCategoriesBloc(
+            appEventNotifier: appLocator<AppEventNotifier>(),
+            appRouter: appLocator<AppRouter>(),
+            createCategoryUseCase: appLocator<CreateCategoryUseCase>(),
+            getUserCategoriesUseCase: appLocator<GetUserCategoriesUseCase>(),
+            deleteCategoryUseCase: appLocator<DeleteCategoryUseCase>(),
+          ),
+        ),
+        BlocProvider<UserFoldersBloc>(
+          create: (_) => UserFoldersBloc(
+            appEventNotifier: appLocator<AppEventNotifier>(),
+            appRouter: appLocator<AppRouter>(),
+            createFolderUseCase: appLocator<CreateFolderUseCase>(),
+            deleteFolderUseCase: appLocator<DeleteFolderUseCase>(),
+            getFoldersUseCase: appLocator<GetFoldersUseCase>(),
+          ),
+        ),
+      ],
       child: this,
     );
   }
 }
 
 class _UserCategoriesScreenState extends State<UserCategoriesScreen> {
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Folders'),
+        title: Text('data.userData'.tr()),
         automaticallyImplyLeading: false,
       ),
-      body: BlocBuilder<UserFoldersBloc, UserFoldersState>(
-        builder: (BuildContext context, UserFoldersState state) {
-          if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            final List<FolderModel> folders =
-                _isExpanded ? state.folders : state.folders.take(3).toList();
-            return CustomScrollView(
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      if (index < folders.length) {
-                        return FolderCard(folder: folders[index]);
-                      } else if (index == folders.length) {
-                        return TextButton(
-                          onPressed: () {
-                            setState(() {
-                              _isExpanded = !_isExpanded;
-                            });
-                          },
-                          child: Text(_isExpanded ? 'Show Less' : 'Show More'),
-                        );
-                      } else {
-                        return null;
-                      }
-                    },
-                    childCount: folders.length + 1,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CreateFolderDialog(
-                              onCreate: (String folderName) {
-                                // context.read<UserCategoriesBloc>().add(
-                                //       CreateFolderEvent(folderName: folderName),
-                                //     );
-                              },
+      body: CustomScrollView(
+        slivers: <Widget>[
+          const UserFolders(),
+          SliverToBoxAdapter(
+            child: ListTile(
+              leading: const Icon(Icons.add),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext _) {
+                    return CreateFolderDialog(
+                      onCreate: (String folderName) {
+                        context.read<UserFoldersBloc>().add(
+                              CreateFolderEvent(folderName: folderName),
                             );
-                          },
-                        );
                       },
-                      child: const Text('Add Folder'),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          }
-        },
+                    );
+                  },
+                );
+              },
+              title: Text('folders.addFolder'.tr()),
+            ),
+          ),
+          const SliverToBoxAdapter(child: Divider()),
+          const UserCategories(),
+          SliverToBoxAdapter(
+            child: ListTile(
+              leading: const Icon(Icons.add),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext _) {
+                    return CreateCategoryDialog(
+                      onCreate: (String folderName) {
+                        context.read<UserCategoriesBloc>().add(
+                              CreateCategoryEvent(categoryName: folderName),
+                            );
+                      },
+                    );
+                  },
+                );
+              },
+              title: Text('category.addCategory'.tr()),
+            ),
+          ),
+        ],
       ),
     );
   }

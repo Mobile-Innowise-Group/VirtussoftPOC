@@ -31,6 +31,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
         super(UserFoldersState.initial()) {
     on<CreateFolderEvent>(_onCreateFolder);
     on<DeleteFolderEvent>(_onDeleteFolder);
+    on<ToggleExpandedEvent>(_onToggleExpanded);
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -98,5 +99,12 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
         ),
       );
     }
+  }
+
+  FutureOr<void> _onToggleExpanded(
+    ToggleExpandedEvent event,
+    Emitter<UserFoldersState> emit,
+  ) async {
+    emit(state.copyWith(isExpanded: !state.isExpanded));
   }
 }

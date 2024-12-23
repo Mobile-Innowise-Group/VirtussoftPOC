@@ -21,7 +21,7 @@ class FolderProviderImpl implements FolderProvider {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final Map<String, dynamic> response = await _supabaseClient
-            .rpc('create_new_folder', params: <String, dynamic>{
+            .rpc('create_folder', params: <String, dynamic>{
           'folder_name': request.name,
         });
 

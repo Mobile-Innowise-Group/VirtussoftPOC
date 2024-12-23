@@ -22,3 +22,7 @@ class DeleteFolderEvent extends UserFoldersEvent {
 
   const DeleteFolderEvent(this.folder);
 }
+
+class ToggleExpandedEvent extends UserFoldersEvent {
+  const ToggleExpandedEvent();
+}

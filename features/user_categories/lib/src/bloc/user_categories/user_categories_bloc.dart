@@ -31,6 +31,7 @@ class UserCategoriesBloc
         super(UserCategoriesState.initial()) {
     on<CreateCategoryEvent>(_onCreateCategory);
     on<DeleteCategoryEvent>(_onDeleteCategory);
+    on<ToggleExpandedEvent>(_onToggleExpanded);
 
     on<InitEvent>(_onInit);
 
@@ -120,5 +121,12 @@ class UserCategoriesBloc
         ),
       );
     }
+  }
+
+  FutureOr<void> _onToggleExpanded(
+    ToggleExpandedEvent event,
+    Emitter<UserCategoriesState> emit,
+  ) async {
+    emit(state.copyWith(isExpanded: !state.isExpanded));
   }
 }

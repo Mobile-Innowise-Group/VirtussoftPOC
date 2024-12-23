@@ -1,39 +1,40 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
-class CreateFolderDialog extends StatefulWidget {
+class CreateCategoryDialog extends StatefulWidget {
   final Function(String) onCreate;
 
-  const CreateFolderDialog({
+  const CreateCategoryDialog({
     Key? key,
     required this.onCreate,
   }) : super(key: key);
 
   @override
-  _CreateFolderDialogState createState() => _CreateFolderDialogState();
+  _CreateCategoryDialogState createState() => _CreateCategoryDialogState();
 }
 
-class _CreateFolderDialogState extends State<CreateFolderDialog> {
+class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Create New Folder'),
+      title: Text('category.createCategory'.tr()),
       content: TextField(
         controller: _controller,
-        decoration: const InputDecoration(hintText: 'Folder Name'),
+        decoration: InputDecoration(hintText: 'category.categoryName'.tr()),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text('common.cancel'.tr()),
         ),
         ElevatedButton(
           onPressed: () {
             widget.onCreate(_controller.text);
             Navigator.of(context).pop();
           },
-          child: const Text('Create'),
+          child: Text('common.create'.tr()),
         ),
       ],
     );

@@ -1,9 +1,4 @@
-import 'dart:io';
-
-import 'package:core/core.dart';
 import 'package:domain/domain.dart';
-import 'package:path_provider/path_provider.dart';
-
 import '../categories.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
