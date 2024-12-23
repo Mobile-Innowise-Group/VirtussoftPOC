@@ -72,10 +72,8 @@ class SupabaseAuthProvider implements AuthorizationProvider {
 
   @override
   Future<UserEntity?> signInWithSessionId() {
+    // TODO Mikala Sihau - implement this method
     return Future.value(null);
-    // final User? supabaseUser = _supabaseClient.auth.currentUser;
-    //
-    // return Future<UserEntity?>.value(UserMapper.fromSupabaseUser(supabaseUser));
   }
 
   @override

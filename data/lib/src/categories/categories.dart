@@ -1,4 +1,5 @@
 export 'entities/category_entity.dart';
+export 'mappers/category_mapper.dart';
 export 'providers/category_local_data_source.dart';
 export 'providers/category_local_data_source_impl.dart';
 export 'providers/category_remote_data_source.dart';

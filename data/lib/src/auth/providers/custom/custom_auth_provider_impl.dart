@@ -24,6 +24,7 @@ class CustomAuthProviderImpl implements AuthorizationProvider {
   }) async {
     return _customExceptionHandler.safeExecute(
       execute: () async {
+        // TODO Mikala Sihau - implement this method
         return null;
       },
     );
@@ -35,6 +36,7 @@ class CustomAuthProviderImpl implements AuthorizationProvider {
   }) async {
     return _customExceptionHandler.safeExecute(
       execute: () async {
+        // TODO Mikala Sihau - implement this method
         return null;
       },
     );
@@ -44,6 +46,7 @@ class CustomAuthProviderImpl implements AuthorizationProvider {
   Future<UserEntity?> signInWithSessionId() async {
     return _customExceptionHandler.safeExecute(
       execute: () async {
+        // TODO Mikala Sihau - implement this method
         return null;
       },
     );
@@ -51,11 +54,13 @@ class CustomAuthProviderImpl implements AuthorizationProvider {
 
   @override
   UserEntity? getCurrentUser() {
+    // TODO Mikala Sihau - implement this method
     return null;
   }
 
   @override
   Future<void> signOut() async {
+    // TODO Mikala Sihau - implement this method
     await _storage.deleteAll();
   }
 }

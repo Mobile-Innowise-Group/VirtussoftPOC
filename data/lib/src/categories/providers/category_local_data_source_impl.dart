@@ -13,16 +13,17 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     final String specificDirPath = '${appDocDir.path}/categories';
     final Directory categoriesPath = Directory(specificDirPath);
-
-    if (categoriesPath.existsSync()) {
-      final List<FileSystemEntity> entities = categoriesPath.listSync();
-      return entities
-          .map((FileSystemEntity entity) => CategoryModel(
-                name: entity.path.split('/').last,
-              ))
-          .toList();
-    } else {
-      return <CategoryModel>[];
-    }
+    return <CategoryModel>[];
+    // TODO: Mikalai Sihau - implement this method to return a list of categories
+    // if (categoriesPath.existsSync()) {
+    //   final List<FileSystemEntity> entities = categoriesPath.listSync();
+    //   return entities
+    //       .map((FileSystemEntity entity) => CategoryModel(
+    //             name: entity.path.split('/').last,
+    //           ))
+    //       .toList();
+    // } else {
+    //   return <CategoryModel>[];
+    // }
   }
 }

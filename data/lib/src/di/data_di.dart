@@ -71,7 +71,12 @@ abstract class DataDI {
 
   static void _initProviders(GetIt locator) {
     locator.registerLazySingleton<CategoryRemoteDataSource>(
-      CategoryRemoteDataSourceImpl.new,
+      () => CategoryRemoteDataSourceImpl(
+        supabaseClient: locator<SupabaseClient>(),
+        supabaseExceptionHandler: locator.get<ExceptionsHandler>(
+          instanceName: ProviderInstance.supabaseProviderInstanceName.name,
+        ),
+      ),
     );
 
     locator.registerLazySingleton<CategoryLocalDataSource>(

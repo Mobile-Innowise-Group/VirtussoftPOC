@@ -30,8 +30,6 @@ class AppNotifications extends StatelessWidget {
                     duration: const Duration(seconds: 20),
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: Colors.transparent,
-                    margin: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height - 200),
                     content: _getNotificationContent(state.appEvent),
                   ),
                   snackBarAnimationStyle:

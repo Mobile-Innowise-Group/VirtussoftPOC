@@ -51,7 +51,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
     required DeleteCategoryPayload payload,
   }) {
     return _categoryRemoteDataSource.deleteCategory(
-        request: DeleteCategoryRequest());
+      request: DeleteCategoryRequest(
+        categoryId: payload.categoryId,
+      ),
+    );
   }
 
   @override
@@ -66,12 +69,12 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<List<CategoryModel>> getUserCategories({
     required GetUserCategoriesPayload payload,
   }) async {
-    final List<CategoryModel> localCategories =
-        await _categoryLocalDataSource.getUserCategories(
-      request: GetUserCategoriesRequest(),
-    );
-    // return _categoryRemoteDataSource.getUserCategories(
-    //     request: GetUserCategoriesRequest());
-    return localCategories;
+    // final List<CategoryModel> localCategories =
+    //     await _categoryLocalDataSource.getUserCategories(
+    //   request: GetUserCategoriesRequest(),
+    // );
+    // return localCategories;
+    return _categoryRemoteDataSource.getUserCategories(
+        request: GetUserCategoriesRequest());
   }
 }

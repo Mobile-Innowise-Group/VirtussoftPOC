@@ -13,20 +13,24 @@ class UserCategoriesBloc
     extends Bloc<UserCategoriesEvent, UserCategoriesState> {
   final CreateCategoryUseCase _createCategoryUseCase;
   final GetUserCategoriesUseCase _getUserCategoriesUseCase;
+  final DeleteCategoryUseCase _deleteCategoryUseCase;
   final AppEventNotifier _appEventNotifier;
   final AppRouter _appRouter;
 
   UserCategoriesBloc({
     required CreateCategoryUseCase createCategoryUseCase,
     required GetUserCategoriesUseCase getUserCategoriesUseCase,
+    required DeleteCategoryUseCase deleteCategoryUseCase,
     required AppEventNotifier appEventNotifier,
     required AppRouter appRouter,
   })  : _createCategoryUseCase = createCategoryUseCase,
         _getUserCategoriesUseCase = getUserCategoriesUseCase,
+        _deleteCategoryUseCase = deleteCategoryUseCase,
         _appEventNotifier = appEventNotifier,
         _appRouter = appRouter,
         super(UserCategoriesState.initial()) {
     on<CreateCategoryEvent>(_onCreateCategory);
+    on<DeleteCategoryEvent>(_onDeleteCategory);
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -64,9 +68,7 @@ class UserCategoriesBloc
     emit(state.copyWith(isLoading: true));
     try {
       final CategoryModel category = await _createCategoryUseCase.execute(
-        CreateCategoryPayload(
-          name: 'Category ${state.categories.length + 1}',
-        ),
+        CreateCategoryPayload(name: event.categoryName),
       );
       final List<CategoryModel> categories =
           List<CategoryModel>.from(state.categories)..add(category);
@@ -76,6 +78,39 @@ class UserCategoriesBloc
           categories: categories,
         ),
       );
+    } catch (e) {
+      emit(state.copyWith(isLoading: false));
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  FutureOr<void> _onDeleteCategory(
+    DeleteCategoryEvent event,
+    Emitter<UserCategoriesState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      final bool isDeleted = await _deleteCategoryUseCase.execute(
+        DeleteCategoryPayload(
+          categoryId: event.category.id,
+        ),
+      );
+      if (isDeleted) {
+        final List<CategoryModel> categories =
+            List<CategoryModel>.from(state.categories)
+              ..removeWhere(
+                  (CategoryModel category) => category.id == event.category.id);
+        emit(
+          state.copyWith(
+            isLoading: false,
+            categories: categories,
+          ),
+        );
+      }
     } catch (e) {
       emit(state.copyWith(isLoading: false));
       _appEventNotifier.notify(

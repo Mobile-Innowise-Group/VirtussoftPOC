@@ -1,21 +1,48 @@
 import 'package:domain/domain.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../auth/exceptions/handlers/exception_handler.dart';
 import '../categories.dart';
 
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
+  final ExceptionsHandler _supabaseExceptionHandler;
+  final SupabaseClient _supabaseClient;
+
+  CategoryRemoteDataSourceImpl({
+    required SupabaseClient supabaseClient,
+    required ExceptionsHandler supabaseExceptionHandler,
+  })  : _supabaseClient = supabaseClient,
+        _supabaseExceptionHandler = supabaseExceptionHandler;
+
   @override
   Future<CategoryModel> createCategory({
     required CreateCategoryRequest request,
-  }) {
-    return Future<CategoryModel>.value(CategoryModel(name: request.name));
+  }) async {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final Map<String, dynamic> response = await _supabaseClient
+            .rpc('create_new_category', params: <String, dynamic>{
+          'category_name': request.name,
+        });
+
+        return CategoryMapper.toModel(CategoryEntity.fromJson(response));
+      },
+    );
   }
 
   @override
   Future<bool> deleteCategory({
     required DeleteCategoryRequest request,
   }) {
-    // TODO: implement deleteCategory
-    throw UnimplementedError();
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        await _supabaseClient.rpc('delete_category', params: <String, dynamic>{
+          'category_id': request.categoryId,
+        });
+
+        return true;
+      },
+    );
   }
 
   @override
@@ -30,7 +57,16 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   Future<List<CategoryModel>> getUserCategories({
     required GetUserCategoriesRequest request,
   }) {
-    // TODO: implement getUserCategories
-    throw UnimplementedError();
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('get_user_categories', params: <String, dynamic>{});
+
+        return response
+            .map((Map<String, dynamic> category) =>
+                CategoryMapper.toModel(CategoryEntity.fromJson(category)))
+            .toList();
+      },
+    );
   }
 }

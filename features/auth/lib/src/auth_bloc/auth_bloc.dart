@@ -150,13 +150,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return;
       }
 
-      final bool isBiometricsVerified =
-          await _biometricService.authenticateWithBiometrics();
-
-      if (!isBiometricsVerified) {
-        await _signOutUseCase.execute(const NoParams());
-        return;
-      }
+      // final bool isBiometricsVerified =
+      //     await _biometricService.authenticateWithBiometrics();
+      //
+      // if (!isBiometricsVerified) {
+      //   await _signOutUseCase.execute(const NoParams());
+      //   return;
+      // }
 
       await _appRouter.replace(const HomeRoute());
     } on Exception catch (e) {

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 import 'bloc/user_categories_bloc.dart';
+import 'widgets/category_card.dart';
+import 'widgets/create_category_dialog.dart';
 
 @RoutePage()
 class UserCategoriesScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -17,6 +19,7 @@ class UserCategoriesScreen extends StatelessWidget implements AutoRouteWrapper {
       create: (_) => UserCategoriesBloc(
         createCategoryUseCase: appLocator<CreateCategoryUseCase>(),
         appEventNotifier: appLocator<AppEventNotifier>(),
+        deleteCategoryUseCase: appLocator<DeleteCategoryUseCase>(),
         appRouter: appLocator<AppRouter>(),
         getUserCategoriesUseCase: appLocator<GetUserCategoriesUseCase>(),
       ),
@@ -36,21 +39,38 @@ class UserCategoriesScreen extends StatelessWidget implements AutoRouteWrapper {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return ListView.builder(
+            return ListView.separated(
               itemCount: state.categories.length,
               itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(state.categories[index].name),
+                return CategoryCard(
+                  category: state.categories[index],
+                  onTap: () {
+                    // Handle card tap
+                  },
                 );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 16);
               },
             );
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<UserCategoriesBloc>().add(
-              const CreateCategoryEvent(),
-            ),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext _) {
+              return CreateCategoryDialog(
+                onCreate: (String categoryName) {
+                  context.read<UserCategoriesBloc>().add(
+                        CreateCategoryEvent(categoryName: categoryName),
+                      );
+                },
+              );
+            },
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
