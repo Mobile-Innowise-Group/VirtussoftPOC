@@ -22,3 +22,7 @@ class DeleteCategoryEvent extends UserCategoriesEvent {
 
   const DeleteCategoryEvent(this.category);
 }
+
+class GoToUserTagsEvent extends UserCategoriesEvent {
+  const GoToUserTagsEvent();
+}

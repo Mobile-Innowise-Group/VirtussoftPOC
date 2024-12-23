@@ -1,7 +1,9 @@
+import '../../../domain.dart';
+
 class DeleteCategoryPayload {
-  final String categoryId;
+  final CategoryModel category;
 
   DeleteCategoryPayload({
-    required this.categoryId,
+    required this.category,
   });
 }

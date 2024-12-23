@@ -116,13 +116,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4"
-  biometrics:
-    dependency: transitive
-    description:
-      path: "../biometrics"
-      relative: true
-    source: path
-    version: "0.0.1"
   bloc:
     dependency: transitive
     description:
@@ -1217,6 +1210,13 @@ packages:
     dependency: transitive
     description:
       path: "../user_profile"
+      relative: true
+    source: path
+    version: "0.0.0"
+  user_tags:
+    dependency: transitive
+    description:
+      path: "../user_tags"
       relative: true
     source: path
     version: "0.0.0"

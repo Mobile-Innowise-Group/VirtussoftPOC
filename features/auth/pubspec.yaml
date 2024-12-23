@@ -20,8 +20,6 @@ dependencies:
     path: ../../navigation
   domain:
     path: ../../domain
-  biometrics:
-    path: ../biometrics
 
 dev_dependencies:
   flutter_test:

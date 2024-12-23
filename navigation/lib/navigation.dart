@@ -6,6 +6,7 @@ export 'package:home_page/home_page.dart';
 export 'package:scanner/scanner.dart';
 export 'package:user_categories/user_categories.dart';
 export 'package:user_profile/user_profile.dart';
+export 'package:user_tags/user_tags.dart';
 
 export 'src/app_router/app_router.dart';
 export 'src/di/navigation_di.dart';

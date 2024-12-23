@@ -33,6 +33,14 @@ class UserCategoriesScreen extends StatelessWidget implements AutoRouteWrapper {
       appBar: AppBar(
         title: const Text('User categories'),
         automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.tag),
+            onPressed: () => context
+                .read<UserCategoriesBloc>()
+                .add(const GoToUserTagsEvent()),
+          ),
+        ],
       ),
       body: BlocBuilder<UserCategoriesBloc, UserCategoriesState>(
         builder: (BuildContext context, UserCategoriesState state) {

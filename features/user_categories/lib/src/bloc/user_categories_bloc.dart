@@ -31,6 +31,8 @@ class UserCategoriesBloc
         super(UserCategoriesState.initial()) {
     on<CreateCategoryEvent>(_onCreateCategory);
     on<DeleteCategoryEvent>(_onDeleteCategory);
+    on<GoToUserTagsEvent>(_onGoToUserTags);
+
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -96,7 +98,7 @@ class UserCategoriesBloc
     try {
       final bool isDeleted = await _deleteCategoryUseCase.execute(
         DeleteCategoryPayload(
-          categoryId: event.category.id,
+          category: event.category,
         ),
       );
       if (isDeleted) {
@@ -119,5 +121,12 @@ class UserCategoriesBloc
         ),
       );
     }
+  }
+
+  FutureOr<void> _onGoToUserTags(
+    GoToUserTagsEvent event,
+    Emitter<UserCategoriesState> emit,
+  ) async {
+    await _appRouter.push(const UserTagsRoute());
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -38,9 +39,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
     if (!folder.existsSync()) {
       await folder.create();
-      print('Folder created at: $categoriesPath');
+      AppLogger().info('Folder created at: $categoriesPath');
     } else {
-      print('Folder already exists at: $categoriesPath');
+      AppLogger().info('Folder already exists at: $categoriesPath');
     }
 
     return createdCategory;
@@ -49,12 +50,24 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<bool> deleteCategory({
     required DeleteCategoryPayload payload,
-  }) {
-    return _categoryRemoteDataSource.deleteCategory(
+  }) async {
+    final bool response = await _categoryRemoteDataSource.deleteCategory(
       request: DeleteCategoryRequest(
-        categoryId: payload.categoryId,
+        categoryId: payload.category.id,
       ),
     );
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final String categoryPath =
+        '${directory.path}/categories/${payload.category.name}';
+    final Directory folder = Directory(categoryPath);
+
+    if (folder.existsSync()) {
+      await folder.delete(recursive: true);
+      AppLogger().info('Folder deleted at: $categoryPath');
+    } else {
+      AppLogger().info('Folder does not exist at: $categoryPath');
+    }
+    return response;
   }
 
   @override
