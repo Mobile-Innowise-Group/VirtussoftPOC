@@ -10,3 +10,4 @@ class MainActivity: FlutterFragmentActivity() {
         GeneratedPluginRegistrant.registerWith(flutterEngine)
     }
 }
+
