@@ -17,14 +17,12 @@ dependencies:
     path: ../features/auth
   home_page:
     path: ../features/home_page
-  user_categories:
-    path: ../features/user_categories
   user_profile:
     path: ../features/user_profile
   scanner:
     path: ../features/scanner
-  user_folders:
-    path: ../features/user_folders
+  user_data:
+    path: ../features/user_data
 
   auto_route: ^9.2.2
 

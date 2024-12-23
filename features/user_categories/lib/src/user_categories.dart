@@ -2,45 +2,42 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-import '../../bloc/user_folders_bloc/user_folders_bloc.dart';
+import 'bloc/user_categories_bloc.dart';
 
-class UserFolders extends StatelessWidget {
-  const UserFolders({super.key});
+class UserCategories extends StatelessWidget {
+  const UserCategories({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserFoldersBloc, UserFoldersState>(
-      builder: (BuildContext context, UserFoldersState state) {
+    return BlocBuilder<UserCategoriesBloc, UserCategoriesState>(
+      builder: (BuildContext context, UserCategoriesState state) {
         if (state.isLoading) {
           return const SliverToBoxAdapter(
             child: Center(child: CircularProgressIndicator()),
           );
         }
-        final List<FolderModel> folders =
-            state.isExpanded ? state.folders : state.folders.take(3).toList();
-
-        return folders.isEmpty
+        final List<CategoryModel> categories = state.isExpanded
+            ? state.categories
+            : state.categories.take(3).toList();
+        return categories.isEmpty
             ? SliverToBoxAdapter(
                 child: ListTile(
-                  title: Text(
-                    'folders.noAddedFolders'.tr(),
-                  ),
+                  title: Text('category.noAddedCategories'.tr()),
                 ),
               )
             : SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    if (index < folders.length) {
+                    if (index < categories.length) {
                       return ListTile(
-                        leading: const Icon(Icons.folder),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        title: Text(folders[index].name),
+                        leading: const Icon(Icons.tag),
+                        title: Text(categories[index].name),
                       );
-                    } else if (index == folders.length &&
-                        state.folders.length > 3) {
+                    } else if (index == categories.length &&
+                        state.categories.length > 3) {
                       return TextButton(
                         onPressed: () => context
-                            .read<UserFoldersBloc>()
+                            .read<UserCategoriesBloc>()
                             .add(const ToggleExpandedEvent()),
                         child: Text(
                           state.isExpanded
@@ -52,7 +49,7 @@ class UserFolders extends StatelessWidget {
                       return null;
                     }
                   },
-                  childCount: folders.length + 1,
+                  childCount: categories.length + 1,
                 ),
               );
       },

@@ -14,7 +14,7 @@ class HomeScreenRouter extends RootStackRouter {
           page: HomeRoute.page,
           children: <AutoRoute>[
             ...UserProfileScreenRouter().routes,
-            ...UserCategoriesScreenRouter().routes,
+            ...UserDataRouter().routes,
             ...ScannerScreenRouter().routes,
           ],
         ),

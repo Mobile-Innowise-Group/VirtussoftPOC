@@ -3,20 +3,20 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 import 'package:nested/nested.dart';
+import 'package:user_categories/src/bloc/user_categories_bloc.dart';
+import 'package:user_categories/src/user_categories.dart';
+import 'package:user_categories/src/widgets/create_category_dialog.dart';
+import 'package:user_folders/src/bloc/user_folders_bloc.dart';
+import 'package:user_folders/src/user_folders.dart';
+import 'package:user_folders/src/widgets/create_folder_dialog.dart';
 
-import 'bloc/user_categories/user_categories_bloc.dart';
-import 'bloc/user_folders_bloc/user_folders_bloc.dart';
-import 'widgets/categories/create_category_dialog.dart';
-import 'widgets/categories/user_categories.dart';
-import 'widgets/folders/create_folder_dialog.dart';
-import 'widgets/folders/user_folders.dart';
 
 @RoutePage()
-class UserCategoriesScreen extends StatefulWidget implements AutoRouteWrapper {
-  const UserCategoriesScreen({super.key});
+class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {
+  const UserDataScreen({super.key});
 
   @override
-  _UserCategoriesScreenState createState() => _UserCategoriesScreenState();
+  _UserDataScreenState createState() => _UserDataScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -46,7 +46,7 @@ class UserCategoriesScreen extends StatefulWidget implements AutoRouteWrapper {
   }
 }
 
-class _UserCategoriesScreenState extends State<UserCategoriesScreen> {
+class _UserDataScreenState extends State<UserDataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,8 +67,8 @@ class _UserCategoriesScreenState extends State<UserCategoriesScreen> {
                     return CreateFolderDialog(
                       onCreate: (String folderName) {
                         context.read<UserFoldersBloc>().add(
-                              CreateFolderEvent(folderName: folderName),
-                            );
+                          CreateFolderEvent(folderName: folderName),
+                        );
                       },
                     );
                   },
@@ -89,8 +89,8 @@ class _UserCategoriesScreenState extends State<UserCategoriesScreen> {
                     return CreateCategoryDialog(
                       onCreate: (String folderName) {
                         context.read<UserCategoriesBloc>().add(
-                              CreateCategoryEvent(categoryName: folderName),
-                            );
+                          CreateCategoryEvent(categoryName: folderName),
+                        );
                       },
                     );
                   },

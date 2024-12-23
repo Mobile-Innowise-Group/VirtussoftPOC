@@ -9,23 +9,23 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:user_folders/src/user_folders.dart' as _i1;
+import 'package:user_data/src/user_data_screen.dart' as _i1;
 
 /// generated route for
-/// [_i1.UserFoldersScreen]
-class UserFoldersRoute extends _i2.PageRouteInfo<void> {
-  const UserFoldersRoute({List<_i2.PageRouteInfo>? children})
+/// [_i1.UserDataScreen]
+class UserDataRoute extends _i2.PageRouteInfo<void> {
+  const UserDataRoute({List<_i2.PageRouteInfo>? children})
       : super(
-          UserFoldersRoute.name,
+          UserDataRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'UserFoldersRoute';
+  static const String name = 'UserDataRoute';
 
   static _i2.PageInfo page = _i2.PageInfo(
     name,
     builder: (data) {
-      return _i2.WrappedRoute(child: const _i1.UserFoldersScreen());
+      return _i2.WrappedRoute(child: const _i1.UserDataScreen());
     },
   );
 }

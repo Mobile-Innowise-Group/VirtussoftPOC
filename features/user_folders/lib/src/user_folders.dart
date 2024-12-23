@@ -1,65 +1,61 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:navigation/navigation.dart';
 
 import 'bloc/user_folders_bloc.dart';
 
-@RoutePage()
-class UserFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
-  const UserFoldersScreen({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<UserFoldersBloc>(
-      create: (_) => UserFoldersBloc(
-        appEventNotifier: appLocator<AppEventNotifier>(),
-        appRouter: appLocator<AppRouter>(),
-      ),
-      child: this,
-    );
-  }
+class UserFolders extends StatelessWidget {
+  const UserFolders({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Tags'),
-        automaticallyImplyLeading: false,
-      ),
-      body: BlocBuilder<UserFoldersBloc, UserFoldersState>(
-        builder: (BuildContext context, UserFoldersState state) {
-          if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return const SizedBox();
-            // return Wrap(
-            //   spacing: 8.0,
-            //   children: state.folders.map((tag) {
-            //     return Chip(
-            //       label: Text(tag.name),
-            //       onDeleted: () {
-            //         context.read<UserFoldersBloc>().add(DeleteTagEvent(tag));
-            //       },
-            //     );
-            //   }).toList(),
-            // );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const SizedBox();
-            // return CreateTagDialog(
-            //   onCreate: (String tagName) {
-            //     context.read<UserTagsBloc>().add(CreateTagEvent(tagName: tagName));
-            //   },
-            // );
-          },
-        ),
-        child: const Icon(Icons.add),
-      ),
+    return BlocBuilder<UserFoldersBloc, UserFoldersState>(
+      builder: (BuildContext context, UserFoldersState state) {
+        if (state.isLoading) {
+          return const SliverToBoxAdapter(
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+        final List<FolderModel> folders =
+            state.isExpanded ? state.folders : state.folders.take(3).toList();
+
+        return folders.isEmpty
+            ? SliverToBoxAdapter(
+                child: ListTile(
+                  title: Text(
+                    'folders.noAddedFolders'.tr(),
+                  ),
+                ),
+              )
+            : SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    if (index < folders.length) {
+                      return ListTile(
+                        leading: const Icon(Icons.folder),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        title: Text(folders[index].name),
+                      );
+                    } else if (index == folders.length &&
+                        state.folders.length > 3) {
+                      return TextButton(
+                        onPressed: () => context
+                            .read<UserFoldersBloc>()
+                            .add(const ToggleExpandedEvent()),
+                        child: Text(
+                          state.isExpanded
+                              ? 'common.showLess'.tr()
+                              : 'common.showMore'.tr(),
+                        ),
+                      );
+                    } else {
+                      return null;
+                    }
+                  },
+                  childCount: folders.length + 1,
+                ),
+              );
+      },
     );
   }
 }

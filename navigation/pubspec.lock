@@ -1208,14 +1208,21 @@ packages:
     source: hosted
     version: "3.1.3"
   user_categories:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "../features/user_categories"
       relative: true
     source: path
     version: "0.0.0"
-  user_folders:
+  user_data:
     dependency: "direct main"
+    description:
+      path: "../features/user_data"
+      relative: true
+    source: path
+    version: "0.0.0"
+  user_folders:
+    dependency: transitive
     description:
       path: "../features/user_folders"
       relative: true

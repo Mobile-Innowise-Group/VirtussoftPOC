@@ -1,8 +1,12 @@
 part of 'user_folders_bloc.dart';
 
 @immutable
-abstract class UserFoldersEvent {
+sealed class UserFoldersEvent {
   const UserFoldersEvent();
+}
+
+class InitEvent extends UserFoldersEvent {
+  const InitEvent();
 }
 
 class CreateFolderEvent extends UserFoldersEvent {
@@ -16,7 +20,9 @@ class CreateFolderEvent extends UserFoldersEvent {
 class DeleteFolderEvent extends UserFoldersEvent {
   final FolderModel folder;
 
-  const DeleteFolderEvent({
-    required this.folder,
-  });
+  const DeleteFolderEvent(this.folder);
+}
+
+class ToggleExpandedEvent extends UserFoldersEvent {
+  const ToggleExpandedEvent();
 }
