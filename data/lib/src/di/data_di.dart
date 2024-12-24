@@ -11,6 +11,9 @@ import '../auth/exceptions/handlers/handlers.dart';
 import '../auth/exceptions/mappers/mappers.dart';
 import '../categories/categories.dart';
 import '../folders/folders.dart';
+import '../scan_entries/providers/scan_entries_provider.dart';
+import '../scan_entries/providers/scan_entries_provider_impl.dart';
+import '../scan_entries/repositories/scan_antries_repository_impl.dart';
 
 abstract class DataDI {
   static void initDependencies({
@@ -84,8 +87,8 @@ abstract class DataDI {
       () => CustomAuthProviderImpl(
         dio: locator.get<Dio>(),
         storage: locator.get<FlutterSecureStorage>(),
-        customExceptionHandler: locator.get<ExceptionsHandler>(
-            instanceName: ProviderInstance.customProviderInstanceName.name),
+        customExceptionHandler:
+            locator.get<ExceptionsHandler>(instanceName: ProviderInstance.customProviderInstanceName.name),
       ),
       instanceName: ProviderInstance.customProviderInstanceName.name,
     );
@@ -93,8 +96,8 @@ abstract class DataDI {
     locator.registerLazySingleton<AuthorizationProvider>(
       () => FirebaseAuthProvider(
         firebaseAuth: locator.get<FirebaseAuth>(),
-        firebaseExceptionsHandler: locator.get<ExceptionsHandler>(
-            instanceName: ProviderInstance.firebaseProviderInstanceName.name),
+        firebaseExceptionsHandler:
+            locator.get<ExceptionsHandler>(instanceName: ProviderInstance.firebaseProviderInstanceName.name),
       ),
       instanceName: ProviderInstance.firebaseProviderInstanceName.name,
     );
@@ -130,6 +133,15 @@ abstract class DataDI {
         ),
       ),
     );
+
+    locator.registerLazySingleton<ScanEntriesProvider>(
+      () => ScanEntriesProviderImpl(
+        supabaseClient: locator.get<SupabaseClient>(),
+        supabaseExceptionHandler: locator.get<ExceptionsHandler>(
+          instanceName: ProviderInstance.supabaseProviderInstanceName.name,
+        ),
+      ),
+    );
   }
 
   static void _initRepositories({
@@ -153,6 +165,14 @@ abstract class DataDI {
     locator.registerLazySingleton<FolderRepository>(
       () => FolderRepositoryImpl(
         folderProvider: locator<FolderProvider>(),
+      ),
+    );
+
+    locator.registerLazySingleton<ScanEntriesRepository>(
+      () => ScanEntriesRepositoryImpl(
+        scanEntriesProvider: locator<ScanEntriesProvider>(),
+        folderProvider: locator<FolderProvider>(),
+        categoryProvider: locator<CategoryProvider>(),
       ),
     );
   }

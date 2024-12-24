@@ -7,6 +7,10 @@ abstract class FolderProvider {
     required GetFoldersRequest request,
   });
 
+  Future<FolderModel> getUserFolderById({
+    required GetFolderByIdRequest request,
+  });
+
   Future<FolderModel> createFolder({
     required CreateFolderRequest request,
   });

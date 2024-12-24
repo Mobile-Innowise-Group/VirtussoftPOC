@@ -20,8 +20,7 @@ class FolderProviderImpl implements FolderProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient
-            .rpc('create_folder', params: <String, dynamic>{
+        final Map<String, dynamic> response = await _supabaseClient.rpc('create_folder', params: <String, dynamic>{
           'folder_name': request.name,
         });
 
@@ -51,13 +50,27 @@ class FolderProviderImpl implements FolderProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_user_folders', params: <String, dynamic>{});
+        final List<Map<String, dynamic>> response =
+            await _supabaseClient.rpc('get_user_folders', params: <String, dynamic>{});
 
         return response
-            .map((Map<String, dynamic> category) =>
-                FolderMapper.toModel(FolderEntity.fromJson(category)))
+            .map((Map<String, dynamic> category) => FolderMapper.toModel(FolderEntity.fromJson(category)))
             .toList();
+      },
+    );
+  }
+
+  @override
+  Future<FolderModel> getUserFolderById({
+    required GetFolderByIdRequest request,
+  }) {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final Map<String, dynamic> response = await _supabaseClient.rpc('get_user_folder', params: <String, dynamic>{
+          'folder_id': request.folderId,
+        });
+
+        return FolderMapper.toModel(FolderEntity.fromJson(response));
       },
     );
   }

@@ -7,4 +7,5 @@ export 'requests/create_category_request.dart';
 export 'requests/delete_category_request.dart';
 export 'requests/edit_category_request.dart';
 export 'requests/get_user_categories_request.dart';
+export 'requests/get_user_category_by_id_request.dart';
 export 'requests/get_user_local_categories_request.dart';
