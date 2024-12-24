@@ -47,7 +47,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<List<CategoryModel>> getUserCategories({
     required GetUserCategoriesPayload payload,
   }) {
-    return _categoryRemoteProvider.getUserCategories(
+    return _categoryLocalProvider.getCategories(
         request: GetCategoriesRequest());
   }
 }

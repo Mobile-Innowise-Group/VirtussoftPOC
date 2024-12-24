@@ -73,5 +73,10 @@ abstract class DomainDI {
         folderRepository: locator.get<FolderRepository>(),
       ),
     );
+
+    locator.registerLazySingleton<SynchronizeDataUseCase>(
+      () => SynchronizeDataUseCase(
+          synchronizationRepository: locator.get<SynchronizationRepository>()),
+    );
   }
 }

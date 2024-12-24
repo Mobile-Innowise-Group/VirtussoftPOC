@@ -5,7 +5,7 @@ export 'providers/folder_local_provider_impl.dart';
 export 'providers/folder_remote_provider.dart';
 export 'providers/folder_remote_provider_impl.dart';
 export 'repositories/folder_repository_impl.dart';
-export 'requests/create_folder_remote_request.dart';
 export 'requests/create_folder_local_request.dart';
+export 'requests/create_folder_remote_request.dart';
 export 'requests/delete_folder_request.dart';
 export 'requests/get_folders_request.dart';

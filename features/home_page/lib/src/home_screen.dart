@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
@@ -13,7 +14,8 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<HomeBloc>(
-      create: (_) => HomeBloc(),
+      create: (_) => HomeBloc(
+          synchronizeDataUseCase: appLocator<SynchronizeDataUseCase>()),
       child: this,
     );
   }
