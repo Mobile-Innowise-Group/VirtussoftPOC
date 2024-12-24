@@ -22,7 +22,7 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   }) async {
     final ScanEntryEntity scanEntryEntity = await _scanEntriesProvider.createScanEntry(
       request: CreateScanEntryRequest(
-        path: payload.path,
+        scanPath: payload.scanPath,
         folderId: payload.folderId,
         categoryId: payload.categoryId,
       ),

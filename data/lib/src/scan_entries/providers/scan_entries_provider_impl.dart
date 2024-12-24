@@ -19,7 +19,7 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final Map<String, dynamic> response = await _supabaseClient.rpc('create_scan_entry', params: <String, dynamic>{
-          'scan_entry_path': request.path,
+          'scan_entry_path': request.scanPath,
           'scan_entry_folder_id': request.folderId,
           'scan_entry_category_id': request.categoryId,
         });

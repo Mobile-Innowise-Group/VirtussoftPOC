@@ -16,6 +16,7 @@ class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
     return BlocProvider<ScannerBloc>(
       create: (_) => ScannerBloc(
         appRouter: appLocator<AppRouter>(),
+        appEventNotifier: appLocator<AppEventNotifier>(),
       ),
       child: this,
     );
@@ -30,7 +31,7 @@ class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: ScannerScreenContent(),
+      body: const ScannerScreenContent(),
     );
   }
 }
