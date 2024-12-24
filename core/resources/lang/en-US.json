@@ -63,5 +63,8 @@
   "data": {
     "data": "Data",
     "userData": "User data"
+  },
+  "docScanner": {
+    "docScanner": "Doc Scanner"
   }
 }

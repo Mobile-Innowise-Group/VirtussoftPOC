@@ -1,4 +1,9 @@
 part of 'scanner_bloc.dart';
 
-@immutable
-sealed class ScannerEvent {}
+abstract class ScannerEvent {
+  const ScannerEvent();
+}
+
+class OpenScanner extends ScannerEvent {
+  const OpenScanner();
+}

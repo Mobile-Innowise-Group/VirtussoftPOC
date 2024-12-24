@@ -9,6 +9,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  cunning_document_scanner: ^1.2.3
+  google_mlkit_text_recognition: ^0.14.0
+
   core:
     path: ../../core
   core_ui:
