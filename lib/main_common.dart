@@ -1,9 +1,6 @@
 import 'dart:async';
 
-import 'package:auth/auth.dart';
-import 'package:biometrics/biometrics.dart';
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +14,7 @@ Future<void> mainCommon(Flavor flavor) async {
   await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await EasyLocalization.ensureInitialized();
-    await dotenv.load(fileName: ".env");
+    await dotenv.load();
 
     _setupDI(flavor);
     Bloc.observer = AppBlocObserver();
@@ -33,13 +30,11 @@ void _setupDI(Flavor flavor) {
   appLocator.pushNewScope(
     scopeName: unauthScope,
     init: (_) async {
-      await AuthDI.initDependencies(
+      AppDI.initDependencies(appLocator, flavor);
+      DataDI.initDependencies(
         locator: appLocator,
         provider: ProviderInstance.supabaseProviderInstanceName,
       );
-      BiometricsDI.initBiometrics(locator: appLocator);
-      AppDI.initDependencies(appLocator, flavor);
-      DataDI.initDependencies(appLocator);
       DomainDI.initDependencies(appLocator);
       NavigationDI.initDependencies(appLocator);
     },
@@ -71,7 +66,7 @@ class App extends StatelessWidget {
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
-              theme: lightTheme,
+              //theme: lightTheme,
               builder: (BuildContext context, Widget? child) {
                 return AppNotifications(
                   child: child ?? const SizedBox(),

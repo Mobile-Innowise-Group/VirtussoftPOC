@@ -1,0 +1,64 @@
+// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+
+abstract class  LocaleKeys {
+  static const auth_signUp = 'auth.signUp';
+  static const auth_login = 'auth.login';
+  static const auth_email = 'auth.email';
+  static const auth_password = 'auth.password';
+  static const auth_enterEmail = 'auth.enterEmail';
+  static const auth_enterPassword = 'auth.enterPassword';
+  static const auth_createAccount = 'auth.createAccount';
+  static const auth_alreadyCreatedAccount = 'auth.alreadyCreatedAccount';
+  static const auth_doNotHaveAccount = 'auth.doNotHaveAccount';
+  static const auth_loginButton = 'auth.loginButton';
+  static const auth_signUpButton = 'auth.signUpButton';
+  static const auth = 'auth';
+  static const biometrics_pleaseAuthenticate = 'biometrics.pleaseAuthenticate';
+  static const biometrics = 'biometrics';
+  static const folders_createFolder = 'folders.createFolder';
+  static const folders_folderName = 'folders.folderName';
+  static const folders_enterFolderName = 'folders.enterFolderName';
+  static const folders_deleteFolder = 'folders.deleteFolder';
+  static const folders_deleteFolderMessage = 'folders.deleteFolderMessage';
+  static const folders_editFolder = 'folders.editFolder';
+  static const folders_editFolderMessage = 'folders.editFolderMessage';
+  static const folders_noAddedFolders = 'folders.noAddedFolders';
+  static const folders_addFolder = 'folders.addFolder';
+  static const folders = 'folders';
+  static const category_createCategory = 'category.createCategory';
+  static const category_categoryName = 'category.categoryName';
+  static const category_enterCategoryName = 'category.enterCategoryName';
+  static const category_deleteCategory = 'category.deleteCategory';
+  static const category_deleteCategoryMessage = 'category.deleteCategoryMessage';
+  static const category_editCategory = 'category.editCategory';
+  static const category_editCategoryMessage = 'category.editCategoryMessage';
+  static const category_noAddedCategories = 'category.noAddedCategories';
+  static const category_addCategory = 'category.addCategory';
+  static const category = 'category';
+  static const common_cancel = 'common.cancel';
+  static const common_save = 'common.save';
+  static const common_delete = 'common.delete';
+  static const common_edit = 'common.edit';
+  static const common_yes = 'common.yes';
+  static const common_no = 'common.no';
+  static const common_ok = 'common.ok';
+  static const common_close = 'common.close';
+  static const common_back = 'common.back';
+  static const common_add = 'common.add';
+  static const common_search = 'common.search';
+  static const common_noData = 'common.noData';
+  static const common_noResults = 'common.noResults';
+  static const common_loading = 'common.loading';
+  static const common_error = 'common.error';
+  static const common_success = 'common.success';
+  static const common_warning = 'common.warning';
+  static const common_info = 'common.info';
+  static const common_confirm = 'common.confirm';
+  static const common_showMore = 'common.showMore';
+  static const common_showLess = 'common.showLess';
+  static const common = 'common';
+  static const data_data = 'data.data';
+  static const data_userData = 'data.userData';
+  static const data = 'data';
+
+}

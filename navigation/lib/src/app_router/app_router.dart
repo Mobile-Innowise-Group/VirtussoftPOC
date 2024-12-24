@@ -1,5 +1,3 @@
-import 'package:doc_scanner/doc_scanner_navigation.dart';
-
 import '../../navigation.dart';
 
 part 'app_router.gr.dart';
@@ -13,18 +11,8 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-        AutoRoute(
-          page: LoginRoute.page,
-          initial: true,
-        ),
-        AutoRoute(
-          page: SignUpRoute.page,
-        ),
-        AutoRoute(
-          page: DemoHomeRoute.page,
-        ),
-        AutoRoute(
-          page: DocScannerRoute.page,
-        ),
+        ...AuthScreenRouter().routes,
+        ...HomeScreenRouter().routes,
+        ...DocScannerRoute().routes,
       ];
 }

@@ -5,12 +5,12 @@ import '../../core_ui.dart';
 const LightColors _appColors = LightColors();
 
 final ThemeData lightTheme = ThemeData.light().copyWith(
-  appBarTheme: AppBarTheme().copyWith(color: _appColors.primaryBg),
+  appBarTheme: const AppBarTheme().copyWith(color: _appColors.primaryBg),
   scaffoldBackgroundColor: _appColors.primaryBg,
   textTheme: _getTextTheme(),
   inputDecorationTheme: _getInputDecorationTheme(),
   primaryColor: _appColors.primary,
-  buttonTheme: ButtonThemeData().copyWith(
+  buttonTheme: const ButtonThemeData().copyWith(
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: _appColors.secondary,
       primary: _appColors.primary,
@@ -35,8 +35,8 @@ TextTheme _getTextTheme() {
 InputDecorationTheme _getInputDecorationTheme() {
   return InputDecorationTheme(
     hintStyle: AppFonts.normal13.copyWith(color: _appColors.hintGray),
-    border: OutlineInputBorder(
-      borderRadius: const BorderRadius.all(
+    border: const OutlineInputBorder(
+      borderRadius: BorderRadius.all(
         Radius.circular(AppDimens.BORDER_RADIUS_12),
       ),
     ),
