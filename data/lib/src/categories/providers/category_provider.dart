@@ -7,6 +7,10 @@ abstract class CategoryProvider {
     required GetUserCategoriesRequest request,
   });
 
+  Future<CategoryModel> getUserCategoryById({
+    required GetUserCategoryByIdRequest request,
+  });
+
   Future<CategoryModel> createCategory({
     required CreateCategoryRequest request,
   });

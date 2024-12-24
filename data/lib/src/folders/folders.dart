@@ -5,4 +5,5 @@ export 'providers/folder_provider_impl.dart';
 export 'repositories/folder_repository_impl.dart';
 export 'requests/create_folder_request.dart';
 export 'requests/delete_folder_request.dart';
+export 'requests/get_folder_by_id_request.dart';
 export 'requests/get_folders_request.dart';

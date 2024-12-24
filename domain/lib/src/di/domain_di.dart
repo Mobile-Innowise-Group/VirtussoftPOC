@@ -73,5 +73,23 @@ abstract class DomainDI {
         folderRepository: locator.get<FolderRepository>(),
       ),
     );
+
+    locator.registerLazySingleton<CreateScanEntryUseCase>(
+      () => CreateScanEntryUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<DeleteScanEntryUseCase>(
+      () => DeleteScanEntryUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<GetScanEntriesUseCase>(
+      () => GetScanEntriesUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
   }
 }
