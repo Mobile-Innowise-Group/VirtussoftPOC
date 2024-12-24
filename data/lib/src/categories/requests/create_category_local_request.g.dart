@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'folder_entity.dart';
+part of 'create_category_local_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$FolderEntityImpl _$$FolderEntityImplFromJson(Map<String, dynamic> json) =>
-    _$FolderEntityImpl(
-      id: (json['id'] as num).toInt(),
+_$CreateCategoryLocalRequestImpl _$$CreateCategoryLocalRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CreateCategoryLocalRequestImpl(
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$FolderEntityImplToJson(_$FolderEntityImpl instance) =>
+Map<String, dynamic> _$$CreateCategoryLocalRequestImplToJson(
+        _$CreateCategoryLocalRequestImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
     };

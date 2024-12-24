@@ -71,8 +71,8 @@ abstract class DataDI {
   }
 
   static void _initProviders(GetIt locator) {
-    locator.registerLazySingleton<CategoryProvider>(
-      () => CategoryProviderImpl(
+    locator.registerLazySingleton<CategoryRemoteProvider>(
+      () => CategoryRemoteProviderImpl(
         supabaseClient: locator<SupabaseClient>(),
         supabaseExceptionHandler: locator.get<ExceptionsHandler>(
           instanceName: ProviderInstance.supabaseProviderInstanceName.name,
@@ -122,13 +122,29 @@ abstract class DataDI {
       ),
     );
 
-    locator.registerLazySingleton<FolderProvider>(
-      () => FolderProviderImpl(
+    locator.registerLazySingleton<FolderRemoteProvider>(
+      () => FolderRemoteProviderImpl(
         supabaseClient: locator.get<SupabaseClient>(),
         supabaseExceptionHandler: locator.get<ExceptionsHandler>(
           instanceName: ProviderInstance.supabaseProviderInstanceName.name,
         ),
       ),
+    );
+
+    locator.registerLazySingleton<FolderLocalProvider>(
+      () => FolderLocalProviderImpl(
+        databaseProvider: locator.get<DatabaseProvider>(),
+      ),
+    );
+
+    locator.registerLazySingleton<CategoryLocalProvider>(
+      () => CategoryLocalProviderImpl(
+        databaseProvider: locator.get<DatabaseProvider>(),
+      ),
+    );
+
+    locator.registerLazySingleton<DatabaseProvider>(
+      DatabaseProvider.new,
     );
   }
 
@@ -138,7 +154,8 @@ abstract class DataDI {
   }) {
     locator.registerLazySingleton<CategoryRepository>(
       () => CategoryRepositoryImpl(
-        categoryProvider: locator<CategoryProvider>(),
+        categoryRemoteProvider: locator<CategoryRemoteProvider>(),
+        categoryLocalProvider: locator<CategoryLocalProvider>(),
       ),
     );
 
@@ -152,7 +169,8 @@ abstract class DataDI {
 
     locator.registerLazySingleton<FolderRepository>(
       () => FolderRepositoryImpl(
-        folderProvider: locator<FolderProvider>(),
+        folderRemoteProvider: locator<FolderRemoteProvider>(),
+        folderLocalProvider: locator<FolderLocalProvider>(),
       ),
     );
   }

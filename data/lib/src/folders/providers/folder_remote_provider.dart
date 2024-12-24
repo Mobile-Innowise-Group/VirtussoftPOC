@@ -2,13 +2,13 @@ import 'package:domain/domain.dart';
 
 import '../folders.dart';
 
-abstract class FolderProvider {
+abstract class FolderRemoteProvider {
   Future<List<FolderModel>> getUserFolders({
     required GetFoldersRequest request,
   });
 
   Future<FolderModel> createFolder({
-    required CreateFolderRequest request,
+    required CreateFolderRemoteRequest request,
   });
 
   Future<bool> deleteFolder({

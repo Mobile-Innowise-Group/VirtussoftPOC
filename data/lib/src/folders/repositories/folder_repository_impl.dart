@@ -7,47 +7,58 @@ import 'package:path_provider/path_provider.dart';
 import '../folders.dart';
 
 class FolderRepositoryImpl implements FolderRepository {
-  final FolderProvider _folderProvider;
+  final FolderRemoteProvider _folderRemoteProvider;
+  final FolderLocalProvider _folderLocalProvider;
 
   FolderRepositoryImpl({
-    required FolderProvider folderProvider,
-  }) : _folderProvider = folderProvider;
+    required FolderRemoteProvider folderRemoteProvider,
+    required FolderLocalProvider folderLocalProvider,
+  })  : _folderRemoteProvider = folderRemoteProvider,
+        _folderLocalProvider = folderLocalProvider;
 
   @override
   Future<FolderModel> createFolder({
     required CreateFolderPayload payload,
   }) async {
-    final FolderModel createdFolder = await _folderProvider.createFolder(
-      request: CreateFolderRequest(
+    final int createdFolderId = await _folderLocalProvider.createFolder(
+      request: CreateFolderLocalRequest(
         name: payload.name,
       ),
     );
 
+    final FolderModel createdRemoteFolder =
+        await _folderRemoteProvider.createFolder(
+      request: CreateFolderRemoteRequest(
+        name: payload.name,
+        id: createdFolderId,
+      ),
+    );
+
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String categoriesPath = '${directory.path}/folders';
-    final Directory categoriesFolder = Directory(categoriesPath);
+    final String foldersPath = '${directory.path}/folders';
+    final Directory foldersDirectory = Directory(foldersPath);
 
-    if (!categoriesFolder.existsSync()) {
-      await categoriesFolder.create();
-    }
-
-    final String categoryPath = '${directory.path}/folders/${payload.name}';
-    final Directory folder = Directory(categoryPath);
-
-    if (!folder.existsSync()) {
-      await folder.create();
-      AppLogger().info('Folder created at: $categoriesPath');
+    if (!foldersDirectory.existsSync()) {
+      AppLogger().info('Creating folders directory at: $foldersPath');
+      await foldersDirectory.create();
     } else {
-      AppLogger().info('Folder already exists at: $categoriesPath');
+      AppLogger().info('Folders directory already exists at: $foldersPath');
     }
-    return createdFolder;
+
+    return createdRemoteFolder;
   }
 
   @override
   Future<bool> deleteFolder({
     required DeleteFolderPayload payload,
   }) async {
-    final bool response = await _folderProvider.deleteFolder(
+    final bool response = await _folderRemoteProvider.deleteFolder(
+      request: DeleteFolderRequest(
+        folderId: payload.folder.id,
+      ),
+    );
+
+    await _folderLocalProvider.deleteFolder(
       request: DeleteFolderRequest(
         folderId: payload.folder.id,
       ),
@@ -71,7 +82,7 @@ class FolderRepositoryImpl implements FolderRepository {
   Future<List<FolderModel>> getFolders({
     required GetFoldersPayload payload,
   }) {
-    return _folderProvider.getUserFolders(
+    return _folderLocalProvider.getFolders(
       request: GetFoldersRequest(),
     );
   }

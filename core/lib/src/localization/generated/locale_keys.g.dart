@@ -60,5 +60,7 @@ abstract class  LocaleKeys {
   static const data_data = 'data.data';
   static const data_userData = 'data.userData';
   static const data = 'data';
+  static const docScanner_docScanner = 'docScanner.docScanner';
+  static const docScanner = 'docScanner';
 
 }

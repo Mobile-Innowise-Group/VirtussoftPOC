@@ -29,6 +29,7 @@ dependencies:
   local_auth: ^2.3.0
   pdf: ^3.11.1
   open_file: ^3.5.10
+  sqflite: ^2.4.1
 
 dev_dependencies:
   flutter_test:

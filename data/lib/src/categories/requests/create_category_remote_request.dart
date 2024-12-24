@@ -1,8 +1,8 @@
-class FolderModel {
+class CreateCategoryRemoteRequest {
   final int id;
   final String name;
 
-  FolderModel({
+  CreateCategoryRemoteRequest({
     required this.id,
     required this.name,
   });

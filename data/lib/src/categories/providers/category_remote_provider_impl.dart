@@ -1,43 +1,44 @@
-import 'package:domain/src/folders/models/folder_model.dart';
+import 'package:domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
-import '../folders.dart';
+import '../categories.dart';
 
-class FolderProviderImpl implements FolderProvider {
+class CategoryRemoteProviderImpl implements CategoryRemoteProvider {
   final ExceptionsHandler _supabaseExceptionHandler;
   final SupabaseClient _supabaseClient;
 
-  FolderProviderImpl({
+  CategoryRemoteProviderImpl({
     required SupabaseClient supabaseClient,
     required ExceptionsHandler supabaseExceptionHandler,
   })  : _supabaseClient = supabaseClient,
         _supabaseExceptionHandler = supabaseExceptionHandler;
 
   @override
-  Future<FolderModel> createFolder({
-    required CreateFolderRequest request,
-  }) {
+  Future<CategoryModel> createCategory({
+    required CreateCategoryRemoteRequest request,
+  }) async {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final Map<String, dynamic> response = await _supabaseClient
-            .rpc('create_folder', params: <String, dynamic>{
-          'folder_name': request.name,
+            .rpc('add_new_category', params: <String, dynamic>{
+          'category_name': request.name,
+          'category_id': request.id,
         });
 
-        return FolderMapper.toModel(FolderEntity.fromJson(response));
+        return CategoryMapper.toModel(CategoryEntity.fromJson(response));
       },
     );
   }
 
   @override
-  Future<bool> deleteFolder({
-    required DeleteFolderRequest request,
+  Future<bool> deleteCategory({
+    required DeleteCategoryRequest request,
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        await _supabaseClient.rpc('delete_folder', params: <String, dynamic>{
-          'folder_id': request.folderId,
+        await _supabaseClient.rpc('delete_category', params: <String, dynamic>{
+          'category_id': request.categoryId,
         });
 
         return true;
@@ -46,17 +47,17 @@ class FolderProviderImpl implements FolderProvider {
   }
 
   @override
-  Future<List<FolderModel>> getUserFolders({
-    required GetFoldersRequest request,
+  Future<List<CategoryModel>> getUserCategories({
+    required GetCategoriesRequest request,
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_user_folders', params: <String, dynamic>{});
+            .rpc('get_user_categories', params: <String, dynamic>{});
 
         return response
             .map((Map<String, dynamic> category) =>
-                FolderMapper.toModel(FolderEntity.fromJson(category)))
+                CategoryMapper.toModel(CategoryEntity.fromJson(category)))
             .toList();
       },
     );

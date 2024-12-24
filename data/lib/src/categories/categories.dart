@@ -1,10 +1,13 @@
 export 'entities/category_entity.dart';
 export 'mappers/category_mapper.dart';
-export 'providers/category_provider.dart';
-export 'providers/category_provider_impl.dart';
+export 'providers/category_local_provider.dart';
+export 'providers/category_local_provider_impl.dart';
+export 'providers/category_remote_provider.dart';
+export 'providers/category_remote_provider_impl.dart';
 export 'repositories/category_repository_impl.dart';
-export 'requests/create_category_request.dart';
+export 'requests/create_category_local_request.dart';
+export 'requests/create_category_remote_request.dart';
 export 'requests/delete_category_request.dart';
 export 'requests/edit_category_request.dart';
-export 'requests/get_user_categories_request.dart';
+export 'requests/get_categories_request.dart';
 export 'requests/get_user_local_categories_request.dart';

@@ -2,13 +2,13 @@ import 'package:domain/domain.dart';
 
 import '../categories.dart';
 
-abstract class CategoryProvider {
+abstract class CategoryRemoteProvider {
   Future<List<CategoryModel>> getUserCategories({
-    required GetUserCategoriesRequest request,
+    required GetCategoriesRequest request,
   });
 
   Future<CategoryModel> createCategory({
-    required CreateCategoryRequest request,
+    required CreateCategoryRemoteRequest request,
   });
 
   Future<bool> deleteCategory({
