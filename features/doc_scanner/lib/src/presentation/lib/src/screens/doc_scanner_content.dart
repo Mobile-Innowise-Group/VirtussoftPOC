@@ -13,7 +13,6 @@ class DocScannerScreenContent extends StatefulWidget {
 class _DocScannerScreenContentState extends State<DocScannerScreenContent> {
   late final DocScannerBloc _bloc;
 
-
   @override
   void initState() {
     super.initState();
@@ -28,13 +27,12 @@ class _DocScannerScreenContentState extends State<DocScannerScreenContent> {
           'docScanner.docScanner'.tr(),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: BlocBuilder<DocScannerBloc, DocScannerState>(
-          bloc: _bloc,
-          builder: (BuildContext context, DocScannerState state) {
-            return const Text('Doc Dcanner');
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            _bloc.add(const OpenScanner());
           },
+          child: const Text("Scan Document"),
         ),
       ),
     );
