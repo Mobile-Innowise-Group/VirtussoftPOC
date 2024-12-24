@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 import 'bloc/scanner_bloc.dart';
+import 'scanner_content.dart';
 
 @RoutePage()
 class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -13,7 +14,9 @@ class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<ScannerBloc>(
-      create: (_) => ScannerBloc(),
+      create: (_) => ScannerBloc(
+        appRouter: appLocator<AppRouter>(),
+      ),
       child: this,
     );
   }
@@ -22,12 +25,12 @@ class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scanner'),
+        title: Text(
+          'docScanner.docScanner'.tr(),
+        ),
         automaticallyImplyLeading: false,
       ),
-      body: const Center(
-        child: Text('Scanner page'),
-      ),
+      body: ScannerScreenContent(),
     );
   }
 }

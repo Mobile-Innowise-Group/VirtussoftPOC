@@ -1,6 +1,11 @@
 part of 'scanner_bloc.dart';
 
-@immutable
-sealed class ScannerState {}
+class ScannerState {
+  const ScannerState();
 
-final class ScannerInitial extends ScannerState {}
+  const ScannerState.initial();
+
+  ScannerState copyWith() {
+    return const ScannerState();
+  }
+}

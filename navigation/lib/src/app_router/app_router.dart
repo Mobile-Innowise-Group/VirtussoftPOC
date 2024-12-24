@@ -13,6 +13,6 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => <AutoRoute>[
         ...AuthScreenRouter().routes,
         ...HomeScreenRouter().routes,
-        ...DocScannerRoute().routes,
+        ...ScannerScreenRouter().routes,
       ];
 }

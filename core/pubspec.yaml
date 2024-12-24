@@ -27,6 +27,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   awesome_snackbar_content: ^0.1.4
   local_auth: ^2.3.0
+  pdf: ^3.11.1
+  open_file: ^3.5.10
 
 dev_dependencies:
   flutter_test:
