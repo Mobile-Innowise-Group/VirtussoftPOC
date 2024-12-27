@@ -33,9 +33,11 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
     try {
       pictures = await CunningDocumentScanner.getPictures(isGalleryImportAllowed: true) ?? <String>[];
 
-      final File file = await _parseImageToPdf(pictures);
+      if (pictures.isNotEmpty) {
+        final File file = await _parseImageToPdf(pictures);
 
-      await _appRouter.push(SavingScanEntryBottomSheetRoute(scanPath: file.path));
+        await _appRouter.push(SavingScanEntryBottomSheetRoute(scanPath: file.path));
+      }
     } catch (e) {
       _appEventNotifier.notify(
         SnackBarErrorNotification(
