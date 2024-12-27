@@ -9,8 +9,8 @@ class ScanEntryEntity with _$ScanEntryEntity {
   const factory ScanEntryEntity({
     required String id,
     required String path,
-    required String folderId,
-    required String categoryId,
+    required int folderId,
+    required int categoryId,
   }) = _ScanEntryEntity;
 
   factory ScanEntryEntity.fromJson(Map<String, dynamic> json) =>

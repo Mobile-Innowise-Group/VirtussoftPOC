@@ -8,7 +8,7 @@ part of 'category_entity.dart';
 
 _$CategoryEntityImpl _$$CategoryEntityImplFromJson(Map<String, dynamic> json) =>
     _$CategoryEntityImpl(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
     );
 

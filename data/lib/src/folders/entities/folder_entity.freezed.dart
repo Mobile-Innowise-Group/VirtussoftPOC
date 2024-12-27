@@ -20,7 +20,7 @@ FolderEntity _$FolderEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FolderEntity {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   /// Serializes this FolderEntity to a JSON map.
@@ -39,7 +39,7 @@ abstract class $FolderEntityCopyWith<$Res> {
           FolderEntity value, $Res Function(FolderEntity) then) =
       _$FolderEntityCopyWithImpl<$Res, FolderEntity>;
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$FolderEntityCopyWithImpl<$Res, $Val extends FolderEntity>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$FolderEntityImplCopyWith<$Res>
       __$$FolderEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$FolderEntityImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -122,7 +122,7 @@ class _$FolderEntityImpl implements _FolderEntity {
       _$$FolderEntityImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
 
@@ -162,14 +162,13 @@ class _$FolderEntityImpl implements _FolderEntity {
 
 abstract class _FolderEntity implements FolderEntity {
   const factory _FolderEntity(
-      {required final String id,
-      required final String name}) = _$FolderEntityImpl;
+      {required final int id, required final String name}) = _$FolderEntityImpl;
 
   factory _FolderEntity.fromJson(Map<String, dynamic> json) =
       _$FolderEntityImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
 

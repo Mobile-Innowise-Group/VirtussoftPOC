@@ -91,5 +91,10 @@ abstract class DomainDI {
         scanEntriesRepository: locator.get<ScanEntriesRepository>(),
       ),
     );
+
+    locator.registerLazySingleton<SynchronizeDataUseCase>(
+      () => SynchronizeDataUseCase(
+          synchronizationRepository: locator.get<SynchronizationRepository>()),
+    );
   }
 }

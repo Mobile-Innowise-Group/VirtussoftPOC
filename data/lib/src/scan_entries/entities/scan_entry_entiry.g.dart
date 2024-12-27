@@ -11,8 +11,8 @@ _$ScanEntryEntityImpl _$$ScanEntryEntityImplFromJson(
     _$ScanEntryEntityImpl(
       id: json['id'] as String,
       path: json['path'] as String,
-      folderId: json['folderId'] as String,
-      categoryId: json['categoryId'] as String,
+      folderId: (json['folderId'] as num).toInt(),
+      categoryId: (json['categoryId'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$ScanEntryEntityImplToJson(

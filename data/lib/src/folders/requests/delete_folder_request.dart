@@ -1,5 +1,5 @@
 class DeleteFolderRequest {
-  final String folderId;
+  final int folderId;
 
   DeleteFolderRequest({
     required this.folderId,

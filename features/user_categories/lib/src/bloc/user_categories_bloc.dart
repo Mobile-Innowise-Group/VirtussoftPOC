@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:data/src/categories/categories.dart';
 import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
@@ -80,6 +82,24 @@ class UserCategoriesBloc
           categories: categories,
         ),
       );
+    } on FailedToCreateRemoteCategoryException catch (_) {
+      try {
+        final List<CategoryModel> categories =
+            await _getUserCategoriesUseCase.execute(GetUserCategoriesPayload());
+        emit(
+          state.copyWith(
+            isLoading: false,
+            categories: categories,
+          ),
+        );
+      } catch (e) {
+        emit(state.copyWith(isLoading: false));
+        _appEventNotifier.notify(
+          SnackBarErrorNotification(
+            message: e.toString(),
+          ),
+        );
+      }
     } catch (e) {
       emit(state.copyWith(isLoading: false));
       _appEventNotifier.notify(

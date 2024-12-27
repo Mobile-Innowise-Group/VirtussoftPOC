@@ -4,11 +4,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/exceptions/handlers/exception_handler.dart';
 import '../folders.dart';
 
-class FolderProviderImpl implements FolderProvider {
+class FolderRemoteProviderImpl implements FolderRemoteProvider {
   final ExceptionsHandler _supabaseExceptionHandler;
   final SupabaseClient _supabaseClient;
 
-  FolderProviderImpl({
+  FolderRemoteProviderImpl({
     required SupabaseClient supabaseClient,
     required ExceptionsHandler supabaseExceptionHandler,
   })  : _supabaseClient = supabaseClient,
@@ -16,12 +16,14 @@ class FolderProviderImpl implements FolderProvider {
 
   @override
   Future<FolderModel> createFolder({
-    required CreateFolderRequest request,
+    required CreateFolderRemoteRequest request,
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient.rpc('create_folder', params: <String, dynamic>{
+        final Map<String, dynamic> response = await _supabaseClient
+            .rpc('add_new_folder', params: <String, dynamic>{
           'folder_name': request.name,
+          'folder_id': request.id,
         });
 
         return FolderMapper.toModel(FolderEntity.fromJson(response));
@@ -45,13 +47,13 @@ class FolderProviderImpl implements FolderProvider {
   }
 
   @override
-  Future<List<FolderModel>> getUserFolders({
+  Future<List<FolderModel>> getFolders({
     required GetFoldersRequest request,
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response =
-            await _supabaseClient.rpc('get_user_folders', params: <String, dynamic>{});
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('get_user_new_folders', params: <String, dynamic>{});
 
         return response
             .map((Map<String, dynamic> category) => FolderMapper.toModel(FolderEntity.fromJson(category)))

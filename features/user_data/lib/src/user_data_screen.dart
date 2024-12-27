@@ -74,7 +74,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                   },
                 );
               },
-              title: Text('folders.addFolder'.tr()),
+              title: Text('folder.addFolder'.tr()),
             ),
           ),
           const SliverToBoxAdapter(child: Divider()),

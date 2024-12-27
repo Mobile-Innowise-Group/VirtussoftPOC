@@ -1,5 +1,4 @@
 import '../../../domain.dart';
-import '../folders.dart';
 
 class DeleteFolderUseCase extends FutureUseCase<DeleteFolderPayload, bool> {
   final FolderRepository _folderRepository;
