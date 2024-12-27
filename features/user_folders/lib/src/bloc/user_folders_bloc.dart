@@ -72,7 +72,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
       final List<FolderModel> folders = List<FolderModel>.from(state.folders)
         ..add(folder);
       emit(state.copyWith(isLoading: false, folders: folders));
-    } on FailedToCreateRemoteFolderException catch (e) {
+    } on FailedToCreateRemoteFolderException catch (_) {
       try {
         final List<FolderModel> folders =
             await _getFoldersUseCase.execute(GetFoldersPayload());
@@ -81,10 +81,6 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
             isLoading: false,
             folders: folders,
           ),
-        );
-        emit(state.copyWith(isLoading: false));
-        _appEventNotifier.notify(
-          SnackBarErrorNotification(message: e.toString()),
         );
       } catch (e) {
         emit(state.copyWith(isLoading: false));

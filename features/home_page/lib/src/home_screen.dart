@@ -29,38 +29,61 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
             child: CircularProgressIndicator(),
           );
         }
-        return AutoTabsRouter.tabBar(
-          routes: const <PageRouteInfo>[
-            ScannerRoute(),
-            UserDataRoute(),
-            UserProfileRoute(),
-          ],
-          builder:
-              (BuildContext context, Widget child, TabController controller) {
-            final TabsRouter tabsRouter = AutoTabsRouter.of(context);
+        return Stack(
+          children: <Widget>[
+            AutoTabsRouter.tabBar(
+              routes: const <PageRouteInfo>[
+                ScannerRoute(),
+                UserDataRoute(),
+                UserProfileRoute(),
+              ],
+              builder: (BuildContext context, Widget child,
+                  TabController controller) {
+                final TabsRouter tabsRouter = AutoTabsRouter.of(context);
 
-            return Scaffold(
-              body: child,
-              bottomNavigationBar: BottomNavigationBar(
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.qr_code),
-                    label: 'Scanner',
+                return Scaffold(
+                  body: child,
+                  bottomNavigationBar: BottomNavigationBar(
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.qr_code),
+                        label: 'Scanner',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.data_usage),
+                        label: 'Data',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.person),
+                        label: 'Profile',
+                      ),
+                    ],
+                    onTap: tabsRouter.setActiveIndex,
+                    currentIndex: tabsRouter.activeIndex,
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.data_usage),
-                    label: 'Data',
+                );
+              },
+            ),
+            if (!state.isInternetConnected)
+              Positioned(
+                top: MediaQuery.of(context).padding.top,
+                left: 48,
+                right: 48,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.errorContainer,
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: 'Profile',
+                  height: 50,
+                  child: Center(
+                    child: Text(
+                      'No internet connection',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
-                ],
-                onTap: tabsRouter.setActiveIndex,
-                currentIndex: tabsRouter.activeIndex,
+                ),
               ),
-            );
-          },
+          ],
         );
       },
     );

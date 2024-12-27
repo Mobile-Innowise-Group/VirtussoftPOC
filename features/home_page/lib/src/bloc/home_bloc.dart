@@ -9,6 +9,7 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  final Stream<bool> networkStream = NetworkService.observeConnection;
   final SynchronizeDataUseCase _synchronizeDataUseCase;
 
   HomeBloc({
@@ -24,7 +25,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeInit event,
     Emitter<HomeState> emit,
   ) async {
+    bool initialCheck = true;
     try {
+      await emit.forEach(NetworkService.observeConnection,
+          onData: (bool isConnected) {
+        if (initialCheck) {
+          initialCheck = false;
+          return state;
+        }
+        return state.copyWith(isInternetConnected: isConnected);
+      });
       emit(state.copyWith(isLoading: true));
       await _synchronizeDataUseCase.execute(SynchronizeDataPayload());
     } catch (e) {
