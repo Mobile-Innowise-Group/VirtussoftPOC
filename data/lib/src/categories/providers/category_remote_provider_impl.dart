@@ -47,13 +47,13 @@ class CategoryRemoteProviderImpl implements CategoryRemoteProvider {
   }
 
   @override
-  Future<List<CategoryModel>> getUserCategories({
+  Future<List<CategoryModel>> getCategories({
     required GetCategoriesRequest request,
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_user_categories', params: <String, dynamic>{});
+            .rpc('get_user_new_categories', params: <String, dynamic>{});
 
         return response
             .map((Map<String, dynamic> category) =>

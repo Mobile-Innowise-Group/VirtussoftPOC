@@ -3,7 +3,7 @@ import 'package:domain/domain.dart';
 import '../folders.dart';
 
 abstract class FolderRemoteProvider {
-  Future<List<FolderModel>> getUserFolders({
+  Future<List<FolderModel>> getFolders({
     required GetFoldersRequest request,
   });
 

@@ -22,35 +22,45 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsRouter.tabBar(
-      routes: const <PageRouteInfo>[
-        ScannerRoute(),
-        UserDataRoute(),
-        UserProfileRoute(),
-      ],
-      builder: (BuildContext context, Widget child, TabController controller) {
-        final TabsRouter tabsRouter = AutoTabsRouter.of(context);
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (BuildContext context, HomeState state) {
+        if (state.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return AutoTabsRouter.tabBar(
+          routes: const <PageRouteInfo>[
+            ScannerRoute(),
+            UserDataRoute(),
+            UserProfileRoute(),
+          ],
+          builder:
+              (BuildContext context, Widget child, TabController controller) {
+            final TabsRouter tabsRouter = AutoTabsRouter.of(context);
 
-        return Scaffold(
-          body: child,
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code),
-                label: 'Scanner',
+            return Scaffold(
+              body: child,
+              bottomNavigationBar: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.qr_code),
+                    label: 'Scanner',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.data_usage),
+                    label: 'Data',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: 'Profile',
+                  ),
+                ],
+                onTap: tabsRouter.setActiveIndex,
+                currentIndex: tabsRouter.activeIndex,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.data_usage),
-                label: 'Data',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
-            onTap: tabsRouter.setActiveIndex,
-            currentIndex: tabsRouter.activeIndex,
-          ),
+            );
+          },
         );
       },
     );

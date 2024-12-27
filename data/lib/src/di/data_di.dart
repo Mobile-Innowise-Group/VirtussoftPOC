@@ -11,7 +11,7 @@ import '../auth/exceptions/handlers/handlers.dart';
 import '../auth/exceptions/mappers/mappers.dart';
 import '../categories/categories.dart';
 import '../folders/folders.dart';
-import '../synchronization/repositories/synchronization_repository_impl.dart';
+import '../synchronization/synchronization.dart';
 
 abstract class DataDI {
   static void initDependencies({
@@ -147,6 +147,10 @@ abstract class DataDI {
     locator.registerLazySingleton<DatabaseProvider>(
       DatabaseProvider.new,
     );
+
+    locator.registerLazySingleton<SynchronizationProvider>(
+      SynchronizationProviderImpl.new,
+    );
   }
 
   static void _initRepositories({
@@ -176,7 +180,13 @@ abstract class DataDI {
     );
 
     locator.registerLazySingleton<SynchronizationRepository>(
-      SynchronizationRepositoryImpl.new,
+      () => SynchronizationRepositoryImpl(
+        synchronizationProvider: locator<SynchronizationProvider>(),
+        categoryRemoteProvider: locator<CategoryRemoteProvider>(),
+        folderRemoteProvider: locator<FolderRemoteProvider>(),
+        categoryLocalProvider: locator<CategoryLocalProvider>(),
+        folderLocalProvider: locator<FolderLocalProvider>(),
+      ),
     );
   }
 

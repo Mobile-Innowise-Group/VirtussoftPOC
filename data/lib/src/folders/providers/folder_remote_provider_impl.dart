@@ -47,13 +47,13 @@ class FolderRemoteProviderImpl implements FolderRemoteProvider {
   }
 
   @override
-  Future<List<FolderModel>> getUserFolders({
+  Future<List<FolderModel>> getFolders({
     required GetFoldersRequest request,
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_user_folders', params: <String, dynamic>{});
+            .rpc('get_user_new_folders', params: <String, dynamic>{});
 
         return response
             .map((Map<String, dynamic> category) =>

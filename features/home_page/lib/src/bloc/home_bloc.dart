@@ -14,8 +14,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required SynchronizeDataUseCase synchronizeDataUseCase,
   })  : _synchronizeDataUseCase = synchronizeDataUseCase,
-        super(HomeInitial()) {
+        super(HomeState.initial()) {
     on<HomeInit>(_onInit);
+
+    add(HomeInit());
   }
 
   FutureOr<void> _onInit(
@@ -23,9 +25,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     try {
+      emit(state.copyWith(isLoading: true));
       await _synchronizeDataUseCase.execute(SynchronizeDataPayload());
     } catch (e) {
       AppLogger().error(e.toString());
+    } finally {
+      emit(state.copyWith(isLoading: false));
     }
   }
 }
