@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class AppDimens {
   static const double BORDER_RADIUS_0 = 0.0;
   static const double BORDER_RADIUS_4 = 4.0;
@@ -35,6 +37,9 @@ class AppDimens {
   static const double MARGIN_16 = 16.0;
   static const double MARGIN_24 = 24.0;
 
+  static const double SIZE_12 = 12.0;
+  static const double SIZE_32 = 32.0;
+
   static const double extent_ratio_0_34 = 0.34;
 
   static const double LETTER_SPACING_0_6 = 0.6;
@@ -62,10 +67,14 @@ class AppDimens {
 
   static const double ASPECT_RATIO_18_9 = 18 / 9;
 
+  static const double OPACITY_0_6 = 0.6;
+
   static const double RADIUS_0 = 0;
   static const double RADIUS_5 = 5.0;
   static const double RADIUS_10 = 10.0;
   static const double RADIUS_15 = 15.0;
   static const double RADIUS_25 = 25.0;
   static const double RADIUS_30 = 30.0;
+
+  static const Offset DEFAULT_SHADOW_OFFSET = Offset(0, 3);
 }

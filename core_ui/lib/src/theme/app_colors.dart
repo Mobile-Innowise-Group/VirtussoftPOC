@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 abstract class AppColors {
   factory AppColors.of(BuildContext context) {
     final Brightness brightness = Theme.of(context).brightness;
-    return brightness == Brightness.light
-        ? const LightColors()
-        : const DarkColors();
+    return brightness == Brightness.light ? const LightColors() : const DarkColors();
   }
 
   Color get primaryBg;
@@ -56,7 +54,7 @@ class LightColors implements AppColors {
   Color get primary => const Color.fromRGBO(0, 48, 73, 1);
 
   @override
-  Color get error => const Color(0xdc2f02);
+  Color get error => const Color.fromRGBO(220, 47, 2, 1);
 
   @override
   Color get secondary => const Color.fromRGBO(102, 155, 188, 1);

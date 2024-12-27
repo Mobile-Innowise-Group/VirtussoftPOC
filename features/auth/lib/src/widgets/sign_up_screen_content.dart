@@ -12,10 +12,10 @@ class SignUpScreenContent extends StatefulWidget {
 
 class _SignUpScreenContentState extends State<SignUpScreenContent> {
   late final AuthBloc _bloc;
-  final TextEditingController _emailTextEditingController =
-      TextEditingController();
-  final TextEditingController _passwordTextEditingController =
-      TextEditingController();
+  final TextEditingController _emailTextEditingController = TextEditingController();
+  final TextEditingController _passwordTextEditingController = TextEditingController();
+  final TextEditingController _usernameTextEditingController = TextEditingController();
+
   bool _obscurePassword = true;
 
   @override
@@ -59,6 +59,18 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                   const SizedBox(height: 12),
                   TextField(
                     style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
+                      label: Text(
+                        'Username',
+                      ),
+                      hintText: 'Enter your username, please',
+                      prefixIcon: Icon(Icons.person),
+                    ),
+                    controller: _usernameTextEditingController,
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    style: const TextStyle(color: Colors.black),
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       label: Text(
@@ -83,6 +95,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                       SignUpWithCredentials(
                         login: _emailTextEditingController.text,
                         password: _passwordTextEditingController.text,
+                        username: _usernameTextEditingController.text,
                       ),
                     ),
                     child: Text('auth.createAccount'.tr()),

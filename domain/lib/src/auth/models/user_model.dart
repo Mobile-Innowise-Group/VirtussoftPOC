@@ -1,10 +1,9 @@
-// TODO(): Modify to fit your User model
 class UserModel {
-  final String login;
-  final String id;
+  final String email;
+  final String username;
 
   UserModel({
-    required this.login,
-    required this.id,
+    required this.email,
+    required this.username,
   });
 }

@@ -1,10 +1,12 @@
 // TODO(CustomProvider): Modify to fit your credentials
 class SignUpPayloadEntity {
-  final String login;
+  final String email;
   final String password;
+  final String username;
 
   SignUpPayloadEntity({
-    required this.login,
+    required this.email,
     required this.password,
+    required this.username,
   });
 }

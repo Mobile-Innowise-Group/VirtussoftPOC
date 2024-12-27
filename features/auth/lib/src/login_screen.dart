@@ -16,11 +16,8 @@ class LoginScreen extends StatelessWidget {
       create: (_) => AuthBloc(
         biometricService: appLocator<BiometricService>(),
         appRouter: appLocator<AppRouter>(),
-        signUpWithCredentialsUseCase:
-            appLocator.get<SignUpWithCredentialsUseCase>(),
-        signInWithCredentialsUseCase:
-            appLocator.get<SignInWithCredentialsUseCase>(),
-        signOutUseCase: appLocator.get<SignOutUseCase>(),
+        signUpWithCredentialsUseCase: appLocator.get<SignUpWithCredentialsUseCase>(),
+        signInWithCredentialsUseCase: appLocator.get<SignInWithCredentialsUseCase>(),
         getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
         appEventNotifier: appLocator.get<AppEventNotifier>(),
       ),

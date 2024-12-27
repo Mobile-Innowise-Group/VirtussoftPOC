@@ -22,7 +22,7 @@ class SupabaseAuthProvider implements AuthorizationProvider {
 
   @override
   UserEntity? getCurrentUser() {
-    return UserMapper.fromSupabaseUser(_supabaseClient.auth.currentUser);
+    return UserMapper.fromSupabaseUser(supabaseUser: _supabaseClient.auth.currentUser);
   }
 
   @override
@@ -32,14 +32,19 @@ class SupabaseAuthProvider implements AuthorizationProvider {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final AuthResponse authResponse = await _supabaseClient.auth.signUp(
-          email: signUpPayloadEntity.login,
-          password: signUpPayloadEntity.password,
-        );
+            email: signUpPayloadEntity.email,
+            password: signUpPayloadEntity.password,
+            data: <String, dynamic>{
+              'username': signUpPayloadEntity.username,
+              'avatar_url': '',
+              'email': signUpPayloadEntity.email,
+            });
 
         final User? authUser = authResponse.user;
+        final Map<String, dynamic>? metadata = authUser?.userMetadata;
 
-        if (authUser != null) {
-          return UserMapper.fromSupabaseUser(authUser);
+        if (authUser != null && metadata != null) {
+          return UserMapper.fromSupabaseUser(supabaseUser: authUser);
         } else {
           throw UserNotSignedInAuthException();
         }
@@ -53,8 +58,7 @@ class SupabaseAuthProvider implements AuthorizationProvider {
   }) async {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final AuthResponse authResponse =
-            await _supabaseClient.auth.signInWithPassword(
+        final AuthResponse authResponse = await _supabaseClient.auth.signInWithPassword(
           email: signInPayloadEntity.login,
           password: signInPayloadEntity.password,
         );
@@ -62,7 +66,7 @@ class SupabaseAuthProvider implements AuthorizationProvider {
         final User? authUser = authResponse.user;
 
         if (authUser != null) {
-          return UserMapper.fromSupabaseUser(authUser);
+          return UserMapper.fromSupabaseUser(supabaseUser: authUser);
         } else {
           throw UserNotSignedInAuthException();
         }
