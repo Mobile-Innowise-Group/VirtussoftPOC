@@ -204,8 +204,8 @@ abstract class DataDI {
     locator.registerLazySingleton<ScanEntriesRepository>(
       () => ScanEntriesRepositoryImpl(
         scanEntriesProvider: locator<ScanEntriesProvider>(),
-        folderProvider: locator<FolderProvider>(),
-        categoryProvider: locator<CategoryProvider>(),
+        folderProvider: locator<FolderRemoteProvider>(),
+        categoryProvider: locator<CategoryRemoteProvider>(),
       ),
     );
   }

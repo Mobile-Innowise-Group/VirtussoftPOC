@@ -22,8 +22,8 @@ ScanEntryEntity _$ScanEntryEntityFromJson(Map<String, dynamic> json) {
 mixin _$ScanEntryEntity {
   String get id => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
-  String get folderId => throw _privateConstructorUsedError;
-  String get categoryId => throw _privateConstructorUsedError;
+  int get folderId => throw _privateConstructorUsedError;
+  int get categoryId => throw _privateConstructorUsedError;
 
   /// Serializes this ScanEntryEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $ScanEntryEntityCopyWith<$Res> {
           ScanEntryEntity value, $Res Function(ScanEntryEntity) then) =
       _$ScanEntryEntityCopyWithImpl<$Res, ScanEntryEntity>;
   @useResult
-  $Res call({String id, String path, String folderId, String categoryId});
+  $Res call({String id, String path, int folderId, int categoryId});
 }
 
 /// @nodoc
@@ -76,11 +76,11 @@ class _$ScanEntryEntityCopyWithImpl<$Res, $Val extends ScanEntryEntity>
       folderId: null == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ) as $Val);
   }
 }
@@ -93,7 +93,7 @@ abstract class _$$ScanEntryEntityImplCopyWith<$Res>
       __$$ScanEntryEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String path, String folderId, String categoryId});
+  $Res call({String id, String path, int folderId, int categoryId});
 }
 
 /// @nodoc
@@ -126,11 +126,11 @@ class __$$ScanEntryEntityImplCopyWithImpl<$Res>
       folderId: null == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -152,9 +152,9 @@ class _$ScanEntryEntityImpl implements _ScanEntryEntity {
   @override
   final String path;
   @override
-  final String folderId;
+  final int folderId;
   @override
-  final String categoryId;
+  final int categoryId;
 
   @override
   String toString() {
@@ -199,8 +199,8 @@ abstract class _ScanEntryEntity implements ScanEntryEntity {
   const factory _ScanEntryEntity(
       {required final String id,
       required final String path,
-      required final String folderId,
-      required final String categoryId}) = _$ScanEntryEntityImpl;
+      required final int folderId,
+      required final int categoryId}) = _$ScanEntryEntityImpl;
 
   factory _ScanEntryEntity.fromJson(Map<String, dynamic> json) =
       _$ScanEntryEntityImpl.fromJson;
@@ -210,9 +210,9 @@ abstract class _ScanEntryEntity implements ScanEntryEntity {
   @override
   String get path;
   @override
-  String get folderId;
+  int get folderId;
   @override
-  String get categoryId;
+  int get categoryId;
 
   /// Create a copy of ScanEntryEntity
   /// with the given fields replaced by the non-null parameter values.
