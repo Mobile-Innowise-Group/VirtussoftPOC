@@ -4,6 +4,7 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 
 part 'app_error_handler_event.dart';
+
 part 'app_error_handler_state.dart';
 
 class AppErrorHandlerBloc

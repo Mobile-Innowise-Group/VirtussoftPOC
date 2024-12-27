@@ -23,7 +23,7 @@ class UserFolders extends StatelessWidget {
             ? SliverToBoxAdapter(
                 child: ListTile(
                   title: Text(
-                    'folders.noAddedFolders'.tr(),
+                    'folder.noAddedFolders'.tr(),
                   ),
                 ),
               )
@@ -31,10 +31,15 @@ class UserFolders extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     if (index < folders.length) {
-                      return ListTile(
-                        leading: const Icon(Icons.folder),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        title: Text(folders[index].name),
+                      return GestureDetector(
+                        onLongPress: () {
+                          print('Long press');
+                        },
+                        child: ListTile(
+                          leading: const Icon(Icons.folder),
+                          trailing: const Icon(Icons.arrow_forward_ios),
+                          title: Text(folders[index].name),
+                        ),
                       );
                     } else if (index == folders.length &&
                         state.folders.length > 3) {

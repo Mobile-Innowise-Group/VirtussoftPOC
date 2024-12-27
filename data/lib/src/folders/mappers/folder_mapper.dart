@@ -9,7 +9,7 @@ abstract class FolderMapper {
     );
   }
 
-  static FolderEntity toEntity(CategoryModel folderModel) {
+  static FolderEntity toEntity(FolderModel folderModel) {
     return FolderEntity(
       id: folderModel.id,
       name: folderModel.name,

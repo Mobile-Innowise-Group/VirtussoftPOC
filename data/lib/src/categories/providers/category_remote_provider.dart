@@ -2,9 +2,9 @@ import 'package:domain/domain.dart';
 
 import '../categories.dart';
 
-abstract class CategoryProvider {
-  Future<List<CategoryModel>> getUserCategories({
-    required GetUserCategoriesRequest request,
+abstract class CategoryRemoteProvider {
+  Future<List<CategoryModel>> getCategories({
+    required GetCategoriesRequest request,
   });
 
   Future<CategoryModel> getUserCategoryById({
@@ -12,7 +12,7 @@ abstract class CategoryProvider {
   });
 
   Future<CategoryModel> createCategory({
-    required CreateCategoryRequest request,
+    required CreateCategoryRemoteRequest request,
   });
 
   Future<bool> deleteCategory({

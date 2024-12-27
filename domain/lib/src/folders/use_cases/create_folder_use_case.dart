@@ -1,5 +1,4 @@
 import '../../../domain.dart';
-import '../folders.dart';
 
 class CreateFolderUseCase
     extends FutureUseCase<CreateFolderPayload, FolderModel> {

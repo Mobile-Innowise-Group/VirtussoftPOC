@@ -15,7 +15,7 @@
   "biometrics": {
     "pleaseAuthenticate": "Please authenticate to access this feature"
   },
-  "folders": {
+  "folder": {
     "createFolder": "Create folder",
     "folderName": "Folder name",
     "enterFolderName": "Enter folder name",
@@ -58,7 +58,8 @@
     "info": "Info",
     "confirm": "Confirm",
     "showMore": "Show more",
-    "showLess": "Show less"
+    "showLess": "Show less",
+    "create": "Create"
   },
   "data": {
     "data": "Data",
