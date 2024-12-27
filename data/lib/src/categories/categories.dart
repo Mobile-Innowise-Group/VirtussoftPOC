@@ -1,4 +1,5 @@
 export 'entities/category_entity.dart';
+export 'exceptions/failed_to_create_remote_category_exception.dart';
 export 'mappers/category_mapper.dart';
 export 'providers/category_local_provider.dart';
 export 'providers/category_local_provider_impl.dart';

@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const auth_signUp = 'auth.signUp';
   static const auth_login = 'auth.login';
   static const auth_email = 'auth.email';
@@ -15,21 +15,22 @@ abstract class  LocaleKeys {
   static const auth = 'auth';
   static const biometrics_pleaseAuthenticate = 'biometrics.pleaseAuthenticate';
   static const biometrics = 'biometrics';
-  static const folders_createFolder = 'folders.createFolder';
-  static const folders_folderName = 'folders.folderName';
-  static const folders_enterFolderName = 'folders.enterFolderName';
-  static const folders_deleteFolder = 'folders.deleteFolder';
-  static const folders_deleteFolderMessage = 'folders.deleteFolderMessage';
-  static const folders_editFolder = 'folders.editFolder';
-  static const folders_editFolderMessage = 'folders.editFolderMessage';
-  static const folders_noAddedFolders = 'folders.noAddedFolders';
-  static const folders_addFolder = 'folders.addFolder';
-  static const folders = 'folders';
+  static const folder_createFolder = 'folder.createFolder';
+  static const folder_folderName = 'folder.folderName';
+  static const folder_enterFolderName = 'folder.enterFolderName';
+  static const folder_deleteFolder = 'folder.deleteFolder';
+  static const folder_deleteFolderMessage = 'folder.deleteFolderMessage';
+  static const folder_editFolder = 'folder.editFolder';
+  static const folder_editFolderMessage = 'folder.editFolderMessage';
+  static const folder_noAddedFolders = 'folder.noAddedFolders';
+  static const folder_addFolder = 'folder.addFolder';
+  static const folder = 'folder';
   static const category_createCategory = 'category.createCategory';
   static const category_categoryName = 'category.categoryName';
   static const category_enterCategoryName = 'category.enterCategoryName';
   static const category_deleteCategory = 'category.deleteCategory';
-  static const category_deleteCategoryMessage = 'category.deleteCategoryMessage';
+  static const category_deleteCategoryMessage =
+      'category.deleteCategoryMessage';
   static const category_editCategory = 'category.editCategory';
   static const category_editCategoryMessage = 'category.editCategoryMessage';
   static const category_noAddedCategories = 'category.noAddedCategories';
@@ -56,11 +57,11 @@ abstract class  LocaleKeys {
   static const common_confirm = 'common.confirm';
   static const common_showMore = 'common.showMore';
   static const common_showLess = 'common.showLess';
+  static const common_create = 'common.create';
   static const common = 'common';
   static const data_data = 'data.data';
   static const data_userData = 'data.userData';
   static const data = 'data';
   static const docScanner_docScanner = 'docScanner.docScanner';
   static const docScanner = 'docScanner';
-
 }

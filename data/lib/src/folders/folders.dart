@@ -1,4 +1,5 @@
 export 'entities/folder_entity.dart';
+export 'exceptions/failed_to_create_remote_folder_exception.dart';
 export 'mappers/folder_mapper.dart';
 export 'providers/folder_local_provider.dart';
 export 'providers/folder_local_provider_impl.dart';

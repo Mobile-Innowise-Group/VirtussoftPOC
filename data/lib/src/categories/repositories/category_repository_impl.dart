@@ -21,15 +21,19 @@ class CategoryRepositoryImpl implements CategoryRepository {
       ),
     );
 
-    final CategoryModel createdRemoteCategory =
-        await _categoryRemoteProvider.createCategory(
-      request: CreateCategoryRemoteRequest(
-        name: payload.name,
-        id: createdCategoryId,
-      ),
-    );
+    try {
+      final CategoryModel createdRemoteCategory =
+          await _categoryRemoteProvider.createCategory(
+        request: CreateCategoryRemoteRequest(
+          name: payload.name,
+          id: createdCategoryId,
+        ),
+      );
 
-    return createdRemoteCategory;
+      return createdRemoteCategory;
+    } catch (e) {
+      throw FailedToCreateRemoteCategoryException(e.toString());
+    }
   }
 
   @override

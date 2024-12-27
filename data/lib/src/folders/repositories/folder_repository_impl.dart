@@ -26,14 +26,6 @@ class FolderRepositoryImpl implements FolderRepository {
       ),
     );
 
-    final FolderModel createdRemoteFolder =
-        await _folderRemoteProvider.createFolder(
-      request: CreateFolderRemoteRequest(
-        name: payload.name,
-        id: createdFolderId,
-      ),
-    );
-
     final Directory directory = await getApplicationDocumentsDirectory();
     final String foldersPath = '${directory.path}/folders';
     final Directory foldersDirectory = Directory(foldersPath);
@@ -44,8 +36,19 @@ class FolderRepositoryImpl implements FolderRepository {
     } else {
       AppLogger().info('Folders directory already exists at: $foldersPath');
     }
+    try {
+      final FolderModel createdRemoteFolder =
+          await _folderRemoteProvider.createFolder(
+        request: CreateFolderRemoteRequest(
+          name: payload.name,
+          id: createdFolderId,
+        ),
+      );
 
-    return createdRemoteFolder;
+      return createdRemoteFolder;
+    } catch (e) {
+      throw FailedToCreateRemoteFolderException(e.toString());
+    }
   }
 
   @override

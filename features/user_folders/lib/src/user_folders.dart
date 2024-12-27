@@ -23,7 +23,7 @@ class UserFolders extends StatelessWidget {
             ? SliverToBoxAdapter(
                 child: ListTile(
                   title: Text(
-                    'folders.noAddedFolders'.tr(),
+                    'folder.noAddedFolders'.tr(),
                   ),
                 ),
               )

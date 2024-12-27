@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:data/src/folders/folders.dart';
 import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
 
 part 'user_folders_event.dart';
+
 part 'user_folders_state.dart';
 
 class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
@@ -44,10 +46,12 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     try {
       final List<FolderModel> folders =
           await _getFoldersUseCase.execute(GetFoldersPayload());
-      emit(state.copyWith(
-        isLoading: false,
-        folders: folders,
-      ));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          folders: folders,
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(isLoading: false));
       _appEventNotifier.notify(
@@ -68,6 +72,26 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
       final List<FolderModel> folders = List<FolderModel>.from(state.folders)
         ..add(folder);
       emit(state.copyWith(isLoading: false, folders: folders));
+    } on FailedToCreateRemoteFolderException catch (e) {
+      try {
+        final List<FolderModel> folders =
+            await _getFoldersUseCase.execute(GetFoldersPayload());
+        emit(
+          state.copyWith(
+            isLoading: false,
+            folders: folders,
+          ),
+        );
+        emit(state.copyWith(isLoading: false));
+        _appEventNotifier.notify(
+          SnackBarErrorNotification(message: e.toString()),
+        );
+      } catch (e) {
+        emit(state.copyWith(isLoading: false));
+        _appEventNotifier.notify(
+          SnackBarErrorNotification(message: e.toString()),
+        );
+      }
     } catch (e) {
       emit(state.copyWith(isLoading: false));
       _appEventNotifier.notify(
