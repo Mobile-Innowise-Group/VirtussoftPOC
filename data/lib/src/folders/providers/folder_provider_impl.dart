@@ -66,11 +66,12 @@ class FolderProviderImpl implements FolderProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient.rpc('get_user_folder', params: <String, dynamic>{
+        final List<dynamic> response = await _supabaseClient.rpc('get_user_folder_by_id', params: <String,
+            dynamic>{
           'folder_id': request.folderId,
         });
 
-        return FolderMapper.toModel(FolderEntity.fromJson(response));
+        return FolderMapper.toModel(FolderEntity.fromJson(response.first));
       },
     );
   }

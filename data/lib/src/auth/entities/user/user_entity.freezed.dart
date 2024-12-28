@@ -21,6 +21,7 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserEntity {
   String get login => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
 
   /// Serializes this UserEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +39,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({String login});
+  $Res call({String login, String id});
 }
 
 /// @nodoc
@@ -57,11 +58,16 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   @override
   $Res call({
     Object? login = null,
+    Object? id = null,
   }) {
     return _then(_value.copyWith(
       login: null == login
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -75,7 +81,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String login});
+  $Res call({String login, String id});
 }
 
 /// @nodoc
@@ -92,11 +98,16 @@ class __$$UserEntityImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? login = null,
+    Object? id = null,
   }) {
     return _then(_$UserEntityImpl(
       login: null == login
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -105,17 +116,19 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserEntityImpl implements _UserEntity {
-  const _$UserEntityImpl({required this.login});
+  const _$UserEntityImpl({required this.login, required this.id});
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserEntityImplFromJson(json);
 
   @override
   final String login;
+  @override
+  final String id;
 
   @override
   String toString() {
-    return 'UserEntity(login: $login)';
+    return 'UserEntity(login: $login, id: $id)';
   }
 
   @override
@@ -123,12 +136,13 @@ class _$UserEntityImpl implements _UserEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserEntityImpl &&
-            (identical(other.login, login) || other.login == login));
+            (identical(other.login, login) || other.login == login) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, login);
+  int get hashCode => Object.hash(runtimeType, login, id);
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -147,13 +161,17 @@ class _$UserEntityImpl implements _UserEntity {
 }
 
 abstract class _UserEntity implements UserEntity {
-  const factory _UserEntity({required final String login}) = _$UserEntityImpl;
+  const factory _UserEntity(
+      {required final String login,
+      required final String id}) = _$UserEntityImpl;
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
       _$UserEntityImpl.fromJson;
 
   @override
   String get login;
+  @override
+  String get id;
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.

@@ -65,11 +65,11 @@ class CategoryProviderImpl implements CategoryProvider {
   Future<CategoryModel> getUserCategoryById({required GetUserCategoryByIdRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient.rpc('get_user_category', params: <String, dynamic>{
+        final List<dynamic> response = await _supabaseClient.rpc('get_user_category_by_id', params: <String, dynamic>{
           'category_id': request.categoryId,
         });
 
-        return CategoryMapper.toModel(CategoryEntity.fromJson(response));
+        return CategoryMapper.toModel(CategoryEntity.fromJson(response.first));
       },
     );
   }

@@ -1,10 +1,10 @@
 class CreateScanEntryPayload {
-  final String scanPath;
+  final String scanLocalPath;
   final String folderId;
   final String categoryId;
 
   CreateScanEntryPayload({
-    required this.scanPath,
+    required this.scanLocalPath,
     required this.folderId,
     required this.categoryId,
   });

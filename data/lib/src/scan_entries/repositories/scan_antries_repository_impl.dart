@@ -1,30 +1,53 @@
 import 'package:domain/domain.dart';
+import '../../auth/auth.dart';
+import '../../auth/entities/user/user_entity.dart';
 import '../../categories/categories.dart';
 import '../../folders/folders.dart';
+import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
 class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   final ScanEntriesProvider _scanEntriesProvider;
   final FolderProvider _folderProvider;
   final CategoryProvider _categoryProvider;
+  final AuthorizationProvider _authorizationProvider;
 
   ScanEntriesRepositoryImpl({
     required ScanEntriesProvider scanEntriesProvider,
     required FolderProvider folderProvider,
     required CategoryProvider categoryProvider,
+    required AuthorizationProvider authorizationProvider,
   })  : _scanEntriesProvider = scanEntriesProvider,
         _folderProvider = folderProvider,
-        _categoryProvider = categoryProvider;
+        _categoryProvider = categoryProvider,
+        _authorizationProvider = authorizationProvider;
 
   @override
   Future<ScanEntryModel> createScanEntry({
     required CreateScanEntryPayload payload,
   }) async {
+    final UserEntity? userEntity = _authorizationProvider.getCurrentUser();
+
+    if (userEntity == null) {
+      // TODO(Karatysh): logout instead
+      throw const AppException('no current user');
+    }
+    final String userId = userEntity.id;
+
+    final String scanRemoteLink = await _scanEntriesProvider.uploadScanFile(
+      request: UploadScanFileRequest(
+        userId: userId,
+        localPath: payload.scanLocalPath,
+      ),
+    );
+
     final ScanEntryEntity scanEntryEntity = await _scanEntriesProvider.createScanEntry(
       request: CreateScanEntryRequest(
-        scanPath: payload.scanPath,
+        localPath: payload.scanLocalPath,
+        remotePath: scanRemoteLink,
         folderId: payload.folderId,
         categoryId: payload.categoryId,
+        userId: userEntity.id,
       ),
     );
 

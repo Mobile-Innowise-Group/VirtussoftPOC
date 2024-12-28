@@ -173,6 +173,9 @@ abstract class DataDI {
         scanEntriesProvider: locator<ScanEntriesProvider>(),
         folderProvider: locator<FolderProvider>(),
         categoryProvider: locator<CategoryProvider>(),
+        authorizationProvider: locator<AuthorizationProvider>(
+          instanceName: provider.name,
+        ),
       ),
     );
   }

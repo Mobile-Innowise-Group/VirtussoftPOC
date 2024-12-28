@@ -33,6 +33,7 @@ class PdfService {
     required String newFolderName,
   }) async {
     try {
+
       final File sourceFile = File(currentFilePath);
       if (!sourceFile.existsSync()) {
         throw Exception('No file founded');
@@ -51,8 +52,12 @@ class PdfService {
 
       return newFilePath;
     } catch (e) {
-      throw Exception('Failed to transfer file');
+      rethrow;
     }
+  }
+
+  static String getFileNameByPath(String searchedPath) {
+    return path.basename(searchedPath);
   }
 
   static Future<File> saveDocument({

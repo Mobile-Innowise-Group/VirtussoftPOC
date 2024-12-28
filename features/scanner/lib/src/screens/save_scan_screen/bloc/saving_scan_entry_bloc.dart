@@ -12,8 +12,9 @@ class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryStat
   final GetFoldersUseCase _getFoldersUseCase;
   final GetUserCategoriesUseCase _getUserCategoriesUseCase;
   final CreateScanEntryUseCase _createScanEntryUseCase;
-  String _scanPath;
   final AppEventNotifier _appEventNotifier;
+
+  String _scanPath;
 
   SavingScanEntryBloc({
     required AppRouter appRouter,
@@ -105,7 +106,7 @@ class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryStat
 
         await _createScanEntryUseCase.execute(
           CreateScanEntryPayload(
-            scanPath: newScanPath,
+            scanLocalPath: newScanPath,
             folderId: folder.id,
             categoryId: categoryId,
           ),
