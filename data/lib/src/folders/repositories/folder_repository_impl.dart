@@ -4,23 +4,35 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../auth/auth.dart';
+import '../../auth/entities/user/user_entity.dart';
 import '../folders.dart';
 
 class FolderRepositoryImpl implements FolderRepository {
   final FolderRemoteProvider _folderRemoteProvider;
   final FolderLocalProvider _folderLocalProvider;
+  final AuthorizationProvider _authorizationProvider;
 
   FolderRepositoryImpl({
     required FolderRemoteProvider folderRemoteProvider,
     required FolderLocalProvider folderLocalProvider,
+    required AuthorizationProvider authorizationProvider,
   })  : _folderRemoteProvider = folderRemoteProvider,
-        _folderLocalProvider = folderLocalProvider;
+        _folderLocalProvider = folderLocalProvider,
+        _authorizationProvider = authorizationProvider;
 
   @override
   Future<FolderModel> createFolder({
     required CreateFolderPayload payload,
   }) async {
-    final int createdFolderId = await _folderLocalProvider.createFolder(
+    final UserEntity? userEntity = _authorizationProvider.getCurrentUser();
+
+    if (userEntity == null) {
+      // TODO(Karatysh): logout instead
+      throw const AppException('no current user');
+    }
+
+    final FolderModel folder = await _folderLocalProvider.createFolder(
       request: CreateFolderLocalRequest(
         name: payload.name,
       ),
@@ -37,11 +49,11 @@ class FolderRepositoryImpl implements FolderRepository {
       AppLogger().info('Folders directory already exists at: $foldersPath');
     }
     try {
-      final FolderModel createdRemoteFolder =
-          await _folderRemoteProvider.createFolder(
+      final FolderModel createdRemoteFolder = await _folderRemoteProvider.createFolder(
         request: CreateFolderRemoteRequest(
-          name: payload.name,
-          id: createdFolderId,
+          name: folder.name,
+          id: folder.id,
+          userId: userEntity.id,
         ),
       );
 
@@ -68,8 +80,7 @@ class FolderRepositoryImpl implements FolderRepository {
     );
 
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String categoryPath =
-        '${directory.path}/folders/${payload.folder.name}';
+    final String categoryPath = '${directory.path}/folders/${payload.folder.name}';
     final Directory folder = Directory(categoryPath);
 
     if (folder.existsSync()) {

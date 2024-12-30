@@ -20,13 +20,14 @@ class FolderRemoteProviderImpl implements FolderRemoteProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient
-            .rpc('add_new_folder', params: <String, dynamic>{
-          'folder_name': request.name,
+        final List<Map<String, dynamic>> response =
+            await _supabaseClient.rpc('create_folder', params: <String, dynamic>{
           'folder_id': request.id,
+          'name': request.name,
+          'user_id': request.userId,
         });
 
-        return FolderMapper.toModel(FolderEntity.fromJson(response));
+        return FolderMapper.toModel(FolderEntity.fromJson(response.first));
       },
     );
   }
@@ -52,8 +53,8 @@ class FolderRemoteProviderImpl implements FolderRemoteProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_user_new_folders', params: <String, dynamic>{});
+        final List<Map<String, dynamic>> response =
+            await _supabaseClient.rpc('get_user_folders', params: <String, dynamic>{});
 
         return response
             .map((Map<String, dynamic> category) => FolderMapper.toModel(FolderEntity.fromJson(category)))
@@ -68,8 +69,7 @@ class FolderRemoteProviderImpl implements FolderRemoteProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<dynamic> response = await _supabaseClient.rpc('get_user_folder_by_id', params: <String,
-            dynamic>{
+        final List<dynamic> response = await _supabaseClient.rpc('get_user_folder_by_id', params: <String, dynamic>{
           'folder_id': request.folderId,
         });
 

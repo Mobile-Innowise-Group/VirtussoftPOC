@@ -20,13 +20,13 @@ class CategoryRemoteProviderImpl implements CategoryRemoteProvider {
   }) async {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient
-            .rpc('add_new_category', params: <String, dynamic>{
-          'category_name': request.name,
+        final List<Map<String, dynamic>> response = await _supabaseClient.rpc('create_category', params: <String, dynamic>{
           'category_id': request.id,
+          'name': request.name,
+          'user_id': request.userId,
         });
 
-        return CategoryMapper.toModel(CategoryEntity.fromJson(response));
+        return CategoryMapper.toModel(CategoryEntity.fromJson(response.first));
       },
     );
   }
@@ -52,8 +52,8 @@ class CategoryRemoteProviderImpl implements CategoryRemoteProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_user_new_categories', params: <String, dynamic>{});
+        final List<Map<String, dynamic>> response =
+            await _supabaseClient.rpc('get_user_categories', params: <String, dynamic>{});
 
         return response
             .map((Map<String, dynamic> category) => CategoryMapper.toModel(CategoryEntity.fromJson(category)))

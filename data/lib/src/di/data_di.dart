@@ -173,6 +173,9 @@ abstract class DataDI {
       () => CategoryRepositoryImpl(
         categoryRemoteProvider: locator<CategoryRemoteProvider>(),
         categoryLocalProvider: locator<CategoryLocalProvider>(),
+        authorizationProvider: locator.get<AuthorizationProvider>(
+          instanceName: provider.name,
+        ),
       ),
     );
 
@@ -188,6 +191,9 @@ abstract class DataDI {
       () => FolderRepositoryImpl(
         folderRemoteProvider: locator<FolderRemoteProvider>(),
         folderLocalProvider: locator<FolderLocalProvider>(),
+        authorizationProvider: locator.get<AuthorizationProvider>(
+          instanceName: provider.name,
+        ),
       ),
     );
 

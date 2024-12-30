@@ -66,6 +66,22 @@ class DatabaseProvider {
     return db.query('categories');
   }
 
+  Future<List<Map<String, dynamic>>> getFoldersWithOffset({
+    required int offset,
+    int limit = 1,
+  }) async {
+    final Database db = await database;
+    return db.query('folders', offset: offset, limit: limit);
+  }
+
+  Future<List<Map<String, dynamic>>> getCategoriesWithOffset({
+    required int offset,
+    int limit = 1,
+  }) async {
+    final Database db = await database;
+    return db.query('categories', offset: offset, limit: limit);
+  }
+
   Future<int> deleteFolder(String id) async {
     final Database db = await database;
     return db.delete('folders', where: 'id = ?', whereArgs: [id]);
