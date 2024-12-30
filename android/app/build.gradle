@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.virtussoft"
-    compileSdkVersion 34
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -46,7 +46,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 23
-        targetSdkVersion 34
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -77,4 +77,13 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    // Core text recognition dependency
+    implementation 'com.google.mlkit:text-recognition:16.0.0'
+
+    // Add language-specific dependencies if needed
+    implementation 'com.google.mlkit:text-recognition-chinese:16.0.0'
+    implementation 'com.google.mlkit:text-recognition-japanese:16.0.0'
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.0'
+    implementation 'com.google.mlkit:text-recognition-devanagari:16.0.0'
+}
