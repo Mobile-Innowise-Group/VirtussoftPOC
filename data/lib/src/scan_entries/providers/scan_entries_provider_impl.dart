@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
+import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
 class ScanEntriesProviderImpl implements ScanEntriesProvider {
@@ -19,12 +23,35 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         final Map<String, dynamic> response = await _supabaseClient.rpc('create_scan_entry', params: <String, dynamic>{
-          'scan_entry_path': request.path,
-          'scan_entry_folder_id': request.folderId,
-          'scan_entry_category_id': request.categoryId,
+          'p_user_id': request.userId,
+          'p_folder_id': request.folderId,
+          'p_category_id': request.categoryId,
+          'p_local_path': request.localPath,
+          'p_remote_path': request.remotePath,
         });
 
         return ScanEntryEntity.fromJson(response);
+      },
+    );
+  }
+
+  @override
+  Future<String> uploadScanFile({required UploadScanFileRequest request}) {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final String fileName = PdfService.getFileNameByPath(request.localPath);
+
+        await _supabaseClient.storage
+            .from('files') // TODO(Karatysh): do we have any class to collect supabase configs?
+            .upload(
+              fileName,
+              File(request.localPath),
+              fileOptions: const FileOptions(upsert: true),
+            );
+
+        final String publicUrl = Supabase.instance.client.storage.from('files').getPublicUrl(fileName);
+
+        return publicUrl;
       },
     );
   }

@@ -9,9 +9,11 @@ part of 'user_entity.dart';
 _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
     _$UserEntityImpl(
       login: json['login'] as String,
+      id: json['id'] as String,
     );
 
 Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
     <String, dynamic>{
       'login': instance.login,
+      'id': instance.id,
     };

@@ -10,7 +10,10 @@ class UserMapper {
       return null;
     }
 
-    return UserModel(login: entity.login);
+    return UserModel(
+      login: entity.login,
+      id: entity.id,
+    );
   }
 
   static UserEntity? toEntity(UserModel? model) {
@@ -18,7 +21,10 @@ class UserMapper {
       return null;
     }
 
-    return UserEntity(login: model.login);
+    return UserEntity(
+      login: model.login,
+      id: model.id,
+    );
   }
 
   static UserEntity? fromFirebaseUser(firebase_auth.User? firebaseUser) {
@@ -28,7 +34,7 @@ class UserMapper {
       return null;
     }
 
-    return UserEntity(login: login);
+    return UserEntity(login: login, id: firebaseUser.uid);
   }
 
   static UserEntity? fromSupabaseUser(supabase_auth.User? supabaseUser) {
@@ -38,6 +44,9 @@ class UserMapper {
       return null;
     }
 
-    return UserEntity(login: login);
+    return UserEntity(
+      login: login,
+      id: supabaseUser.id,
+    );
   }
 }

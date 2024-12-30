@@ -1,32 +1,44 @@
 import 'package:domain/domain.dart';
+import '../../auth/auth.dart';
+import '../../auth/entities/entities.dart';
 import '../categories.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryLocalProvider _categoryLocalProvider;
   final CategoryRemoteProvider _categoryRemoteProvider;
+  final AuthorizationProvider _authorizationProvider;
 
   CategoryRepositoryImpl({
     required CategoryLocalProvider categoryLocalProvider,
     required CategoryRemoteProvider categoryRemoteProvider,
+    required AuthorizationProvider authorizationProvider,
   })  : _categoryRemoteProvider = categoryRemoteProvider,
-        _categoryLocalProvider = categoryLocalProvider;
+        _categoryLocalProvider = categoryLocalProvider,
+        _authorizationProvider = authorizationProvider;
 
   @override
   Future<CategoryModel> createCategory({
     required CreateCategoryPayload payload,
   }) async {
-    final int createdCategoryId = await _categoryLocalProvider.createCategory(
+    final UserEntity? userEntity = _authorizationProvider.getCurrentUser();
+
+    if (userEntity == null) {
+      // TODO(Karatysh): logout instead
+      throw const AppException('no current user');
+    }
+
+    final CategoryModel category = await _categoryLocalProvider.createCategory(
       request: CreateCategoryLocalRequest(
         name: payload.name,
       ),
     );
 
     try {
-      final CategoryModel createdRemoteCategory =
-          await _categoryRemoteProvider.createCategory(
+      final CategoryModel createdRemoteCategory = await _categoryRemoteProvider.createCategory(
         request: CreateCategoryRemoteRequest(
-          name: payload.name,
-          id: createdCategoryId,
+          name: category.name,
+          id: category.id,
+          userId: userEntity.id
         ),
       );
 
@@ -51,7 +63,6 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<List<CategoryModel>> getUserCategories({
     required GetUserCategoriesPayload payload,
   }) {
-    return _categoryLocalProvider.getCategories(
-        request: GetCategoriesRequest());
+    return _categoryLocalProvider.getCategories(request: GetCategoriesRequest());
   }
 }

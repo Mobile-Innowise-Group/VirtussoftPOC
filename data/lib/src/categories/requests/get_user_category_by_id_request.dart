@@ -1,5 +1,5 @@
 class GetUserCategoryByIdRequest {
-  final int categoryId;
+  final String categoryId;
 
   GetUserCategoryByIdRequest({
     required this.categoryId,

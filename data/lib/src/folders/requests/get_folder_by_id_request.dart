@@ -1,5 +1,5 @@
 class GetFolderByIdRequest {
-  final int folderId;
+  final String folderId;
 
   GetFolderByIdRequest({
     required this.folderId,

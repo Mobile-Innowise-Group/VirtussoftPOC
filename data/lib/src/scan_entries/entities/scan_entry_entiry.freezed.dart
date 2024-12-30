@@ -21,9 +21,14 @@ ScanEntryEntity _$ScanEntryEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ScanEntryEntity {
   String get id => throw _privateConstructorUsedError;
-  String get path => throw _privateConstructorUsedError;
-  int get folderId => throw _privateConstructorUsedError;
-  int get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'local_path')
+  String get localPath => throw _privateConstructorUsedError;
+  @JsonKey(name: 'remote_path')
+  String get remotePath => throw _privateConstructorUsedError;
+  @JsonKey(name: 'folder_id')
+  String get folderId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_id')
+  String get categoryId => throw _privateConstructorUsedError;
 
   /// Serializes this ScanEntryEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +46,12 @@ abstract class $ScanEntryEntityCopyWith<$Res> {
           ScanEntryEntity value, $Res Function(ScanEntryEntity) then) =
       _$ScanEntryEntityCopyWithImpl<$Res, ScanEntryEntity>;
   @useResult
-  $Res call({String id, String path, int folderId, int categoryId});
+  $Res call(
+      {String id,
+      @JsonKey(name: 'local_path') String localPath,
+      @JsonKey(name: 'remote_path') String remotePath,
+      @JsonKey(name: 'folder_id') String folderId,
+      @JsonKey(name: 'category_id') String categoryId});
 }
 
 /// @nodoc
@@ -60,7 +70,8 @@ class _$ScanEntryEntityCopyWithImpl<$Res, $Val extends ScanEntryEntity>
   @override
   $Res call({
     Object? id = null,
-    Object? path = null,
+    Object? localPath = null,
+    Object? remotePath = null,
     Object? folderId = null,
     Object? categoryId = null,
   }) {
@@ -69,18 +80,22 @@ class _$ScanEntryEntityCopyWithImpl<$Res, $Val extends ScanEntryEntity>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      path: null == path
-          ? _value.path
-          : path // ignore: cast_nullable_to_non_nullable
+      localPath: null == localPath
+          ? _value.localPath
+          : localPath // ignore: cast_nullable_to_non_nullable
+              as String,
+      remotePath: null == remotePath
+          ? _value.remotePath
+          : remotePath // ignore: cast_nullable_to_non_nullable
               as String,
       folderId: null == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
     ) as $Val);
   }
 }
@@ -93,7 +108,12 @@ abstract class _$$ScanEntryEntityImplCopyWith<$Res>
       __$$ScanEntryEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String path, int folderId, int categoryId});
+  $Res call(
+      {String id,
+      @JsonKey(name: 'local_path') String localPath,
+      @JsonKey(name: 'remote_path') String remotePath,
+      @JsonKey(name: 'folder_id') String folderId,
+      @JsonKey(name: 'category_id') String categoryId});
 }
 
 /// @nodoc
@@ -110,7 +130,8 @@ class __$$ScanEntryEntityImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? path = null,
+    Object? localPath = null,
+    Object? remotePath = null,
     Object? folderId = null,
     Object? categoryId = null,
   }) {
@@ -119,18 +140,22 @@ class __$$ScanEntryEntityImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      path: null == path
-          ? _value.path
-          : path // ignore: cast_nullable_to_non_nullable
+      localPath: null == localPath
+          ? _value.localPath
+          : localPath // ignore: cast_nullable_to_non_nullable
+              as String,
+      remotePath: null == remotePath
+          ? _value.remotePath
+          : remotePath // ignore: cast_nullable_to_non_nullable
               as String,
       folderId: null == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
     ));
   }
 }
@@ -140,9 +165,10 @@ class __$$ScanEntryEntityImplCopyWithImpl<$Res>
 class _$ScanEntryEntityImpl implements _ScanEntryEntity {
   const _$ScanEntryEntityImpl(
       {required this.id,
-      required this.path,
-      required this.folderId,
-      required this.categoryId});
+      @JsonKey(name: 'local_path') required this.localPath,
+      @JsonKey(name: 'remote_path') required this.remotePath,
+      @JsonKey(name: 'folder_id') required this.folderId,
+      @JsonKey(name: 'category_id') required this.categoryId});
 
   factory _$ScanEntryEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScanEntryEntityImplFromJson(json);
@@ -150,15 +176,21 @@ class _$ScanEntryEntityImpl implements _ScanEntryEntity {
   @override
   final String id;
   @override
-  final String path;
+  @JsonKey(name: 'local_path')
+  final String localPath;
   @override
-  final int folderId;
+  @JsonKey(name: 'remote_path')
+  final String remotePath;
   @override
-  final int categoryId;
+  @JsonKey(name: 'folder_id')
+  final String folderId;
+  @override
+  @JsonKey(name: 'category_id')
+  final String categoryId;
 
   @override
   String toString() {
-    return 'ScanEntryEntity(id: $id, path: $path, folderId: $folderId, categoryId: $categoryId)';
+    return 'ScanEntryEntity(id: $id, localPath: $localPath, remotePath: $remotePath, folderId: $folderId, categoryId: $categoryId)';
   }
 
   @override
@@ -167,7 +199,10 @@ class _$ScanEntryEntityImpl implements _ScanEntryEntity {
         (other.runtimeType == runtimeType &&
             other is _$ScanEntryEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.path, path) || other.path == path) &&
+            (identical(other.localPath, localPath) ||
+                other.localPath == localPath) &&
+            (identical(other.remotePath, remotePath) ||
+                other.remotePath == remotePath) &&
             (identical(other.folderId, folderId) ||
                 other.folderId == folderId) &&
             (identical(other.categoryId, categoryId) ||
@@ -176,7 +211,8 @@ class _$ScanEntryEntityImpl implements _ScanEntryEntity {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, path, folderId, categoryId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, localPath, remotePath, folderId, categoryId);
 
   /// Create a copy of ScanEntryEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -197,10 +233,12 @@ class _$ScanEntryEntityImpl implements _ScanEntryEntity {
 
 abstract class _ScanEntryEntity implements ScanEntryEntity {
   const factory _ScanEntryEntity(
-      {required final String id,
-      required final String path,
-      required final int folderId,
-      required final int categoryId}) = _$ScanEntryEntityImpl;
+          {required final String id,
+          @JsonKey(name: 'local_path') required final String localPath,
+          @JsonKey(name: 'remote_path') required final String remotePath,
+          @JsonKey(name: 'folder_id') required final String folderId,
+          @JsonKey(name: 'category_id') required final String categoryId}) =
+      _$ScanEntryEntityImpl;
 
   factory _ScanEntryEntity.fromJson(Map<String, dynamic> json) =
       _$ScanEntryEntityImpl.fromJson;
@@ -208,11 +246,17 @@ abstract class _ScanEntryEntity implements ScanEntryEntity {
   @override
   String get id;
   @override
-  String get path;
+  @JsonKey(name: 'local_path')
+  String get localPath;
   @override
-  int get folderId;
+  @JsonKey(name: 'remote_path')
+  String get remotePath;
   @override
-  int get categoryId;
+  @JsonKey(name: 'folder_id')
+  String get folderId;
+  @override
+  @JsonKey(name: 'category_id')
+  String get categoryId;
 
   /// Create a copy of ScanEntryEntity
   /// with the given fields replaced by the non-null parameter values.

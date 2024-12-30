@@ -11,10 +11,11 @@ class FolderLocalProviderImpl implements FolderLocalProvider {
   }) : _databaseProvider = databaseProvider;
 
   @override
-  Future<int> createFolder({
+  Future<FolderModel> createFolder({
     required CreateFolderLocalRequest request,
   }) async {
-    return _databaseProvider.createFolder(request.toJson());
+    final int row = await _databaseProvider.createFolder(request.toJson());
+    return _getFolderByRow(row: row);
   }
 
   @override
@@ -28,10 +29,16 @@ class FolderLocalProviderImpl implements FolderLocalProvider {
   Future<List<FolderModel>> getFolders({
     required GetFoldersRequest request,
   }) async {
-    final List<Map<String, dynamic>> folders =
-        await _databaseProvider.getFolders();
+    final List<Map<String, dynamic>> folders = await _databaseProvider.getFolders();
     return folders.map((Map<String, dynamic> folder) {
       return FolderMapper.toModel(FolderEntity.fromJson(folder));
     }).toList();
+  }
+
+  Future<FolderModel> _getFolderByRow({
+    required int row,
+  }) async {
+    final List<Map<String, dynamic>> folders = await _databaseProvider.getFoldersWithOffset(offset: row - 1);
+    return FolderMapper.toModel(FolderEntity.fromJson(folders.first));
   }
 }

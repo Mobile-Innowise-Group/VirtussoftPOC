@@ -1,5 +1,5 @@
 class DeleteCategoryRequest {
-  final int categoryId;
+  final String categoryId;
 
   DeleteCategoryRequest({
     required this.categoryId,

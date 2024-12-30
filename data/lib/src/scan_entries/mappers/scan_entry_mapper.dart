@@ -10,7 +10,8 @@ abstract class ScanEntryMapper {
   }) {
     return ScanEntryModel(
       id: scanEntryEntity.id,
-      path: scanEntryEntity.path,
+      localPath: scanEntryEntity.localPath,
+      remotePath: scanEntryEntity.remotePath,
       category: category,
       folder: folder,
     );
@@ -19,7 +20,8 @@ abstract class ScanEntryMapper {
   static ScanEntryEntity toEntity(ScanEntryModel scanEntryModel) {
     return ScanEntryEntity(
       id: scanEntryModel.id,
-      path: scanEntryModel.path,
+      localPath: scanEntryModel.localPath,
+      remotePath: scanEntryModel.remotePath,
       folderId: scanEntryModel.folder.id,
       categoryId: scanEntryModel.category.id,
     );

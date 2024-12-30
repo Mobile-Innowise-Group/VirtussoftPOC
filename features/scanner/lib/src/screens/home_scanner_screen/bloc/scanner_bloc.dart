@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:navigation/navigation.dart';
@@ -9,12 +12,15 @@ part 'scanner_state.dart';
 
 class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   final AppRouter _appRouter;
+  final AppEventNotifier _appEventNotifier;
 
   final TextRecognizer _textRecognizer = TextRecognizer();
 
   ScannerBloc({
     required AppRouter appRouter,
+    required AppEventNotifier appEventNotifier,
   })  : _appRouter = appRouter,
+        _appEventNotifier = appEventNotifier,
         super(const ScannerState.initial()) {
     on<OpenScanner>(_onOpenScanner);
   }
@@ -27,13 +33,21 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
     try {
       pictures = await CunningDocumentScanner.getPictures(isGalleryImportAllowed: true) ?? <String>[];
 
-      await _processImage(pictures);
-    } catch (exception) {
-      // TODO(Karatysh): handle error if need
+      if (pictures.isNotEmpty) {
+        final File file = await _parseImageToPdf(pictures);
+
+        await _appRouter.push(SavingScanEntryBottomSheetRoute(scanPath: file.path));
+      }
+    } catch (e) {
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
     }
   }
 
-  Future<void> _processImage(List<String> pictures) async {
+  Future<File> _parseImageToPdf(List<String> pictures) async {
     final List<RecognizedText> recognizedText = <RecognizedText>[];
 
     for (final String path in pictures) {
@@ -44,8 +58,10 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
       recognizedText.add(result);
     }
 
-    await PdfService.generateCenteredText(
+    final File file = await PdfService.generateCenteredText(
       recognizedText.map((RecognizedText item) => item.text).toList(),
     );
+
+    return file;
   }
 }

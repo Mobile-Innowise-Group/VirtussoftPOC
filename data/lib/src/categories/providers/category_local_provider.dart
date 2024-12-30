@@ -3,7 +3,7 @@ import 'package:domain/domain.dart';
 import '../categories.dart';
 
 abstract class CategoryLocalProvider {
-  Future<int> createCategory({
+  Future<CategoryModel> createCategory({
     required CreateCategoryLocalRequest request,
   });
 

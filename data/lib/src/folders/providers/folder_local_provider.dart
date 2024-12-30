@@ -3,7 +3,7 @@ import 'package:domain/domain.dart';
 import '../folders.dart';
 
 abstract class FolderLocalProvider {
-  Future<int> createFolder({
+  Future<FolderModel> createFolder({
     required CreateFolderLocalRequest request,
   });
 

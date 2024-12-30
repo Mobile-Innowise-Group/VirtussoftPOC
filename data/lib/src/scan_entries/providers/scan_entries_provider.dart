@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 
+import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
 abstract class ScanEntriesProvider {
@@ -13,5 +14,9 @@ abstract class ScanEntriesProvider {
 
   Future<ScanEntryEntity> createScanEntry({
     required CreateScanEntryRequest request,
+  });
+
+  Future<String> uploadScanFile({
+    required UploadScanFileRequest request,
   });
 }
