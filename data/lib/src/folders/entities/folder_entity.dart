@@ -7,7 +7,7 @@ part 'folder_entity.g.dart';
 @freezed
 class FolderEntity with _$FolderEntity {
   const factory FolderEntity({
-    required String id,
+    required int id,
     required String name,
   }) = _FolderEntity;
 

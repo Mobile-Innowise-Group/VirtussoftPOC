@@ -20,7 +20,7 @@ CategoryEntity _$CategoryEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryEntity {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryEntity to a JSON map.
@@ -39,7 +39,7 @@ abstract class $CategoryEntityCopyWith<$Res> {
           CategoryEntity value, $Res Function(CategoryEntity) then) =
       _$CategoryEntityCopyWithImpl<$Res, CategoryEntity>;
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$CategoryEntityCopyWithImpl<$Res, $Val extends CategoryEntity>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$CategoryEntityImplCopyWith<$Res>
       __$$CategoryEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$CategoryEntityImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -122,7 +122,7 @@ class _$CategoryEntityImpl implements _CategoryEntity {
       _$$CategoryEntityImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
 
@@ -163,14 +163,14 @@ class _$CategoryEntityImpl implements _CategoryEntity {
 
 abstract class _CategoryEntity implements CategoryEntity {
   const factory _CategoryEntity(
-      {required final String id,
+      {required final int id,
       required final String name}) = _$CategoryEntityImpl;
 
   factory _CategoryEntity.fromJson(Map<String, dynamic> json) =
       _$CategoryEntityImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
 

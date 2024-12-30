@@ -8,14 +8,14 @@ import '../scan_entries.dart';
 
 class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   final ScanEntriesProvider _scanEntriesProvider;
-  final FolderProvider _folderProvider;
-  final CategoryProvider _categoryProvider;
+  final FolderRemoteProvider _folderProvider;
+  final CategoryRemoteProvider _categoryProvider;
   final AuthorizationProvider _authorizationProvider;
 
   ScanEntriesRepositoryImpl({
     required ScanEntriesProvider scanEntriesProvider,
-    required FolderProvider folderProvider,
-    required CategoryProvider categoryProvider,
+    required FolderRemoteProvider folderProvider,
+    required CategoryRemoteProvider categoryProvider,
     required AuthorizationProvider authorizationProvider,
   })  : _scanEntriesProvider = scanEntriesProvider,
         _folderProvider = folderProvider,

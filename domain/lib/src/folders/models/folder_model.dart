@@ -1,5 +1,5 @@
 class FolderModel {
-  final String id;
+  final int id;
   final String name;
 
   FolderModel({

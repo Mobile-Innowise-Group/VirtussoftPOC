@@ -14,6 +14,7 @@ import '../folders/folders.dart';
 import '../scan_entries/providers/scan_entries_provider.dart';
 import '../scan_entries/providers/scan_entries_provider_impl.dart';
 import '../scan_entries/repositories/scan_antries_repository_impl.dart';
+import '../synchronization/synchronization.dart';
 
 abstract class DataDI {
   static void initDependencies({
@@ -74,8 +75,8 @@ abstract class DataDI {
   }
 
   static void _initProviders(GetIt locator) {
-    locator.registerLazySingleton<CategoryProvider>(
-      () => CategoryProviderImpl(
+    locator.registerLazySingleton<CategoryRemoteProvider>(
+      () => CategoryRemoteProviderImpl(
         supabaseClient: locator<SupabaseClient>(),
         supabaseExceptionHandler: locator.get<ExceptionsHandler>(
           instanceName: ProviderInstance.supabaseProviderInstanceName.name,
@@ -125,13 +126,33 @@ abstract class DataDI {
       ),
     );
 
-    locator.registerLazySingleton<FolderProvider>(
-      () => FolderProviderImpl(
+    locator.registerLazySingleton<FolderRemoteProvider>(
+      () => FolderRemoteProviderImpl(
         supabaseClient: locator.get<SupabaseClient>(),
         supabaseExceptionHandler: locator.get<ExceptionsHandler>(
           instanceName: ProviderInstance.supabaseProviderInstanceName.name,
         ),
       ),
+    );
+
+    locator.registerLazySingleton<FolderLocalProvider>(
+      () => FolderLocalProviderImpl(
+        databaseProvider: locator.get<DatabaseProvider>(),
+      ),
+    );
+
+    locator.registerLazySingleton<CategoryLocalProvider>(
+      () => CategoryLocalProviderImpl(
+        databaseProvider: locator.get<DatabaseProvider>(),
+      ),
+    );
+
+    locator.registerLazySingleton<DatabaseProvider>(
+      DatabaseProvider.new,
+    );
+
+    locator.registerLazySingleton<SynchronizationProvider>(
+      SynchronizationProviderImpl.new,
     );
 
     locator.registerLazySingleton<ScanEntriesProvider>(
@@ -150,7 +171,8 @@ abstract class DataDI {
   }) {
     locator.registerLazySingleton<CategoryRepository>(
       () => CategoryRepositoryImpl(
-        categoryProvider: locator<CategoryProvider>(),
+        categoryRemoteProvider: locator<CategoryRemoteProvider>(),
+        categoryLocalProvider: locator<CategoryLocalProvider>(),
       ),
     );
 
@@ -164,15 +186,26 @@ abstract class DataDI {
 
     locator.registerLazySingleton<FolderRepository>(
       () => FolderRepositoryImpl(
-        folderProvider: locator<FolderProvider>(),
+        folderRemoteProvider: locator<FolderRemoteProvider>(),
+        folderLocalProvider: locator<FolderLocalProvider>(),
+      ),
+    );
+
+    locator.registerLazySingleton<SynchronizationRepository>(
+      () => SynchronizationRepositoryImpl(
+        synchronizationProvider: locator<SynchronizationProvider>(),
+        categoryRemoteProvider: locator<CategoryRemoteProvider>(),
+        folderRemoteProvider: locator<FolderRemoteProvider>(),
+        categoryLocalProvider: locator<CategoryLocalProvider>(),
+        folderLocalProvider: locator<FolderLocalProvider>(),
       ),
     );
 
     locator.registerLazySingleton<ScanEntriesRepository>(
       () => ScanEntriesRepositoryImpl(
         scanEntriesProvider: locator<ScanEntriesProvider>(),
-        folderProvider: locator<FolderProvider>(),
-        categoryProvider: locator<CategoryProvider>(),
+        folderProvider: locator<FolderRemoteProvider>(),
+        categoryProvider: locator<CategoryRemoteProvider>(),
         authorizationProvider: locator<AuthorizationProvider>(
           instanceName: provider.name,
         ),

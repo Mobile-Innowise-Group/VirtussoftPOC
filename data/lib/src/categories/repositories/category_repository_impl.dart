@@ -2,28 +2,45 @@ import 'package:domain/domain.dart';
 import '../categories.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
-  final CategoryProvider _categoryProvider;
+  final CategoryLocalProvider _categoryLocalProvider;
+  final CategoryRemoteProvider _categoryRemoteProvider;
 
   CategoryRepositoryImpl({
-    required CategoryProvider categoryProvider,
-  }) : _categoryProvider = categoryProvider;
+    required CategoryLocalProvider categoryLocalProvider,
+    required CategoryRemoteProvider categoryRemoteProvider,
+  })  : _categoryRemoteProvider = categoryRemoteProvider,
+        _categoryLocalProvider = categoryLocalProvider;
 
   @override
   Future<CategoryModel> createCategory({
     required CreateCategoryPayload payload,
-  }) {
-    return _categoryProvider.createCategory(
-      request: CreateCategoryRequest(
+  }) async {
+    final int createdCategoryId = await _categoryLocalProvider.createCategory(
+      request: CreateCategoryLocalRequest(
         name: payload.name,
       ),
     );
+
+    try {
+      final CategoryModel createdRemoteCategory =
+          await _categoryRemoteProvider.createCategory(
+        request: CreateCategoryRemoteRequest(
+          name: payload.name,
+          id: createdCategoryId,
+        ),
+      );
+
+      return createdRemoteCategory;
+    } catch (e) {
+      throw FailedToCreateRemoteCategoryException(e.toString());
+    }
   }
 
   @override
   Future<bool> deleteCategory({
     required DeleteCategoryPayload payload,
   }) {
-    return _categoryProvider.deleteCategory(
+    return _categoryRemoteProvider.deleteCategory(
       request: DeleteCategoryRequest(
         categoryId: payload.category.id,
       ),
@@ -34,7 +51,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<List<CategoryModel>> getUserCategories({
     required GetUserCategoriesPayload payload,
   }) {
-    return _categoryProvider.getUserCategories(
-        request: GetUserCategoriesRequest());
+    return _categoryLocalProvider.getCategories(
+        request: GetCategoriesRequest());
   }
 }

@@ -3,13 +3,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
 import '../categories.dart';
-import 'category_provider.dart';
 
-class CategoryProviderImpl implements CategoryProvider {
+class CategoryRemoteProviderImpl implements CategoryRemoteProvider {
   final ExceptionsHandler _supabaseExceptionHandler;
   final SupabaseClient _supabaseClient;
 
-  CategoryProviderImpl({
+  CategoryRemoteProviderImpl({
     required SupabaseClient supabaseClient,
     required ExceptionsHandler supabaseExceptionHandler,
   })  : _supabaseClient = supabaseClient,
@@ -17,12 +16,14 @@ class CategoryProviderImpl implements CategoryProvider {
 
   @override
   Future<CategoryModel> createCategory({
-    required CreateCategoryRequest request,
+    required CreateCategoryRemoteRequest request,
   }) async {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient.rpc('create_category', params: <String, dynamic>{
+        final Map<String, dynamic> response = await _supabaseClient
+            .rpc('add_new_category', params: <String, dynamic>{
           'category_name': request.name,
+          'category_id': request.id,
         });
 
         return CategoryMapper.toModel(CategoryEntity.fromJson(response));
@@ -46,13 +47,13 @@ class CategoryProviderImpl implements CategoryProvider {
   }
 
   @override
-  Future<List<CategoryModel>> getUserCategories({
-    required GetUserCategoriesRequest request,
+  Future<List<CategoryModel>> getCategories({
+    required GetCategoriesRequest request,
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response =
-            await _supabaseClient.rpc('get_user_categories', params: <String, dynamic>{});
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('get_user_new_categories', params: <String, dynamic>{});
 
         return response
             .map((Map<String, dynamic> category) => CategoryMapper.toModel(CategoryEntity.fromJson(category)))
