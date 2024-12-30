@@ -8,7 +8,7 @@ part of 'folder_entity.dart';
 
 _$FolderEntityImpl _$$FolderEntityImplFromJson(Map<String, dynamic> json) =>
     _$FolderEntityImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       name: json['name'] as String,
     );
 
