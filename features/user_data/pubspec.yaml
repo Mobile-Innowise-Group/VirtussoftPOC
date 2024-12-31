@@ -21,6 +21,8 @@ dependencies:
     path: ../user_categories
   user_folders:
     path: ../user_folders
+  private_folders:
+    path: ../private_folders
 
 dev_dependencies:
   lints: ^2.1.0

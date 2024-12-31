@@ -56,8 +56,20 @@ abstract class DomainDI {
       ),
     );
 
-    locator.registerLazySingleton<GetFoldersUseCase>(
-      () => GetFoldersUseCase(
+    locator.registerLazySingleton<GetAllFoldersUseCase>(
+          () => GetAllFoldersUseCase(
+        folderRepository: locator.get<FolderRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<GetPublicFoldersUseCase>(
+      () => GetPublicFoldersUseCase(
+        folderRepository: locator.get<FolderRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<GetPrivateFoldersUseCase>(
+      () => GetPrivateFoldersUseCase(
         folderRepository: locator.get<FolderRepository>(),
       ),
     );

@@ -9,7 +9,15 @@ abstract class FolderRepository {
     required DeleteFolderPayload payload,
   });
 
-  Future<List<FolderModel>> getFolders({
-    required GetFoldersPayload payload,
+  Future<List<FolderModel>> getPublicFolders({
+    required GetPublicFoldersPayload payload,
+  });
+
+  Future<List<FolderModel>> getPrivateFolders({
+    required GetPrivateFoldersPayload payload,
+  });
+
+  Future<List<FolderModel>> getAllFolders({
+    required GetAllFoldersPayload payload,
   });
 }

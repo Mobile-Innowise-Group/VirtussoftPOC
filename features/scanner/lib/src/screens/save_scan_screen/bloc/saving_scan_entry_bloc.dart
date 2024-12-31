@@ -9,7 +9,7 @@ part 'saving_scan_entry_state.dart';
 
 class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryState> {
   final AppRouter _appRouter;
-  final GetFoldersUseCase _getFoldersUseCase;
+  final GetAllFoldersUseCase _getAllFoldersUseCase;
   final GetUserCategoriesUseCase _getUserCategoriesUseCase;
   final CreateScanEntryUseCase _createScanEntryUseCase;
   final AppEventNotifier _appEventNotifier;
@@ -18,13 +18,13 @@ class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryStat
 
   SavingScanEntryBloc({
     required AppRouter appRouter,
-    required GetFoldersUseCase getFoldersUseCase,
+    required GetAllFoldersUseCase getAllFoldersUseCase,
     required GetUserCategoriesUseCase getUserCategoriesUseCase,
     required CreateScanEntryUseCase createScanEntryUseCase,
     required AppEventNotifier appEventNotifier,
     required String scanPath,
   })  : _appRouter = appRouter,
-        _getFoldersUseCase = getFoldersUseCase,
+        _getAllFoldersUseCase = getAllFoldersUseCase,
         _getUserCategoriesUseCase = getUserCategoriesUseCase,
         _createScanEntryUseCase = createScanEntryUseCase,
         _appEventNotifier = appEventNotifier,
@@ -42,7 +42,7 @@ class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryStat
     Emitter<SavingScanEntryState> emit,
   ) async {
     try {
-      final List<FolderModel> folders = await _getFoldersUseCase.execute(GetFoldersPayload());
+      final List<FolderModel> folders = await _getAllFoldersUseCase.execute(GetAllFoldersPayload());
       final List<CategoryModel> categories = await _getUserCategoriesUseCase.execute(GetUserCategoriesPayload());
 
       emit(

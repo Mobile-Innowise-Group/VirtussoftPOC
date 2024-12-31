@@ -9,6 +9,7 @@ class FolderEntity with _$FolderEntity {
   const factory FolderEntity({
     required String id,
     required String name,
+    required bool isPrivate,
   }) = _FolderEntity;
 
   factory FolderEntity.fromJson(Map<String, dynamic> json) =>

@@ -49,7 +49,8 @@ class FolderRepositoryImpl implements FolderRepository {
       AppLogger().info('Folders directory already exists at: $foldersPath');
     }
     try {
-      final FolderModel createdRemoteFolder = await _folderRemoteProvider.createFolder(
+      final FolderModel createdRemoteFolder =
+          await _folderRemoteProvider.createFolder(
         request: CreateFolderRemoteRequest(
           name: folder.name,
           id: folder.id,
@@ -80,7 +81,8 @@ class FolderRepositoryImpl implements FolderRepository {
     );
 
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String categoryPath = '${directory.path}/folders/${payload.folder.name}';
+    final String categoryPath =
+        '${directory.path}/folders/${payload.folder.name}';
     final Directory folder = Directory(categoryPath);
 
     if (folder.existsSync()) {
@@ -93,8 +95,30 @@ class FolderRepositoryImpl implements FolderRepository {
   }
 
   @override
-  Future<List<FolderModel>> getFolders({
-    required GetFoldersPayload payload,
+  Future<List<FolderModel>> getPublicFolders({
+    required GetPublicFoldersPayload payload,
+  }) async {
+    final List<FolderModel> folders = await _folderLocalProvider.getFolders(
+      request: GetFoldersRequest(),
+    );
+
+    return folders.where((FolderModel folder) => !folder.isPrivate).toList();
+  }
+
+  @override
+  Future<List<FolderModel>> getPrivateFolders({
+    required GetPrivateFoldersPayload payload,
+  }) async {
+    final List<FolderModel> folders = await _folderLocalProvider.getFolders(
+      request: GetFoldersRequest(),
+    );
+
+    return folders.where((FolderModel folder) => folder.isPrivate).toList();
+  }
+
+  @override
+  Future<List<FolderModel>> getAllFolders({
+    required GetAllFoldersPayload payload,
   }) {
     return _folderLocalProvider.getFolders(
       request: GetFoldersRequest(),

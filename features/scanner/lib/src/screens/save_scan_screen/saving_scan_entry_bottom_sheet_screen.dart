@@ -19,7 +19,7 @@ class SavingScanEntryBottomSheetScreen extends StatelessWidget implements AutoRo
     return BlocProvider<SavingScanEntryBloc>(
       create: (_) => SavingScanEntryBloc(
         appRouter: appLocator<AppRouter>(),
-        getFoldersUseCase: appLocator<GetFoldersUseCase>(),
+        getAllFoldersUseCase: appLocator<GetAllFoldersUseCase>(),
         getUserCategoriesUseCase: appLocator<GetUserCategoriesUseCase>(),
         createScanEntryUseCase: appLocator<CreateScanEntryUseCase>(),
         appEventNotifier: appLocator.get<AppEventNotifier>(),

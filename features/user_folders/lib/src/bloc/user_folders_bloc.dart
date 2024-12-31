@@ -15,14 +15,14 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
   final AppEventNotifier _appEventNotifier;
   final CreateFolderUseCase _createFolderUseCase;
   final DeleteFolderUseCase _deleteFolderUseCase;
-  final GetFoldersUseCase _getFoldersUseCase;
+  final GetPublicFoldersUseCase _getFoldersUseCase;
   final AppRouter _appRouter;
 
   UserFoldersBloc({
     required AppEventNotifier appEventNotifier,
     required CreateFolderUseCase createFolderUseCase,
     required DeleteFolderUseCase deleteFolderUseCase,
-    required GetFoldersUseCase getFoldersUseCase,
+    required GetPublicFoldersUseCase getFoldersUseCase,
     required AppRouter appRouter,
   })  : _appEventNotifier = appEventNotifier,
         _createFolderUseCase = createFolderUseCase,
@@ -45,7 +45,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     emit(state.copyWith(isLoading: true));
     try {
       final List<FolderModel> folders =
-          await _getFoldersUseCase.execute(GetFoldersPayload());
+          await _getFoldersUseCase.execute(GetPublicFoldersPayload());
       emit(
         state.copyWith(
           isLoading: false,
@@ -75,7 +75,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     } on FailedToCreateRemoteFolderException catch (_) {
       try {
         final List<FolderModel> folders =
-            await _getFoldersUseCase.execute(GetFoldersPayload());
+            await _getFoldersUseCase.execute(GetPublicFoldersPayload());
         emit(
           state.copyWith(
             isLoading: false,

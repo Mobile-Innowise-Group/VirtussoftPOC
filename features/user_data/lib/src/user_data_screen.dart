@@ -10,6 +10,7 @@ import 'package:user_folders/src/bloc/user_folders_bloc.dart';
 import 'package:user_folders/src/user_folders.dart';
 import 'package:user_folders/src/widgets/create_folder_dialog.dart';
 
+import 'bloc/user_data_bloc.dart';
 
 @RoutePage()
 class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -22,6 +23,13 @@ class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
+        BlocProvider<UserDataBloc>(
+          create: (_) => UserDataBloc(
+            appRouter: appLocator<AppRouter>(),
+            biometricService: appLocator<BiometricService>(),
+            appEventNotifier: appLocator<AppEventNotifier>(),
+          ),
+        ),
         BlocProvider<UserCategoriesBloc>(
           create: (_) => UserCategoriesBloc(
             appEventNotifier: appLocator<AppEventNotifier>(),
@@ -37,7 +45,7 @@ class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {
             appRouter: appLocator<AppRouter>(),
             createFolderUseCase: appLocator<CreateFolderUseCase>(),
             deleteFolderUseCase: appLocator<DeleteFolderUseCase>(),
-            getFoldersUseCase: appLocator<GetFoldersUseCase>(),
+            getFoldersUseCase: appLocator<GetPublicFoldersUseCase>(),
           ),
         ),
       ],
@@ -51,8 +59,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('data.userData'.tr()),
-        automaticallyImplyLeading: false,
+          title: Text('data.userData'.tr()),
+          automaticallyImplyLeading: false,
       ),
       body: CustomScrollView(
         slivers: <Widget>[
@@ -67,8 +75,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     return CreateFolderDialog(
                       onCreate: (String folderName) {
                         context.read<UserFoldersBloc>().add(
-                          CreateFolderEvent(folderName: folderName),
-                        );
+                              CreateFolderEvent(folderName: folderName),
+                            );
                       },
                     );
                   },
@@ -89,8 +97,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     return CreateCategoryDialog(
                       onCreate: (String folderName) {
                         context.read<UserCategoriesBloc>().add(
-                          CreateCategoryEvent(categoryName: folderName),
-                        );
+                              CreateCategoryEvent(categoryName: folderName),
+                            );
                       },
                     );
                   },

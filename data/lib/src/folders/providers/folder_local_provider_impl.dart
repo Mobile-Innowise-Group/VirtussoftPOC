@@ -29,16 +29,19 @@ class FolderLocalProviderImpl implements FolderLocalProvider {
   Future<List<FolderModel>> getFolders({
     required GetFoldersRequest request,
   }) async {
-    final List<Map<String, dynamic>> folders = await _databaseProvider.getFolders();
+    final List<Map<String, dynamic>> folders =
+        await _databaseProvider.getFolders();
     return folders.map((Map<String, dynamic> folder) {
-      return FolderMapper.toModel(FolderEntity.fromJson(folder));
+      return FolderMapper.toModelFromLocal(FolderLocalEntity.fromJson(folder));
     }).toList();
   }
 
   Future<FolderModel> _getFolderByRow({
     required int row,
   }) async {
-    final List<Map<String, dynamic>> folders = await _databaseProvider.getFoldersWithOffset(offset: row - 1);
-    return FolderMapper.toModel(FolderEntity.fromJson(folders.first));
+    final List<Map<String, dynamic>> folders =
+        await _databaseProvider.getFoldersWithOffset(offset: row - 1);
+    return FolderMapper.toModelFromLocal(
+        FolderLocalEntity.fromJson(folders.first));
   }
 }

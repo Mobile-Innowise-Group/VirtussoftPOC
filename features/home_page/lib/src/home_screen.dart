@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
               routes: const <PageRouteInfo>[
                 ScannerRoute(),
                 UserDataRoute(),
+                PrivateFoldersRoute(),
                 UserProfileRoute(),
               ],
               builder: (BuildContext context, Widget child,
@@ -51,6 +52,10 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                       BottomNavigationBarItem(
                         icon: Icon(Icons.data_usage),
                         label: 'Data',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.lock),
+                        label: 'Private Folders',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.person),
