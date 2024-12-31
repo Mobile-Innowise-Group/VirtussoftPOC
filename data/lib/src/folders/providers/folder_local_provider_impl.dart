@@ -44,4 +44,18 @@ class FolderLocalProviderImpl implements FolderLocalProvider {
     return FolderMapper.toModelFromLocal(
         FolderLocalEntity.fromJson(folders.first));
   }
+
+  @override
+  Future<FolderModel> editFolder({
+    required EditLocalFolderRequest request,
+  }) {
+    // TODO: implement editFolder
+    throw UnimplementedError();
+  }
 }
+
+1. Сделать ui часть для изменения приватности директории
+2. При входе на вкладку приватных директорий запрашивать биометрику
+3. Создать дата слой для изменения директории
+4. Написать функции в супабейз для измененния директорий
+5. Доделать логику на создание приватной директории

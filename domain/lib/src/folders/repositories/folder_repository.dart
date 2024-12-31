@@ -20,4 +20,9 @@ abstract class FolderRepository {
   Future<List<FolderModel>> getAllFolders({
     required GetAllFoldersPayload payload,
   });
+
+  Future<FolderModel> toggleFolderPrivacy({
+    required ToggleFolderPrivacyPayload payload,
+  });
+
 }

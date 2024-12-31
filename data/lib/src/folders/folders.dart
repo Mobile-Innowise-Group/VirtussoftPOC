@@ -10,6 +10,7 @@ export 'repositories/folder_repository_impl.dart';
 export 'requests/create_folder_local_request.dart';
 export 'requests/create_folder_remote_request.dart';
 export 'requests/delete_folder_request.dart';
+export 'requests/edit_local_folder_request.dart';
 export 'requests/get_folder_by_id_request.dart';
 export 'requests/get_private_folders_request.dart';
 export 'requests/get_public_folders_request.dart';

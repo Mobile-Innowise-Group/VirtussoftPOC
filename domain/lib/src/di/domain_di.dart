@@ -108,5 +108,15 @@ abstract class DomainDI {
       () => SynchronizeDataUseCase(
           synchronizationRepository: locator.get<SynchronizationRepository>()),
     );
+
+    locator.registerLazySingleton<CreatePrivateFolderUseCase>(
+          () => CreatePrivateFolderUseCase(
+          folderRepository: locator.get<FolderRepository>()),
+    );
+
+    locator.registerLazySingleton<ToggleFolderPrivacyUseCase>(
+          () => ToggleFolderPrivacyUseCase(
+          folderRepository: locator.get<FolderRepository>()),
+    );
   }
 }

@@ -35,6 +35,7 @@ class FolderRepositoryImpl implements FolderRepository {
     final FolderModel folder = await _folderLocalProvider.createFolder(
       request: CreateFolderLocalRequest(
         name: payload.name,
+        isPrivate: payload.isPrivate ? 1 : 0,
       ),
     );
 
@@ -55,6 +56,7 @@ class FolderRepositoryImpl implements FolderRepository {
           name: folder.name,
           id: folder.id,
           userId: userEntity.id,
+          isPrivate: payload.isPrivate,
         ),
       );
 
@@ -123,5 +125,14 @@ class FolderRepositoryImpl implements FolderRepository {
     return _folderLocalProvider.getFolders(
       request: GetFoldersRequest(),
     );
+  }
+
+  @override
+  Future<FolderModel> toggleFolderPrivacy({
+    required ToggleFolderPrivacyPayload payload,
+  }) async {
+    final FolderModel editedFolder = await _folderLocalProvider.editFolder(
+        request: EditLocalFolderRequest());
+    return editedFolder;
   }
 }

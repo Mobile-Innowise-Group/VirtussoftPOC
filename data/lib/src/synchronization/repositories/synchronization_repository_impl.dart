@@ -46,6 +46,7 @@ class SynchronizationRepositoryImpl implements SynchronizationRepository {
       await _folderLocalProvider.createFolder(
         request: CreateFolderLocalRequest(
           name: remoteFolder.name,
+          isPrivate: remoteFolder.isPrivate ? 1 : 0,
         ),
       );
     }

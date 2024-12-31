@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 import 'bloc/private_folders_bloc.dart';
+import 'widgets/create_private_folder_dialog.dart';
 
 @RoutePage()
 class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -17,6 +18,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
       create: (_) => PrivateFoldersBloc(
         appEventNotifier: appLocator<AppEventNotifier>(),
         getPrivateFoldersUseCase: appLocator<GetPrivateFoldersUseCase>(),
+        createPrivateFolderUseCase: appLocator<CreatePrivateFolderUseCase>(),
         appRouter: appLocator<AppRouter>(),
       ),
       child: this,
@@ -66,6 +68,26 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                       ),
                     );
             },
+          ),
+          SliverToBoxAdapter(
+            child: ListTile(
+              leading: const Icon(Icons.add),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext _) {
+                    return CreatePrivateFolderDialog(
+                      onCreate: (String folderName) {
+                        context.read<PrivateFoldersBloc>().add(
+                          CreatePrivateFolderEvent(folderName: folderName),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+              title: Text('folder.addFolder'.tr()),
+            ),
           ),
         ],
       ),
