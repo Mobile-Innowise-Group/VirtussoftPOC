@@ -24,11 +24,6 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (BuildContext context, HomeState state) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
         return Stack(
           children: <Widget>[
             AutoTabsRouter.tabBar(
@@ -42,7 +37,11 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                 final TabsRouter tabsRouter = AutoTabsRouter.of(context);
 
                 return Scaffold(
-                  body: child,
+                  body: state.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : child,
                   bottomNavigationBar: BottomNavigationBar(
                     items: const <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
