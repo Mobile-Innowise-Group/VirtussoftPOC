@@ -23,6 +23,8 @@ dependencies:
     path: ../features/scanner
   user_data:
     path: ../features/user_data
+  user_folders:
+    path: ../features/user_folders
 
   auto_route: ^9.2.2
 

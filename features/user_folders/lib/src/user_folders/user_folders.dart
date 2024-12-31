@@ -16,8 +16,7 @@ class UserFolders extends StatelessWidget {
             child: Center(child: CircularProgressIndicator()),
           );
         }
-        final List<FolderModel> folders =
-            state.isExpanded ? state.folders : state.folders.take(3).toList();
+        final List<FolderModel> folders = state.isExpanded ? state.folders : state.folders.take(3).toList();
 
         return folders.isEmpty
             ? SliverToBoxAdapter(
@@ -32,8 +31,8 @@ class UserFolders extends StatelessWidget {
                   (BuildContext context, int index) {
                     if (index < folders.length) {
                       return GestureDetector(
-                        onLongPress: () {
-                          print('Long press');
+                        onTap: () {
+                          context.read<UserFoldersBloc>().add(OpenFolderEvent(folder: folders[index]));
                         },
                         child: ListTile(
                           leading: const Icon(Icons.folder),
@@ -41,16 +40,11 @@ class UserFolders extends StatelessWidget {
                           title: Text(folders[index].name),
                         ),
                       );
-                    } else if (index == folders.length &&
-                        state.folders.length > 3) {
+                    } else if (index == folders.length && state.folders.length > 3) {
                       return TextButton(
-                        onPressed: () => context
-                            .read<UserFoldersBloc>()
-                            .add(const ToggleExpandedEvent()),
+                        onPressed: () => context.read<UserFoldersBloc>().add(const ToggleExpandedEvent()),
                         child: Text(
-                          state.isExpanded
-                              ? 'common.showLess'.tr()
-                              : 'common.showMore'.tr(),
+                          state.isExpanded ? 'common.showLess'.tr() : 'common.showMore'.tr(),
                         ),
                       );
                     } else {

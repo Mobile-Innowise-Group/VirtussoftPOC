@@ -10,10 +10,12 @@ _$CreateFolderLocalRequestImpl _$$CreateFolderLocalRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateFolderLocalRequestImpl(
       name: json['name'] as String,
+      id: json['id'] as String?,
     );
 
 Map<String, dynamic> _$$CreateFolderLocalRequestImplToJson(
         _$CreateFolderLocalRequestImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
+      'id': instance.id,
     };

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:core/core.dart';
-import 'package:domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
+import '../requests/get_scan_entries_by_folder_id_request.dart';
 import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
@@ -63,8 +63,16 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
   }
 
   @override
-  Future<List<CategoryModel>> getScanEntries({required GetScanEntriesRequest request}) {
-    // TODO: implement getScanEntries
-    throw UnimplementedError();
+  Future<List<ScanEntryEntity>> getScanEntriesByFolderId({required GetScanEntriesByFolderIdRequest request}) {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final List<Map<String, dynamic>> response =
+            await _supabaseClient.rpc('get_scan_entries_by_folder', params: <String, dynamic>{
+          'p_folder_id': request.folderId,
+        });
+
+        return response.map(ScanEntryEntity.fromJson).toList();
+      },
+    );
   }
 }

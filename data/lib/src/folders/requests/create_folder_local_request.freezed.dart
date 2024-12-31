@@ -22,6 +22,7 @@ CreateFolderLocalRequest _$CreateFolderLocalRequestFromJson(
 /// @nodoc
 mixin _$CreateFolderLocalRequest {
   String get name => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
 
   /// Serializes this CreateFolderLocalRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $CreateFolderLocalRequestCopyWith<$Res> {
           $Res Function(CreateFolderLocalRequest) then) =
       _$CreateFolderLocalRequestCopyWithImpl<$Res, CreateFolderLocalRequest>;
   @useResult
-  $Res call({String name});
+  $Res call({String name, String? id});
 }
 
 /// @nodoc
@@ -59,12 +60,17 @@ class _$CreateFolderLocalRequestCopyWithImpl<$Res,
   @override
   $Res call({
     Object? name = null,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -78,7 +84,7 @@ abstract class _$$CreateFolderLocalRequestImplCopyWith<$Res>
       __$$CreateFolderLocalRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name});
+  $Res call({String name, String? id});
 }
 
 /// @nodoc
@@ -97,12 +103,17 @@ class __$$CreateFolderLocalRequestImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? id = freezed,
   }) {
     return _then(_$CreateFolderLocalRequestImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -110,17 +121,19 @@ class __$$CreateFolderLocalRequestImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
-  const _$CreateFolderLocalRequestImpl({required this.name});
+  const _$CreateFolderLocalRequestImpl({required this.name, this.id});
 
   factory _$CreateFolderLocalRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateFolderLocalRequestImplFromJson(json);
 
   @override
   final String name;
+  @override
+  final String? id;
 
   @override
   String toString() {
-    return 'CreateFolderLocalRequest(name: $name)';
+    return 'CreateFolderLocalRequest(name: $name, id: $id)';
   }
 
   @override
@@ -128,12 +141,13 @@ class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateFolderLocalRequestImpl &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name);
+  int get hashCode => Object.hash(runtimeType, name, id);
 
   /// Create a copy of CreateFolderLocalRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -153,14 +167,17 @@ class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
 }
 
 abstract class _CreateFolderLocalRequest implements CreateFolderLocalRequest {
-  const factory _CreateFolderLocalRequest({required final String name}) =
-      _$CreateFolderLocalRequestImpl;
+  const factory _CreateFolderLocalRequest(
+      {required final String name,
+      final String? id}) = _$CreateFolderLocalRequestImpl;
 
   factory _CreateFolderLocalRequest.fromJson(Map<String, dynamic> json) =
       _$CreateFolderLocalRequestImpl.fromJson;
 
   @override
   String get name;
+  @override
+  String? get id;
 
   /// Create a copy of CreateFolderLocalRequest
   /// with the given fields replaced by the non-null parameter values.

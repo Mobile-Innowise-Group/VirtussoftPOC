@@ -6,10 +6,8 @@ import 'package:nested/nested.dart';
 import 'package:user_categories/src/bloc/user_categories_bloc.dart';
 import 'package:user_categories/src/user_categories.dart';
 import 'package:user_categories/src/widgets/create_category_dialog.dart';
-import 'package:user_folders/src/bloc/user_folders_bloc.dart';
-import 'package:user_folders/src/user_folders.dart';
-import 'package:user_folders/src/widgets/create_folder_dialog.dart';
-
+import 'package:user_folders/src/user_folders/user_folders.dart';
+import 'package:user_folders/src/user_folders/widgets/create_folder_dialog.dart';
 
 @RoutePage()
 class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -67,8 +65,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     return CreateFolderDialog(
                       onCreate: (String folderName) {
                         context.read<UserFoldersBloc>().add(
-                          CreateFolderEvent(folderName: folderName),
-                        );
+                              CreateFolderEvent(folderName: folderName),
+                            );
                       },
                     );
                   },
@@ -89,8 +87,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     return CreateCategoryDialog(
                       onCreate: (String folderName) {
                         context.read<UserCategoriesBloc>().add(
-                          CreateCategoryEvent(categoryName: folderName),
-                        );
+                              CreateCategoryEvent(categoryName: folderName),
+                            );
                       },
                     );
                   },

@@ -7,6 +7,8 @@ import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
 
+import '../../../user_folder.dart';
+
 part 'user_folders_event.dart';
 
 part 'user_folders_state.dart';
@@ -33,6 +35,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     on<CreateFolderEvent>(_onCreateFolder);
     on<DeleteFolderEvent>(_onDeleteFolder);
     on<ToggleExpandedEvent>(_onToggleExpanded);
+    on<OpenFolderEvent>(_onOpenFolderEvent);
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -44,8 +47,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
   ) async {
     emit(state.copyWith(isLoading: true));
     try {
-      final List<FolderModel> folders =
-          await _getFoldersUseCase.execute(GetFoldersPayload());
+      final List<FolderModel> folders = await _getFoldersUseCase.execute(GetFoldersPayload());
       emit(
         state.copyWith(
           isLoading: false,
@@ -69,13 +71,11 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
       final FolderModel folder = await _createFolderUseCase.execute(
         CreateFolderPayload(name: event.folderName),
       );
-      final List<FolderModel> folders = List<FolderModel>.from(state.folders)
-        ..add(folder);
+      final List<FolderModel> folders = List<FolderModel>.from(state.folders)..add(folder);
       emit(state.copyWith(isLoading: false, folders: folders));
     } on FailedToCreateRemoteFolderException catch (_) {
       try {
-        final List<FolderModel> folders =
-            await _getFoldersUseCase.execute(GetFoldersPayload());
+        final List<FolderModel> folders = await _getFoldersUseCase.execute(GetFoldersPayload());
         emit(
           state.copyWith(
             isLoading: false,
@@ -125,5 +125,12 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     Emitter<UserFoldersState> emit,
   ) async {
     emit(state.copyWith(isExpanded: !state.isExpanded));
+  }
+
+  FutureOr<void> _onOpenFolderEvent(
+    OpenFolderEvent event,
+    Emitter<UserFoldersState> emit,
+  ) async {
+    await _appRouter.push(FoldersScanListRoute(folder: event.folder));
   }
 }
