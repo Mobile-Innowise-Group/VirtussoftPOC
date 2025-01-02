@@ -25,8 +25,9 @@ class DatabaseProvider {
     final String path = join(await getDatabasesPath(), 'app_database.db');
     return openDatabase(
       path,
-      version: 1,
+      version: 2, // Increment the version number
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -34,7 +35,8 @@ class DatabaseProvider {
     await db.execute('''
       CREATE TABLE folders(
         id TEXT PRIMARY KEY DEFAULT $_generateUUID,
-        name TEXT
+        name TEXT,
+        isPrivate INTEGER DEFAULT 0
       )
     ''');
 
@@ -44,6 +46,14 @@ class DatabaseProvider {
         name TEXT
       )
     ''');
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('''
+        ALTER TABLE folders ADD COLUMN isPrivate INTEGER DEFAULT 0
+      ''');
+    }
   }
 
   Future<int> createFolder(Map<String, dynamic> row) async {
@@ -90,5 +100,10 @@ class DatabaseProvider {
   Future<int> deleteCategory(String id) async {
     final Database db = await database;
     return db.delete('categories', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> editFolder(Map<String, dynamic> row) async {
+    final Database db = await database;
+    return db.update('folders', row, where: 'id = ?', whereArgs: [row['id']]);
   }
 }

@@ -88,8 +88,8 @@ abstract class DataDI {
       () => CustomAuthProviderImpl(
         dio: locator.get<Dio>(),
         storage: locator.get<FlutterSecureStorage>(),
-        customExceptionHandler:
-            locator.get<ExceptionsHandler>(instanceName: ProviderInstance.customProviderInstanceName.name),
+        customExceptionHandler: locator.get<ExceptionsHandler>(
+            instanceName: ProviderInstance.customProviderInstanceName.name),
       ),
       instanceName: ProviderInstance.customProviderInstanceName.name,
     );
@@ -97,8 +97,8 @@ abstract class DataDI {
     locator.registerLazySingleton<AuthorizationProvider>(
       () => FirebaseAuthProvider(
         firebaseAuth: locator.get<FirebaseAuth>(),
-        firebaseExceptionsHandler:
-            locator.get<ExceptionsHandler>(instanceName: ProviderInstance.firebaseProviderInstanceName.name),
+        firebaseExceptionsHandler: locator.get<ExceptionsHandler>(
+            instanceName: ProviderInstance.firebaseProviderInstanceName.name),
       ),
       instanceName: ProviderInstance.firebaseProviderInstanceName.name,
     );

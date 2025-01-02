@@ -41,7 +41,8 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
       ),
     );
 
-    final ScanEntryEntity scanEntryEntity = await _scanEntriesProvider.createScanEntry(
+    final ScanEntryEntity scanEntryEntity =
+        await _scanEntriesProvider.createScanEntry(
       request: CreateScanEntryRequest(
         localPath: payload.scanLocalPath,
         remotePath: scanRemoteLink,

@@ -10,10 +10,12 @@ class SavingScanEntryBottomSheetContent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _SavingScanEntryBottomSheetContentState();
+  State<StatefulWidget> createState() =>
+      _SavingScanEntryBottomSheetContentState();
 }
 
-class _SavingScanEntryBottomSheetContentState extends State<SavingScanEntryBottomSheetContent> {
+class _SavingScanEntryBottomSheetContentState
+    extends State<SavingScanEntryBottomSheetContent> {
   late final SavingScanEntryBloc _bloc;
 
   @override
@@ -41,7 +43,8 @@ class _SavingScanEntryBottomSheetContentState extends State<SavingScanEntryBotto
                 children: <Widget>[
                   const Text(
                     'Scanning successfully finished! Let`s save it!',
-                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16.0),
                   DropdownButtonFormField<CategoryModel>(

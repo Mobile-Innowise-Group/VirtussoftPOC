@@ -15,7 +15,9 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<HomeBloc>(
       create: (_) => HomeBloc(
-          synchronizeDataUseCase: appLocator<SynchronizeDataUseCase>()),
+        synchronizeDataUseCase: appLocator<SynchronizeDataUseCase>(),
+        appEventNotifier: appLocator<AppEventNotifier>(),
+      ),
       child: this,
     );
   }
@@ -24,17 +26,13 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (BuildContext context, HomeState state) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
         return Stack(
           children: <Widget>[
             AutoTabsRouter.tabBar(
               routes: const <PageRouteInfo>[
                 ScannerRoute(),
                 UserDataRoute(),
+                PrivateFoldersRoute(),
                 UserProfileRoute(),
               ],
               builder: (BuildContext context, Widget child,
@@ -42,8 +40,14 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                 final TabsRouter tabsRouter = AutoTabsRouter.of(context);
 
                 return Scaffold(
-                  body: child,
+                  body: state.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : child,
                   bottomNavigationBar: BottomNavigationBar(
+                    selectedItemColor: Theme.of(context).primaryColor,
+                    unselectedItemColor: Colors.black54,
                     items: const <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
                         icon: Icon(Icons.qr_code),
@@ -52,6 +56,10 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                       BottomNavigationBarItem(
                         icon: Icon(Icons.data_usage),
                         label: 'Data',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.lock),
+                        label: 'Private Folders',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.person),

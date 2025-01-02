@@ -6,7 +6,8 @@ import 'bloc/saving_scan_entry_bloc.dart';
 import 'saving_scan_entry_bottom_sheet_content.dart';
 
 @RoutePage()
-class SavingScanEntryBottomSheetScreen extends StatelessWidget implements AutoRouteWrapper {
+class SavingScanEntryBottomSheetScreen extends StatelessWidget
+    implements AutoRouteWrapper {
   final String scanPath;
 
   const SavingScanEntryBottomSheetScreen({
@@ -19,7 +20,7 @@ class SavingScanEntryBottomSheetScreen extends StatelessWidget implements AutoRo
     return BlocProvider<SavingScanEntryBloc>(
       create: (_) => SavingScanEntryBloc(
         appRouter: appLocator<AppRouter>(),
-        getFoldersUseCase: appLocator<GetFoldersUseCase>(),
+        getAllFoldersUseCase: appLocator<GetAllFoldersUseCase>(),
         getUserCategoriesUseCase: appLocator<GetUserCategoriesUseCase>(),
         createScanEntryUseCase: appLocator<CreateScanEntryUseCase>(),
         appEventNotifier: appLocator.get<AppEventNotifier>(),

@@ -1,6 +1,7 @@
 import '../../../domain.dart';
 
-class DeleteScanEntryUseCase extends FutureUseCase<DeleteScanEntryPayload, bool> {
+class DeleteScanEntryUseCase
+    extends FutureUseCase<DeleteScanEntryPayload, bool> {
   final ScanEntriesRepository _scanEntriesRepository;
 
   DeleteScanEntryUseCase({

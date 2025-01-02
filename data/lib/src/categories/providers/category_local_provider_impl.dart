@@ -29,7 +29,8 @@ class CategoryLocalProviderImpl implements CategoryLocalProvider {
   Future<List<CategoryModel>> getCategories({
     required GetCategoriesRequest request,
   }) async {
-    final List<Map<String, dynamic>> categories = await _databaseProvider.getCategories();
+    final List<Map<String, dynamic>> categories =
+        await _databaseProvider.getCategories();
     return categories.map((Map<String, dynamic> category) {
       return CategoryMapper.toModel(CategoryEntity.fromJson(category));
     }).toList();
@@ -38,7 +39,8 @@ class CategoryLocalProviderImpl implements CategoryLocalProvider {
   Future<CategoryModel> _getCategoryByRow({
     required int row,
   }) async {
-    final List<Map<String, dynamic>> categories = await _databaseProvider.getCategoriesWithOffset(offset: row - 1);
+    final List<Map<String, dynamic>> categories =
+        await _databaseProvider.getCategoriesWithOffset(offset: row - 1);
     return CategoryMapper.toModel(CategoryEntity.fromJson(categories.first));
   }
 }

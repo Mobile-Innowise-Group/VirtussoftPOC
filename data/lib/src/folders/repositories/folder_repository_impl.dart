@@ -35,6 +35,7 @@ class FolderRepositoryImpl implements FolderRepository {
     final FolderModel folder = await _folderLocalProvider.createFolder(
       request: CreateFolderLocalRequest(
         name: payload.name,
+        isPrivate: payload.isPrivate ? 1 : 0,
       ),
     );
 
@@ -49,11 +50,13 @@ class FolderRepositoryImpl implements FolderRepository {
       AppLogger().info('Folders directory already exists at: $foldersPath');
     }
     try {
-      final FolderModel createdRemoteFolder = await _folderRemoteProvider.createFolder(
+      final FolderModel createdRemoteFolder =
+          await _folderRemoteProvider.createFolder(
         request: CreateFolderRemoteRequest(
           name: folder.name,
           id: folder.id,
           userId: userEntity.id,
+          isPrivate: payload.isPrivate,
         ),
       );
 
@@ -80,7 +83,8 @@ class FolderRepositoryImpl implements FolderRepository {
     );
 
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String categoryPath = '${directory.path}/folders/${payload.folder.name}';
+    final String categoryPath =
+        '${directory.path}/folders/${payload.folder.name}';
     final Directory folder = Directory(categoryPath);
 
     if (folder.existsSync()) {
@@ -93,11 +97,56 @@ class FolderRepositoryImpl implements FolderRepository {
   }
 
   @override
-  Future<List<FolderModel>> getFolders({
-    required GetFoldersPayload payload,
+  Future<List<FolderModel>> getPublicFolders({
+    required GetPublicFoldersPayload payload,
+  }) async {
+    final List<FolderModel> folders = await _folderLocalProvider.getFolders(
+      request: GetFoldersRequest(),
+    );
+
+    return folders.where((FolderModel folder) => !folder.isPrivate).toList();
+  }
+
+  @override
+  Future<List<FolderModel>> getPrivateFolders({
+    required GetPrivateFoldersPayload payload,
+  }) async {
+    final List<FolderModel> folders = await _folderLocalProvider.getFolders(
+      request: GetFoldersRequest(),
+    );
+
+    return folders.where((FolderModel folder) => folder.isPrivate).toList();
+  }
+
+  @override
+  Future<List<FolderModel>> getAllFolders({
+    required GetAllFoldersPayload payload,
   }) {
     return _folderLocalProvider.getFolders(
       request: GetFoldersRequest(),
     );
+  }
+
+  @override
+  Future<FolderModel> toggleFolderPrivacy({
+    required ToggleFolderPrivacyPayload payload,
+  }) async {
+    final FolderModel editedFolder = await _folderLocalProvider.editFolder(
+      request: EditLocalFolderRequest(
+        folder: FolderMapper.toLocalEntity(payload.folder).copyWith(
+          isPrivate: payload.folder.isPrivate ? 0 : 1,
+        ),
+      ),
+    );
+    try {
+      await _folderRemoteProvider.editFolder(
+        request: EditRemoteFolderRequest(
+            folder: FolderMapper.toEntity(editedFolder)),
+      );
+    } catch (e) {
+      throw FailedToEditRemoteFolderException(e.toString());
+    }
+
+    return editedFolder;
   }
 }

@@ -24,7 +24,10 @@
     "editFolder": "Edit folder",
     "editFolderMessage": "Edit folder name",
     "noAddedFolders": "No added folders",
-    "addFolder": "Add folder"
+    "addFolder": "Add folder",
+    "privateFolders": "Private folders",
+    "makeFolderPrivate": "Make folder private",
+    "makeFolderPublic": "Make folder public"
   },
   "category": {
     "createCategory": "Create category",
