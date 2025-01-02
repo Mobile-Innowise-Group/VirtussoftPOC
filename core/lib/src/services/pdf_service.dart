@@ -74,9 +74,7 @@ class PdfService {
     return file;
   }
 
-  static Future<void> openFile(File file) async {
-    final String url = file.path;
-
-    await OpenFile.open(url);
+  static Future<void> openFile(String path) async {
+    await OpenFile.open(path);
   }
 }

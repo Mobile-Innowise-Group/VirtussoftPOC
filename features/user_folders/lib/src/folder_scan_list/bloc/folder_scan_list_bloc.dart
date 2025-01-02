@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
@@ -27,7 +28,9 @@ class FolderScanListBloc extends Bloc<FolderScanListEvent, FolderScanListState> 
         _folder = folder,
         super(FolderScanListState.initial()) {
     on<InitEvent>(_onInit);
-    on<ShareScanEvent>(_onShareScanEvent);
+    on<ShareQrEvent>(_onShareQrEvent);
+    on<OpenScanEvent>(_onOpenScanEvent);
+    on<CloseShareQrDialogEvent>(_onCloseShareQrDialogEvent);
   }
 
   FutureOr<void> _onInit(
@@ -54,8 +57,30 @@ class FolderScanListBloc extends Bloc<FolderScanListEvent, FolderScanListState> 
     }
   }
 
-  FutureOr<void> _onShareScanEvent(
-    ShareScanEvent event,
+  FutureOr<void> _onCloseShareQrDialogEvent(
+    CloseShareQrDialogEvent event,
     Emitter<FolderScanListState> emit,
-  ) async {}
+  ) async {
+    emit(state.copyWith());
+    await _appRouter.maybePopTop();
+  }
+
+  FutureOr<void> _onShareQrEvent(
+    ShareQrEvent event,
+    Emitter<FolderScanListState> emit,
+  ) async {
+    await ShareService.shareFile(
+      message: 'Use this qr-code to download file',
+      bites: event.qrCodeBites,
+    );
+
+    await _appRouter.maybePopTop();
+  }
+
+  FutureOr<void> _onOpenScanEvent(
+    OpenScanEvent event,
+    Emitter<FolderScanListState> emit,
+  ) async {
+    await PdfService.openFile(event.localUrl);
+  }
 }

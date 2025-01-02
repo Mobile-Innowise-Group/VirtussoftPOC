@@ -24,6 +24,7 @@ class FolderScanListState {
     return FolderScanListState(
       isLoading: isLoading ?? this.isLoading,
       scans: scans ?? this.scans,
+      // qrCode: qrCode,
     );
   }
 }
