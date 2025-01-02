@@ -81,11 +81,16 @@ class FolderRemoteProviderImpl implements FolderRemoteProvider {
   }
 
   @override
-  Future<void> editFolder({required EditRemoteFolderRequest request}) {
+  Future<FolderModel> editFolder({required EditRemoteFolderRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        return await _supabaseClient.rpc('edit_folder',
-            params: request.folder.toJson());
+        final Map<String, dynamic> response =
+            await _supabaseClient.rpc('edit_folder', params: <String, dynamic>{
+          'folder_id': request.folder.id,
+          'folder_name': request.folder.name,
+          'is_private_flag': request.folder.isPrivate,
+        });
+        return FolderMapper.toModel(FolderEntity.fromJson(response));
       },
     );
   }

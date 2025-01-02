@@ -25,7 +25,7 @@ class DatabaseProvider {
     final String path = join(await getDatabasesPath(), 'app_database.db');
     return openDatabase(
       path,
-      version: 2, // Increment the version number
+      version: 2,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -36,7 +36,7 @@ class DatabaseProvider {
       CREATE TABLE folders(
         id TEXT PRIMARY KEY DEFAULT $_generateUUID,
         name TEXT,
-        isPrivate INTEGER DEFAULT 0
+        is_private INTEGER DEFAULT 0
       )
     ''');
 
@@ -51,7 +51,7 @@ class DatabaseProvider {
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
       await db.execute('''
-        ALTER TABLE folders ADD COLUMN isPrivate INTEGER DEFAULT 0
+        ALTER TABLE folders ADD COLUMN is_private INTEGER DEFAULT 0
       ''');
     }
   }

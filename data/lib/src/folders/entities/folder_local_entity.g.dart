@@ -11,7 +11,7 @@ _$FolderLocalEntityImpl _$$FolderLocalEntityImplFromJson(
     _$FolderLocalEntityImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      isPrivate: (json['isPrivate'] as num).toInt(),
+      isPrivate: (json['is_private'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$FolderLocalEntityImplToJson(
@@ -19,5 +19,5 @@ Map<String, dynamic> _$$FolderLocalEntityImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'isPrivate': instance.isPrivate,
+      'is_private': instance.isPrivate,
     };
