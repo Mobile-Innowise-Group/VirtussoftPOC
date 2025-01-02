@@ -41,7 +41,9 @@ class UserFolders extends StatelessWidget {
                                   ToggleFolderPrivacyEvent(
                                       state.folders[index])),
                               //TODO Sihau - Add localization
-                              title: const Text('Make directory private'),
+                              title: Text(
+                                'folder.makeFolderPrivate'.tr(),
+                              ),
                               leading: const Icon(Icons.lock),
                             ),
                           );

@@ -132,7 +132,21 @@ class FolderRepositoryImpl implements FolderRepository {
     required ToggleFolderPrivacyPayload payload,
   }) async {
     final FolderModel editedFolder = await _folderLocalProvider.editFolder(
-        request: EditLocalFolderRequest());
+      request: EditLocalFolderRequest(
+        folder: FolderMapper.toLocalEntity(payload.folder).copyWith(
+          isPrivate: payload.folder.isPrivate ? 0 : 1,
+        ),
+      ),
+    );
+    try {
+      await _folderRemoteProvider.editFolder(
+        request: EditRemoteFolderRequest(
+            folder: FolderMapper.toEntity(editedFolder)),
+      );
+    } catch (e) {
+      throw FailedToEditRemoteFolderException(e.toString());
+    }
+
     return editedFolder;
   }
 }

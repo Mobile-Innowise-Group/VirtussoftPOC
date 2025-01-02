@@ -15,7 +15,9 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<HomeBloc>(
       create: (_) => HomeBloc(
-          synchronizeDataUseCase: appLocator<SynchronizeDataUseCase>()),
+        synchronizeDataUseCase: appLocator<SynchronizeDataUseCase>(),
+        appEventNotifier: appLocator<AppEventNotifier>(),
+      ),
       child: this,
     );
   }

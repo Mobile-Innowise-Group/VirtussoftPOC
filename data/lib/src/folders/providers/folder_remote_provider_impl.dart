@@ -79,4 +79,14 @@ class FolderRemoteProviderImpl implements FolderRemoteProvider {
       },
     );
   }
+
+  @override
+  Future<void> editFolder({required EditRemoteFolderRequest request}) {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        return await _supabaseClient.rpc('edit_folder',
+            params: request.folder.toJson());
+      },
+    );
+  }
 }

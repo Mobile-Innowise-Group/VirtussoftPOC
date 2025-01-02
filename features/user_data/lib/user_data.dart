@@ -12,6 +12,7 @@ class UserDataRouter extends RootStackRouter {
   List<AutoRoute> get routes => <AutoRoute>[
         AutoRoute(
           initial: true,
+          maintainState: false,
           page: UserDataRoute.page,
         ),
       ];

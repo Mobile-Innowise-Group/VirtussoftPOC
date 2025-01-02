@@ -11,6 +11,7 @@ class PrivateFoldersRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
         AutoRoute(
+          maintainState: false,
           page: PrivateFoldersRoute.page,
         ),
       ];

@@ -101,4 +101,9 @@ class DatabaseProvider {
     final Database db = await database;
     return db.delete('categories', where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<int> editFolder(Map<String, dynamic> row) async {
+    final Database db = await database;
+    return db.update('folders', row, where: 'id = ?', whereArgs: [row['id']]);
+  }
 }

@@ -48,13 +48,11 @@ class FolderLocalProviderImpl implements FolderLocalProvider {
   @override
   Future<FolderModel> editFolder({
     required EditLocalFolderRequest request,
-  }) {
-    // TODO: implement editFolder
-    throw UnimplementedError();
+  }) async {
+    final int row = await _databaseProvider.editFolder(request.folder.toJson());
+    return _getFolderByRow(row: row);
   }
 }
 
-// 2. При входе на вкладку приватных директорий запрашивать биометрику
-// 3. Создать дата слой для изменения директории
 // 4. Написать функции в супабейз для измененния директорий
 // 5. Доделать логику на создание приватной директории

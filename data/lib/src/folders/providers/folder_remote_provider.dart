@@ -18,4 +18,8 @@ abstract class FolderRemoteProvider {
   Future<bool> deleteFolder({
     required DeleteFolderRequest request,
   });
+
+  Future<void> editFolder({
+    required EditRemoteFolderRequest request,
+  });
 }

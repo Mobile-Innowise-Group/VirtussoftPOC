@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 
@@ -11,10 +12,13 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final Stream<bool> networkStream = NetworkService.observeConnection;
   final SynchronizeDataUseCase _synchronizeDataUseCase;
+  final AppEventNotifier _appEventNotifier;
 
   HomeBloc({
     required SynchronizeDataUseCase synchronizeDataUseCase,
+    required AppEventNotifier appEventNotifier,
   })  : _synchronizeDataUseCase = synchronizeDataUseCase,
+        _appEventNotifier = appEventNotifier,
         super(HomeState.initial()) {
     on<HomeInit>(_onInit);
 
@@ -34,7 +38,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return state.copyWith(isInternetConnected: isConnected);
       });
     } catch (e) {
-      AppLogger().error(e.toString());
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(message: e.toString()),
+      );
     } finally {
       emit(state.copyWith(isLoading: false));
     }

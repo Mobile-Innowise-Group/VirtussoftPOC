@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:data/src/folders/folders.dart';
 import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
@@ -16,6 +17,7 @@ class PrivateFoldersBloc
   final GetPrivateFoldersUseCase _getPrivateFoldersUseCase;
   final ToggleFolderPrivacyUseCase _toggleFolderPrivacyUseCase;
   final CreatePrivateFolderUseCase _createPrivateFolderUseCase;
+  final BiometricService _biometricService;
   final AppRouter _appRouter;
 
   PrivateFoldersBloc({
@@ -23,11 +25,13 @@ class PrivateFoldersBloc
     required GetPrivateFoldersUseCase getPrivateFoldersUseCase,
     required ToggleFolderPrivacyUseCase toggleFolderPrivacyUseCase,
     required CreatePrivateFolderUseCase createPrivateFolderUseCase,
+    required BiometricService biometricService,
     required AppRouter appRouter,
   })  : _appEventNotifier = appEventNotifier,
         _getPrivateFoldersUseCase = getPrivateFoldersUseCase,
         _toggleFolderPrivacyUseCase = toggleFolderPrivacyUseCase,
         _createPrivateFolderUseCase = createPrivateFolderUseCase,
+        _biometricService = biometricService,
         _appRouter = appRouter,
         super(PrivateFoldersState.initial()) {
     on<CreatePrivateFolderEvent>(_onCreatePrivateFolder);
@@ -41,7 +45,16 @@ class PrivateFoldersBloc
     InitEvent event,
     Emitter<PrivateFoldersState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    if (!await _biometricService.authenticateWithBiometrics()) {
+      emit(state.copyWith(isAuthenticated: false));
+      return;
+    }
+    emit(
+      state.copyWith(
+        isLoading: true,
+        isAuthenticated: true,
+      ),
+    );
     try {
       final List<FolderModel> folders =
           await _getPrivateFoldersUseCase.execute(GetPrivateFoldersPayload());
@@ -63,36 +76,39 @@ class PrivateFoldersBloc
     CreatePrivateFolderEvent event,
     Emitter<PrivateFoldersState> emit,
   ) async {
-    //   emit(state.copyWith(isLoading: true));
-    //   try {
-    //     final FolderModel folder = await _createFolderUseCase.execute(
-    //       CreateFolderPayload(name: event.folderName),
-    //     );
-    //     final List<FolderModel> folders = List<FolderModel>.from(state.folders)
-    //       ..add(folder);
-    //     emit(state.copyWith(isLoading: false, folders: folders));
-    //   } on FailedToCreateRemoteFolderException catch (_) {
-    //     try {
-    //       final List<FolderModel> folders =
-    //           await _getPrivateFoldersUseCase.execute(GetPublicFoldersPayload());
-    //       emit(
-    //         state.copyWith(
-    //           isLoading: false,
-    //           folders: folders,
-    //         ),
-    //       );
-    //     } catch (e) {
-    //       emit(state.copyWith(isLoading: false));
-    //       _appEventNotifier.notify(
-    //         SnackBarErrorNotification(message: e.toString()),
-    //       );
-    //     }
-    //   } catch (e) {
-    //     emit(state.copyWith(isLoading: false));
-    //     _appEventNotifier.notify(
-    //       SnackBarErrorNotification(message: e.toString()),
-    //     );
-    //   }
+    emit(state.copyWith(isLoading: true));
+    try {
+      final FolderModel folder = await _createPrivateFolderUseCase.execute(
+        CreateFolderPayload(
+          name: event.folderName,
+          isPrivate: true,
+        ),
+      );
+      final List<FolderModel> folders = List<FolderModel>.from(state.folders)
+        ..add(folder);
+      emit(state.copyWith(isLoading: false, folders: folders));
+    } on FailedToCreateRemoteFolderException catch (_) {
+      try {
+        final List<FolderModel> folders =
+            await _getPrivateFoldersUseCase.execute(GetPrivateFoldersPayload());
+        emit(
+          state.copyWith(
+            isLoading: false,
+            folders: folders,
+          ),
+        );
+      } catch (e) {
+        emit(state.copyWith(isLoading: false));
+        _appEventNotifier.notify(
+          SnackBarErrorNotification(message: e.toString()),
+        );
+      }
+    } catch (e) {
+      emit(state.copyWith(isLoading: false));
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(message: e.toString()),
+      );
+    }
   }
 
   FutureOr<void> _onToggleFolderPrivacy(
@@ -114,6 +130,12 @@ class PrivateFoldersBloc
       emit(
         state.copyWith(folders: folders),
       );
+    } on FailedToEditRemoteFolderException catch (_) {
+      final List<FolderModel> privateFolders =
+          await _getPrivateFoldersUseCase.execute(
+        GetPrivateFoldersPayload(),
+      );
+      emit(state.copyWith(folders: privateFolders));
     } catch (e) {
       _appEventNotifier.notify(
         SnackBarErrorNotification(

@@ -25,4 +25,12 @@ abstract class FolderMapper {
       isPrivate: folderModel.isPrivate,
     );
   }
+
+  static FolderLocalEntity toLocalEntity(FolderModel folderModel) {
+    return FolderLocalEntity(
+      id: folderModel.id,
+      name: folderModel.name,
+      isPrivate: folderModel.isPrivate ? 1 : 0,
+    );
+  }
 }

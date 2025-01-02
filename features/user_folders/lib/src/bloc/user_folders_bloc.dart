@@ -151,6 +151,10 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
       emit(
         state.copyWith(folders: folders),
       );
+    } on FailedToEditRemoteFolderException catch (_) {
+      final List<FolderModel> folders =
+          await _getFoldersUseCase.execute(GetPublicFoldersPayload());
+      emit(state.copyWith(folders: folders));
     } catch (e) {
       _appEventNotifier.notify(
         SnackBarErrorNotification(

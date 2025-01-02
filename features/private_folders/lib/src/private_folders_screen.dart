@@ -21,6 +21,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
         getPrivateFoldersUseCase: appLocator<GetPrivateFoldersUseCase>(),
         createPrivateFolderUseCase: appLocator<CreatePrivateFolderUseCase>(),
         toggleFolderPrivacyUseCase: appLocator<ToggleFolderPrivacyUseCase>(),
+        biometricService: appLocator<BiometricService>(),
         appRouter: appLocator<AppRouter>(),
       ),
       child: this,
@@ -31,14 +32,21 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //TODO Sihau - Add localization
-        title: Text('Private folders'),
+        title: Text('folder.privateFolders'.tr()),
         automaticallyImplyLeading: false,
       ),
       body: CustomScrollView(
         slivers: <Widget>[
           BlocBuilder<PrivateFoldersBloc, PrivateFoldersState>(
             builder: (BuildContext context, PrivateFoldersState state) {
+              if (!state.isAuthenticated) {
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: Text('Biometric authentication failed'),
+                  ),
+                );
+              }
+
               if (state.isLoading) {
                 return const SliverToBoxAdapter(
                   child: Center(child: CircularProgressIndicator()),
@@ -65,8 +73,9 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                                       .read<PrivateFoldersBloc>()
                                       .add(ToggleFolderPrivacyEvent(
                                           state.folders[index])),
-                                  //TODO Sihau - Add localization
-                                  title: const Text('Make directory private'),
+                                  title: Text(
+                                    'folder.makeFolderPublic'.tr(),
+                                  ),
                                   leading: const Icon(Icons.lock),
                                 ),
                               );

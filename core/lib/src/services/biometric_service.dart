@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../../core.dart';
@@ -7,28 +6,19 @@ class BiometricService {
   final LocalAuthentication _localAuth = LocalAuthentication();
 
   Future<bool> authenticateWithBiometrics() async {
-    bool isAuthenticated = false;
-
     final bool canAuthenticateWithBiometrics =
         await _localAuth.canCheckBiometrics;
     final bool isDeviceSupported = await _localAuth.isDeviceSupported();
 
-    if (!canAuthenticateWithBiometrics || !isDeviceSupported) {
-      return isAuthenticated;
+    if (!canAuthenticateWithBiometrics && !isDeviceSupported) {
+      return false;
     }
 
-    try {
-      isAuthenticated = await _localAuth.authenticate(
-        localizedReason: 'biometrics.pleaseAuthenticate'.tr(),
-        options: const AuthenticationOptions(
-          useErrorDialogs: true,
-          stickyAuth: true,
-        ),
-      );
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    return isAuthenticated;
+    return _localAuth.authenticate(
+      localizedReason: 'biometrics.pleaseAuthenticate'.tr(),
+      options: const AuthenticationOptions(
+        stickyAuth: true,
+      ),
+    );
   }
 }
