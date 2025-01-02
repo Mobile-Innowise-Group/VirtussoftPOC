@@ -131,7 +131,7 @@ class FolderRepositoryImpl implements FolderRepository {
   Future<FolderModel> toggleFolderPrivacy({
     required ToggleFolderPrivacyPayload payload,
   }) async {
-    final FolderModel editedFolder = await _folderLocalProvider.editFolder(
+    await _folderLocalProvider.editFolder(
       request: EditLocalFolderRequest(
         folder: FolderMapper.toLocalEntity(payload.folder).copyWith(
           isPrivate: payload.folder.isPrivate ? 0 : 1,
@@ -139,14 +139,15 @@ class FolderRepositoryImpl implements FolderRepository {
       ),
     );
     try {
-      await _folderRemoteProvider.editFolder(
+      return await _folderRemoteProvider.editFolder(
         request: EditRemoteFolderRequest(
-            folder: FolderMapper.toEntity(editedFolder)),
+          folder: FolderMapper.toEntity(payload.folder).copyWith(
+            isPrivate: !payload.folder.isPrivate,
+          ),
+        ),
       );
     } catch (e) {
       throw FailedToEditRemoteFolderException(e.toString());
     }
-
-    return editedFolder;
   }
 }

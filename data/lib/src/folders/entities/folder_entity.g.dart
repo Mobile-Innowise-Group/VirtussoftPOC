@@ -10,12 +10,12 @@ _$FolderEntityImpl _$$FolderEntityImplFromJson(Map<String, dynamic> json) =>
     _$FolderEntityImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      isPrivate: json['isPrivate'] as bool,
+      isPrivate: json['is_private'] as bool,
     );
 
 Map<String, dynamic> _$$FolderEntityImplToJson(_$FolderEntityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'isPrivate': instance.isPrivate,
+      'is_private': instance.isPrivate,
     };

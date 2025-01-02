@@ -15,7 +15,7 @@ abstract class FolderLocalProvider {
     required DeleteFolderRequest request,
   });
 
-  Future<FolderModel> editFolder({
+  Future<void> editFolder({
     required EditLocalFolderRequest request,
   });
 }

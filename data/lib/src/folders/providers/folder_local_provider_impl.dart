@@ -46,13 +46,9 @@ class FolderLocalProviderImpl implements FolderLocalProvider {
   }
 
   @override
-  Future<FolderModel> editFolder({
+  Future<void> editFolder({
     required EditLocalFolderRequest request,
   }) async {
-    final int row = await _databaseProvider.editFolder(request.folder.toJson());
-    return _getFolderByRow(row: row);
+    await _databaseProvider.editFolder(request.folder.toJson());
   }
 }
-
-// 4. Написать функции в супабейз для измененния директорий
-// 5. Доделать логику на создание приватной директории

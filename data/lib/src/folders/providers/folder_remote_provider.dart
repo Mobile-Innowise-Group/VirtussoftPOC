@@ -19,7 +19,7 @@ abstract class FolderRemoteProvider {
     required DeleteFolderRequest request,
   });
 
-  Future<void> editFolder({
+  Future<FolderModel> editFolder({
     required EditRemoteFolderRequest request,
   });
 }
