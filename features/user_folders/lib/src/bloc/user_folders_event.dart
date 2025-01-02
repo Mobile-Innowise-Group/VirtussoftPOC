@@ -26,3 +26,9 @@ class DeleteFolderEvent extends UserFoldersEvent {
 class ToggleExpandedEvent extends UserFoldersEvent {
   const ToggleExpandedEvent();
 }
+
+class ToggleFolderPrivacyEvent extends UserFoldersEvent {
+  final FolderModel folder;
+
+  const ToggleFolderPrivacyEvent(this.folder);
+}

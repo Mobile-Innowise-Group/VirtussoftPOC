@@ -10,7 +10,8 @@ class CreatePrivateFolderDialog extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CreatePrivateFolderDialogState createState() => _CreatePrivateFolderDialogState();
+  _CreatePrivateFolderDialogState createState() =>
+      _CreatePrivateFolderDialogState();
 }
 
 class _CreatePrivateFolderDialogState extends State<CreatePrivateFolderDialog> {

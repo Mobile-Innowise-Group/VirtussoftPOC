@@ -31,12 +31,15 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   ) async {
     List<String> pictures;
     try {
-      pictures = await CunningDocumentScanner.getPictures(isGalleryImportAllowed: true) ?? <String>[];
+      pictures = await CunningDocumentScanner.getPictures(
+              isGalleryImportAllowed: true) ??
+          <String>[];
 
       if (pictures.isNotEmpty) {
         final File file = await _parseImageToPdf(pictures);
 
-        await _appRouter.push(SavingScanEntryBottomSheetRoute(scanPath: file.path));
+        await _appRouter
+            .push(SavingScanEntryBottomSheetRoute(scanPath: file.path));
       }
     } catch (e) {
       _appEventNotifier.notify(
@@ -53,7 +56,8 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
     for (final String path in pictures) {
       final InputImage inputImage = InputImage.fromFilePath(path);
 
-      final RecognizedText result = await _textRecognizer.processImage(inputImage);
+      final RecognizedText result =
+          await _textRecognizer.processImage(inputImage);
 
       recognizedText.add(result);
     }

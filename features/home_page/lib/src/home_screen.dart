@@ -44,6 +44,8 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                         )
                       : child,
                   bottomNavigationBar: BottomNavigationBar(
+                    selectedItemColor: Theme.of(context).primaryColor,
+                    unselectedItemColor: Colors.black54,
                     items: const <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
                         icon: Icon(Icons.qr_code),

@@ -33,7 +33,6 @@ class PdfService {
     required String newFolderName,
   }) async {
     try {
-
       final File sourceFile = File(currentFilePath);
       if (!sourceFile.existsSync()) {
         throw Exception('No file founded');

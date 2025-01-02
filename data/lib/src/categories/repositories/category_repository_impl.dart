@@ -34,12 +34,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
     );
 
     try {
-      final CategoryModel createdRemoteCategory = await _categoryRemoteProvider.createCategory(
+      final CategoryModel createdRemoteCategory =
+          await _categoryRemoteProvider.createCategory(
         request: CreateCategoryRemoteRequest(
-          name: category.name,
-          id: category.id,
-          userId: userEntity.id
-        ),
+            name: category.name, id: category.id, userId: userEntity.id),
       );
 
       return createdRemoteCategory;
@@ -63,6 +61,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<List<CategoryModel>> getUserCategories({
     required GetUserCategoriesPayload payload,
   }) {
-    return _categoryLocalProvider.getCategories(request: GetCategoriesRequest());
+    return _categoryLocalProvider.getCategories(
+        request: GetCategoriesRequest());
   }
 }

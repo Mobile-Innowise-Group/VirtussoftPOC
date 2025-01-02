@@ -14,20 +14,24 @@ class PrivateFoldersBloc
     extends Bloc<PrivateFoldersEvent, PrivateFoldersState> {
   final AppEventNotifier _appEventNotifier;
   final GetPrivateFoldersUseCase _getPrivateFoldersUseCase;
+  final ToggleFolderPrivacyUseCase _toggleFolderPrivacyUseCase;
   final CreatePrivateFolderUseCase _createPrivateFolderUseCase;
   final AppRouter _appRouter;
 
   PrivateFoldersBloc({
     required AppEventNotifier appEventNotifier,
     required GetPrivateFoldersUseCase getPrivateFoldersUseCase,
+    required ToggleFolderPrivacyUseCase toggleFolderPrivacyUseCase,
     required CreatePrivateFolderUseCase createPrivateFolderUseCase,
     required AppRouter appRouter,
   })  : _appEventNotifier = appEventNotifier,
         _getPrivateFoldersUseCase = getPrivateFoldersUseCase,
+        _toggleFolderPrivacyUseCase = toggleFolderPrivacyUseCase,
         _createPrivateFolderUseCase = createPrivateFolderUseCase,
         _appRouter = appRouter,
         super(PrivateFoldersState.initial()) {
     on<CreatePrivateFolderEvent>(_onCreatePrivateFolder);
+    on<ToggleFolderPrivacyEvent>(_onToggleFolderPrivacy);
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -89,5 +93,37 @@ class PrivateFoldersBloc
     //       SnackBarErrorNotification(message: e.toString()),
     //     );
     //   }
+  }
+
+  FutureOr<void> _onToggleFolderPrivacy(
+    ToggleFolderPrivacyEvent event,
+    Emitter<PrivateFoldersState> emit,
+  ) async {
+    try {
+      await _appRouter.maybePop();
+      emit(
+        state.copyWith(isLoading: true),
+      );
+      await _toggleFolderPrivacyUseCase.execute(
+        ToggleFolderPrivacyPayload(
+          folder: event.folder,
+        ),
+      );
+      final List<FolderModel> folders = List<FolderModel>.from(state.folders)
+        ..removeWhere((FolderModel folder) => folder.id == event.folder.id);
+      emit(
+        state.copyWith(folders: folders),
+      );
+    } catch (e) {
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
+    } finally {
+      emit(
+        state.copyWith(isLoading: false),
+      );
+    }
   }
 }

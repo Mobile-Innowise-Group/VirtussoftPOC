@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
@@ -19,6 +20,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
         appEventNotifier: appLocator<AppEventNotifier>(),
         getPrivateFoldersUseCase: appLocator<GetPrivateFoldersUseCase>(),
         createPrivateFolderUseCase: appLocator<CreatePrivateFolderUseCase>(),
+        toggleFolderPrivacyUseCase: appLocator<ToggleFolderPrivacyUseCase>(),
         appRouter: appLocator<AppRouter>(),
       ),
       child: this,
@@ -29,6 +31,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //TODO Sihau - Add localization
         title: Text('Private folders'),
         automaticallyImplyLeading: false,
       ),
@@ -53,15 +56,24 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          return GestureDetector(
-                            onLongPress: () {
-                              print('Long press');
+                          return ListTile(
+                            onTap: () {
+                              AppBottomSheet.show(
+                                context: context,
+                                child: ListTile(
+                                  onTap: () => context
+                                      .read<PrivateFoldersBloc>()
+                                      .add(ToggleFolderPrivacyEvent(
+                                          state.folders[index])),
+                                  //TODO Sihau - Add localization
+                                  title: const Text('Make directory private'),
+                                  leading: const Icon(Icons.lock),
+                                ),
+                              );
                             },
-                            child: ListTile(
-                              leading: const Icon(Icons.folder),
-                              trailing: const Icon(Icons.arrow_forward_ios),
-                              title: Text(state.folders[index].name),
-                            ),
+                            leading: const Icon(Icons.folder),
+                            trailing: const Icon(Icons.arrow_forward_ios),
+                            title: Text(state.folders[index].name),
                           );
                         },
                         childCount: state.folders.length,
@@ -79,8 +91,8 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                     return CreatePrivateFolderDialog(
                       onCreate: (String folderName) {
                         context.read<PrivateFoldersBloc>().add(
-                          CreatePrivateFolderEvent(folderName: folderName),
-                        );
+                              CreatePrivateFolderEvent(folderName: folderName),
+                            );
                       },
                     );
                   },

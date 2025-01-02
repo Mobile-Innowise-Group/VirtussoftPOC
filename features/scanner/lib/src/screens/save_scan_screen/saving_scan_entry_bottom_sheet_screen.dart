@@ -6,7 +6,8 @@ import 'bloc/saving_scan_entry_bloc.dart';
 import 'saving_scan_entry_bottom_sheet_content.dart';
 
 @RoutePage()
-class SavingScanEntryBottomSheetScreen extends StatelessWidget implements AutoRouteWrapper {
+class SavingScanEntryBottomSheetScreen extends StatelessWidget
+    implements AutoRouteWrapper {
   final String scanPath;
 
   const SavingScanEntryBottomSheetScreen({

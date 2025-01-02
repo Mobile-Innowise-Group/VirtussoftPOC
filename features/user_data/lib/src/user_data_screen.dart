@@ -46,6 +46,8 @@ class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {
             createFolderUseCase: appLocator<CreateFolderUseCase>(),
             deleteFolderUseCase: appLocator<DeleteFolderUseCase>(),
             getFoldersUseCase: appLocator<GetPublicFoldersUseCase>(),
+            toggleFolderPrivacyUseCase:
+                appLocator<ToggleFolderPrivacyUseCase>(),
           ),
         ),
       ],
@@ -59,8 +61,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('data.userData'.tr()),
-          automaticallyImplyLeading: false,
+        title: Text('data.userData'.tr()),
+        automaticallyImplyLeading: false,
       ),
       body: CustomScrollView(
         slivers: <Widget>[

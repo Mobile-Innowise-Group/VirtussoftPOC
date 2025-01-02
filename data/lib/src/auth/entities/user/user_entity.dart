@@ -13,5 +13,6 @@ class UserEntity with _$UserEntity {
     required String id,
   }) = _UserEntity;
 
-  factory UserEntity.fromJson(Map<String, Object?> json) => _$UserEntityFromJson(json);
+  factory UserEntity.fromJson(Map<String, Object?> json) =>
+      _$UserEntityFromJson(json);
 }

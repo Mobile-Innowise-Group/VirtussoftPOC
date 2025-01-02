@@ -24,5 +24,4 @@ abstract class FolderRepository {
   Future<FolderModel> toggleFolderPrivacy({
     required ToggleFolderPrivacyPayload payload,
   });
-
 }

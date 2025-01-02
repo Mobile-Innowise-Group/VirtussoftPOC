@@ -16,6 +16,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
   final CreateFolderUseCase _createFolderUseCase;
   final DeleteFolderUseCase _deleteFolderUseCase;
   final GetPublicFoldersUseCase _getFoldersUseCase;
+  final ToggleFolderPrivacyUseCase _toggleFolderPrivacyUseCase;
   final AppRouter _appRouter;
 
   UserFoldersBloc({
@@ -23,16 +24,20 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     required CreateFolderUseCase createFolderUseCase,
     required DeleteFolderUseCase deleteFolderUseCase,
     required GetPublicFoldersUseCase getFoldersUseCase,
+    required ToggleFolderPrivacyUseCase toggleFolderPrivacyUseCase,
     required AppRouter appRouter,
   })  : _appEventNotifier = appEventNotifier,
         _createFolderUseCase = createFolderUseCase,
         _deleteFolderUseCase = deleteFolderUseCase,
         _getFoldersUseCase = getFoldersUseCase,
+        _toggleFolderPrivacyUseCase = toggleFolderPrivacyUseCase,
         _appRouter = appRouter,
         super(UserFoldersState.initial()) {
     on<CreateFolderEvent>(_onCreateFolder);
     on<DeleteFolderEvent>(_onDeleteFolder);
     on<ToggleExpandedEvent>(_onToggleExpanded);
+    on<ToggleFolderPrivacyEvent>(_onToggleFolderPrivacy);
+
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -125,5 +130,37 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     Emitter<UserFoldersState> emit,
   ) async {
     emit(state.copyWith(isExpanded: !state.isExpanded));
+  }
+
+  FutureOr<void> _onToggleFolderPrivacy(
+    ToggleFolderPrivacyEvent event,
+    Emitter<UserFoldersState> emit,
+  ) async {
+    try {
+      await _appRouter.maybePop();
+      emit(
+        state.copyWith(isLoading: true),
+      );
+      await _toggleFolderPrivacyUseCase.execute(
+        ToggleFolderPrivacyPayload(
+          folder: event.folder,
+        ),
+      );
+      final List<FolderModel> folders = List<FolderModel>.from(state.folders)
+        ..removeWhere((FolderModel folder) => folder.id == event.folder.id);
+      emit(
+        state.copyWith(folders: folders),
+      );
+    } catch (e) {
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
+    } finally {
+      emit(
+        state.copyWith(isLoading: false),
+      );
+    }
   }
 }

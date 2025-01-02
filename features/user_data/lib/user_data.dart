@@ -10,9 +10,9 @@ export 'user_data.gr.dart';
 class UserDataRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      initial: true,
-      page: UserDataRoute.page,
-    ),
-  ];
+        AutoRoute(
+          initial: true,
+          page: UserDataRoute.page,
+        ),
+      ];
 }

@@ -20,7 +20,8 @@ class CategoryRemoteProviderImpl implements CategoryRemoteProvider {
   }) async {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response = await _supabaseClient.rpc('create_category', params: <String, dynamic>{
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('create_category', params: <String, dynamic>{
           'category_id': request.id,
           'name': request.name,
           'user_id': request.userId,
@@ -52,21 +53,24 @@ class CategoryRemoteProviderImpl implements CategoryRemoteProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response =
-            await _supabaseClient.rpc('get_user_categories', params: <String, dynamic>{});
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('get_user_categories', params: <String, dynamic>{});
 
         return response
-            .map((Map<String, dynamic> category) => CategoryMapper.toModel(CategoryEntity.fromJson(category)))
+            .map((Map<String, dynamic> category) =>
+                CategoryMapper.toModel(CategoryEntity.fromJson(category)))
             .toList();
       },
     );
   }
 
   @override
-  Future<CategoryModel> getUserCategoryById({required GetUserCategoryByIdRequest request}) {
+  Future<CategoryModel> getUserCategoryById(
+      {required GetUserCategoryByIdRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<dynamic> response = await _supabaseClient.rpc('get_user_category_by_id', params: <String, dynamic>{
+        final List<dynamic> response = await _supabaseClient
+            .rpc('get_user_category_by_id', params: <String, dynamic>{
           'category_id': request.categoryId,
         });
 

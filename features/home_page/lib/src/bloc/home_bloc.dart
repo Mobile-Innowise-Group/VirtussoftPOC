@@ -31,8 +31,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(isLoading: false));
       await emit.forEach(NetworkService.observeConnection,
           onData: (bool isConnected) {
-            return state.copyWith(isInternetConnected: isConnected);
-          });
+        return state.copyWith(isInternetConnected: isConnected);
+      });
     } catch (e) {
       AppLogger().error(e.toString());
     } finally {

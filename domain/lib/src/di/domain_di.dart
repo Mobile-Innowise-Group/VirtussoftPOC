@@ -57,7 +57,7 @@ abstract class DomainDI {
     );
 
     locator.registerLazySingleton<GetAllFoldersUseCase>(
-          () => GetAllFoldersUseCase(
+      () => GetAllFoldersUseCase(
         folderRepository: locator.get<FolderRepository>(),
       ),
     );
@@ -110,12 +110,12 @@ abstract class DomainDI {
     );
 
     locator.registerLazySingleton<CreatePrivateFolderUseCase>(
-          () => CreatePrivateFolderUseCase(
+      () => CreatePrivateFolderUseCase(
           folderRepository: locator.get<FolderRepository>()),
     );
 
     locator.registerLazySingleton<ToggleFolderPrivacyUseCase>(
-          () => ToggleFolderPrivacyUseCase(
+      () => ToggleFolderPrivacyUseCase(
           folderRepository: locator.get<FolderRepository>()),
     );
   }

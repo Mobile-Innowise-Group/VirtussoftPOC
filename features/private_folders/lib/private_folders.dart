@@ -10,8 +10,8 @@ export 'private_folders.gr.dart';
 class PrivateFoldersRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      page: PrivateFoldersRoute.page,
-    ),
-  ];
+        AutoRoute(
+          page: PrivateFoldersRoute.page,
+        ),
+      ];
 }
