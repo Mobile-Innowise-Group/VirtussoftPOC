@@ -92,12 +92,15 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   Future<List<ScanEntryModel>> getScanEntriesByFolderId({
     required GetScanEntriesByFolderIdPayload payload,
   }) async {
-    final List<ScanEntryEntity> scanEntries = await _scanEntriesProvider.getScanEntriesByFolderId(
+    final List<ScanEntryEntity> scanEntries =
+        await _scanEntriesProvider.getScanEntriesByFolderId(
       request: GetScanEntriesByFolderIdRequest(folderId: payload.folder.id),
     );
 
-    final List<Future<ScanEntryModel>> futures = scanEntries.map((ScanEntryEntity scanEntryEntity) async {
-      final CategoryModel category = await _categoryLocalProvider.getCategoryById(
+    final List<Future<ScanEntryModel>> futures =
+        scanEntries.map((ScanEntryEntity scanEntryEntity) async {
+      final CategoryModel category =
+          await _categoryLocalProvider.getCategoryById(
         request: GetUserCategoryByIdRequest(
           categoryId: scanEntryEntity.categoryId,
         ),

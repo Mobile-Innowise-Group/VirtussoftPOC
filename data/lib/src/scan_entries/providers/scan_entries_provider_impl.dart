@@ -19,10 +19,12 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         _supabaseExceptionHandler = supabaseExceptionHandler;
 
   @override
-  Future<ScanEntryEntity> createScanEntry({required CreateScanEntryRequest request}) {
+  Future<ScanEntryEntity> createScanEntry(
+      {required CreateScanEntryRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient.rpc('create_scan_entry', params: <String, dynamic>{
+        final Map<String, dynamic> response = await _supabaseClient
+            .rpc('create_scan_entry', params: <String, dynamic>{
           'p_user_id': request.userId,
           'p_folder_id': request.folderId,
           'p_category_id': request.categoryId,
@@ -42,14 +44,17 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         final String fileName = PdfService.getFileNameByPath(request.localPath);
 
         await _supabaseClient.storage
-            .from('files') // TODO(Karatysh): do we have any class to collect supabase configs?
+            .from(
+                'files') // TODO(Karatysh): do we have any class to collect supabase configs?
             .upload(
               fileName,
               File(request.localPath),
               fileOptions: const FileOptions(upsert: true),
             );
 
-        final String publicUrl = Supabase.instance.client.storage.from('files').getPublicUrl(fileName);
+        final String publicUrl = Supabase.instance.client.storage
+            .from('files')
+            .getPublicUrl(fileName);
 
         return publicUrl;
       },
@@ -63,11 +68,12 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
   }
 
   @override
-  Future<List<ScanEntryEntity>> getScanEntriesByFolderId({required GetScanEntriesByFolderIdRequest request}) {
+  Future<List<ScanEntryEntity>> getScanEntriesByFolderId(
+      {required GetScanEntriesByFolderIdRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response =
-            await _supabaseClient.rpc('get_scan_entries_by_folder', params: <String, dynamic>{
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('get_scan_entries_by_folder', params: <String, dynamic>{
           'p_folder_id': request.folderId,
         });
 

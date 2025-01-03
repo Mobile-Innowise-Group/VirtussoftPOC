@@ -23,10 +23,14 @@ mixin _$UserEntity {
   @JsonKey(name: 'sub')
   String get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String get username => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
 
+  /// Serializes this UserEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UserEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserEntityCopyWith<UserEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -37,7 +41,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({@JsonKey(name: 'sub') String id, String email, String username});
+  $Res call({@JsonKey(name: 'sub') String id, String email, String? username});
 }
 
 /// @nodoc
@@ -50,12 +54,14 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UserEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
     Object? email = null,
-    Object? username = null,
+    Object? username = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -66,10 +72,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      username: null == username
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -82,7 +88,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'sub') String id, String email, String username});
+  $Res call({@JsonKey(name: 'sub') String id, String email, String? username});
 }
 
 /// @nodoc
@@ -93,12 +99,14 @@ class __$$UserEntityImplCopyWithImpl<$Res>
       _$UserEntityImpl _value, $Res Function(_$UserEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
     Object? email = null,
-    Object? username = null,
+    Object? username = freezed,
   }) {
     return _then(_$UserEntityImpl(
       id: null == id
@@ -109,10 +117,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      username: null == username
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -123,7 +131,7 @@ class _$UserEntityImpl implements _UserEntity {
   const _$UserEntityImpl(
       {@JsonKey(name: 'sub') required this.id,
       required this.email,
-      required this.username});
+      this.username});
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserEntityImplFromJson(json);
@@ -134,7 +142,7 @@ class _$UserEntityImpl implements _UserEntity {
   @override
   final String email;
   @override
-  final String username;
+  final String? username;
 
   @override
   String toString() {
@@ -152,11 +160,13 @@ class _$UserEntityImpl implements _UserEntity {
                 other.username == username));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, email, username);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
@@ -174,7 +184,7 @@ abstract class _UserEntity implements UserEntity {
   const factory _UserEntity(
       {@JsonKey(name: 'sub') required final String id,
       required final String email,
-      required final String username}) = _$UserEntityImpl;
+      final String? username}) = _$UserEntityImpl;
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
       _$UserEntityImpl.fromJson;
@@ -185,9 +195,12 @@ abstract class _UserEntity implements UserEntity {
   @override
   String get email;
   @override
-  String get username;
+  String? get username;
+
+  /// Create a copy of UserEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

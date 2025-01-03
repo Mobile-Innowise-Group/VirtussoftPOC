@@ -10,7 +10,7 @@ _$CreateCategoryLocalRequestImpl _$$CreateCategoryLocalRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateCategoryLocalRequestImpl(
       name: json['name'] as String,
-      id: json['id'] as String?,
+      id: json['id'] as String,
     );
 
 Map<String, dynamic> _$$CreateCategoryLocalRequestImplToJson(

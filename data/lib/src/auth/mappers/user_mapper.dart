@@ -43,7 +43,8 @@ class UserMapper {
     );
   }
 
-  static UserEntity? fromSupabaseUser({required supabase_auth.User? supabaseUser}) {
+  static UserEntity? fromSupabaseUser(
+      {required supabase_auth.User? supabaseUser}) {
     final String? email = supabaseUser?.email;
 
     if (supabaseUser == null || email == null) {
@@ -51,7 +52,8 @@ class UserMapper {
     }
 
     final Map<String, Object?>? userMetadata = supabaseUser.userMetadata?.map(
-      (String key, dynamic value) => MapEntry<String, Object?>(key, value as Object?),
+      (String key, dynamic value) =>
+          MapEntry<String, Object?>(key, value as Object?),
     );
 
     if (userMetadata == null) {

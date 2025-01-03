@@ -5,12 +5,12 @@ import 'widgets/account_settings_widget.dart';
 import 'widgets/user_name_widget.dart';
 
 class UserProfileLoadedScreen extends StatelessWidget {
-  final String username;
+  final String? username;
   final String userEmail;
 
   const UserProfileLoadedScreen({
-    required this.username,
     required this.userEmail,
+    this.username,
     super.key,
   });
 
@@ -22,7 +22,7 @@ class UserProfileLoadedScreen extends StatelessWidget {
         children: <Widget>[
           UserNameWidget(
             userEmail: userEmail,
-            username: username,
+            username: username ?? '',
           ),
           const SizedBox(height: AppDimens.PADDING_12),
           const AccountSettingsWidget(),

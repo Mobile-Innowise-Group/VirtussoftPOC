@@ -45,8 +45,10 @@ class CategoryLocalProviderImpl implements CategoryLocalProvider {
   }
 
   @override
-  Future<CategoryModel> getCategoryById({required GetUserCategoryByIdRequest request}) async {
-    final List<Map<String, dynamic>> categories = await _databaseProvider.getCategoryById(request.categoryId);
+  Future<CategoryModel> getCategoryById(
+      {required GetUserCategoryByIdRequest request}) async {
+    final List<Map<String, dynamic>> categories =
+        await _databaseProvider.getCategoryById(request.categoryId);
 
     return CategoryMapper.toModel(CategoryEntity.fromJson(categories.first));
   }

@@ -22,7 +22,8 @@ class SupabaseAuthProvider implements AuthorizationProvider {
 
   @override
   UserEntity? getCurrentUser() {
-    return UserMapper.fromSupabaseUser(supabaseUser: _supabaseClient.auth.currentUser);
+    return UserMapper.fromSupabaseUser(
+        supabaseUser: _supabaseClient.auth.currentUser);
   }
 
   @override
@@ -58,7 +59,8 @@ class SupabaseAuthProvider implements AuthorizationProvider {
   }) async {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final AuthResponse authResponse = await _supabaseClient.auth.signInWithPassword(
+        final AuthResponse authResponse =
+            await _supabaseClient.auth.signInWithPassword(
           email: signInPayloadEntity.login,
           password: signInPayloadEntity.password,
         );

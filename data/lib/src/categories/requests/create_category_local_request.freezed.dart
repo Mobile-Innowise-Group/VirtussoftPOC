@@ -22,10 +22,14 @@ CreateCategoryLocalRequest _$CreateCategoryLocalRequestFromJson(
 /// @nodoc
 mixin _$CreateCategoryLocalRequest {
   String get name => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateCategoryLocalRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateCategoryLocalRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateCategoryLocalRequestCopyWith<CreateCategoryLocalRequest>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -37,7 +41,7 @@ abstract class $CreateCategoryLocalRequestCopyWith<$Res> {
       _$CreateCategoryLocalRequestCopyWithImpl<$Res,
           CreateCategoryLocalRequest>;
   @useResult
-  $Res call({String name, String? id});
+  $Res call({String name, String id});
 }
 
 /// @nodoc
@@ -51,21 +55,23 @@ class _$CreateCategoryLocalRequestCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateCategoryLocalRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
-    Object? id = freezed,
+    Object? id = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -79,7 +85,7 @@ abstract class _$$CreateCategoryLocalRequestImplCopyWith<$Res>
       __$$CreateCategoryLocalRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String? id});
+  $Res call({String name, String id});
 }
 
 /// @nodoc
@@ -92,21 +98,23 @@ class __$$CreateCategoryLocalRequestImplCopyWithImpl<$Res>
       $Res Function(_$CreateCategoryLocalRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateCategoryLocalRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
-    Object? id = freezed,
+    Object? id = null,
   }) {
     return _then(_$CreateCategoryLocalRequestImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -114,7 +122,8 @@ class __$$CreateCategoryLocalRequestImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
-  const _$CreateCategoryLocalRequestImpl({required this.name, this.id});
+  const _$CreateCategoryLocalRequestImpl(
+      {required this.name, required this.id});
 
   factory _$CreateCategoryLocalRequestImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -123,7 +132,7 @@ class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
   @override
   final String name;
   @override
-  final String? id;
+  final String id;
 
   @override
   String toString() {
@@ -139,11 +148,13 @@ class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
             (identical(other.id, id) || other.id == id));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, id);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateCategoryLocalRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateCategoryLocalRequestImplCopyWith<_$CreateCategoryLocalRequestImpl>
@@ -162,7 +173,7 @@ abstract class _CreateCategoryLocalRequest
     implements CreateCategoryLocalRequest {
   const factory _CreateCategoryLocalRequest(
       {required final String name,
-      final String? id}) = _$CreateCategoryLocalRequestImpl;
+      required final String id}) = _$CreateCategoryLocalRequestImpl;
 
   factory _CreateCategoryLocalRequest.fromJson(Map<String, dynamic> json) =
       _$CreateCategoryLocalRequestImpl.fromJson;
@@ -170,9 +181,12 @@ abstract class _CreateCategoryLocalRequest
   @override
   String get name;
   @override
-  String? get id;
+  String get id;
+
+  /// Create a copy of CreateCategoryLocalRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateCategoryLocalRequestImplCopyWith<_$CreateCategoryLocalRequestImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
