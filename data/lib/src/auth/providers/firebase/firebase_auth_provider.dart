@@ -28,9 +28,8 @@ class FirebaseAuthProvider implements AuthorizationProvider {
   }) async {
     return _firebaseExceptionsHandler.safeExecute<UserEntity?>(
       execute: () async {
-        final UserCredential userCredential =
-            await _firebaseAuth.createUserWithEmailAndPassword(
-          email: signUpPayloadEntity.login,
+        final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: signUpPayloadEntity.email,
           password: signUpPayloadEntity.password,
         );
 
@@ -51,8 +50,7 @@ class FirebaseAuthProvider implements AuthorizationProvider {
   }) async {
     return _firebaseExceptionsHandler.safeExecute<UserEntity?>(
       execute: () async {
-        final UserCredential userCredential =
-            await _firebaseAuth.signInWithEmailAndPassword(
+        final UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: signInPayloadEntity.login,
           password: signInPayloadEntity.password,
         );

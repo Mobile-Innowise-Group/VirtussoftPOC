@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 part 'auth_event.dart';
-
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -13,7 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final BiometricService _biometricService;
   final SignUpWithCredentialsUseCase _signUpWithCredentialsUseCase;
   final SignInWithCredentialsUseCase _authoriseWithCredentialsUseCase;
-  final SignOutUseCase _signOutUseCase;
+
   final GetCurrentUserUseCase _getCurrentUserUseCase;
   final AppEventNotifier _appEventNotifier;
 
@@ -22,12 +21,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required BiometricService biometricService,
     required SignUpWithCredentialsUseCase signUpWithCredentialsUseCase,
     required SignInWithCredentialsUseCase signInWithCredentialsUseCase,
-    required SignOutUseCase signOutUseCase,
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required AppEventNotifier appEventNotifier,
   })  : _signUpWithCredentialsUseCase = signUpWithCredentialsUseCase,
         _authoriseWithCredentialsUseCase = signInWithCredentialsUseCase,
-        _signOutUseCase = signOutUseCase,
         _getCurrentUserUseCase = getCurrentUserUseCase,
         _appRouter = appRouter,
         _biometricService = biometricService,
@@ -38,7 +35,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<NavigateToLogin>(_onNavigateToLogin);
     on<NavigateToSignUp>(_onNavigateToSignUp);
     on<InitBloc>(_onInitBloc);
-    on<SignOut>(_onSignOut);
 
     add(InitBloc());
   }
@@ -63,11 +59,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isLoading: true));
 
     try {
-      final UserModel? createdUser =
-          await _signUpWithCredentialsUseCase.execute(
+      final UserModel? createdUser = await _signUpWithCredentialsUseCase.execute(
         SignUpPayloadModel(
-          login: event.login,
+          email: event.login,
           password: event.password,
+          username: event.username,
         ),
       );
 
@@ -106,8 +102,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isLoading: true));
 
     try {
-      final UserModel? userModel =
-          await _authoriseWithCredentialsUseCase.execute(
+      final UserModel? userModel = await _authoriseWithCredentialsUseCase.execute(
         SignInPayloadModel(
           login: event.login,
           password: event.password,
@@ -129,22 +124,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _onSignOut(
-    SignOut event,
-    Emitter<AuthState> emit,
-  ) async {
-    await _signOutUseCase.execute(const NoParams());
-
-    emit(state.copyWith());
-  }
-
   Future<void> _onInitBloc(
     InitBloc event,
     Emitter<AuthState> emit,
   ) async {
     try {
-      final UserModel? currentUser =
-          _getCurrentUserUseCase.execute(const NoParams());
+      final UserModel? currentUser = _getCurrentUserUseCase.execute(const NoParams());
 
       if (currentUser == null) {
         return;
@@ -198,8 +183,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   bool _isLoginValid(String email) {
-    return RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
   }
 

@@ -30,12 +30,8 @@ mixin _$ScanEntryEntity {
   @JsonKey(name: 'category_id')
   String get categoryId => throw _privateConstructorUsedError;
 
-  /// Serializes this ScanEntryEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ScanEntryEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ScanEntryEntityCopyWith<ScanEntryEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -64,8 +60,6 @@ class _$ScanEntryEntityCopyWithImpl<$Res, $Val extends ScanEntryEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ScanEntryEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -124,8 +118,6 @@ class __$$ScanEntryEntityImplCopyWithImpl<$Res>
       _$ScanEntryEntityImpl _value, $Res Function(_$ScanEntryEntityImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ScanEntryEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -209,14 +201,12 @@ class _$ScanEntryEntityImpl implements _ScanEntryEntity {
                 other.categoryId == categoryId));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, localPath, remotePath, folderId, categoryId);
 
-  /// Create a copy of ScanEntryEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ScanEntryEntityImplCopyWith<_$ScanEntryEntityImpl> get copyWith =>
@@ -257,11 +247,8 @@ abstract class _ScanEntryEntity implements ScanEntryEntity {
   @override
   @JsonKey(name: 'category_id')
   String get categoryId;
-
-  /// Create a copy of ScanEntryEntity
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ScanEntryEntityImplCopyWith<_$ScanEntryEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
