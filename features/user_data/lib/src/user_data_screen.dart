@@ -11,6 +11,8 @@ import 'package:user_folders/src/user_folders.dart';
 import 'package:user_folders/src/widgets/create_folder_dialog.dart';
 
 import 'bloc/user_data_bloc.dart';
+import 'package:user_folders/src/user_folders/user_folders.dart';
+import 'package:user_folders/src/user_folders/widgets/create_folder_dialog.dart';
 
 @RoutePage()
 class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {

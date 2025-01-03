@@ -211,10 +211,10 @@ abstract class DataDI {
       () => ScanEntriesRepositoryImpl(
         scanEntriesProvider: locator<ScanEntriesProvider>(),
         folderProvider: locator<FolderRemoteProvider>(),
-        categoryProvider: locator<CategoryRemoteProvider>(),
         authorizationProvider: locator<AuthorizationProvider>(
           instanceName: provider.name,
         ),
+        categoryLocalProvider: locator<CategoryLocalProvider>(),
       ),
     );
   }

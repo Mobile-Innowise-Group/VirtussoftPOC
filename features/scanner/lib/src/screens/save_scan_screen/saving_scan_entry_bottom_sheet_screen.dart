@@ -1,13 +1,12 @@
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:navigation/navigation.dart';
+import 'package:navigation/navigation.dart' as nav;
 import 'bloc/saving_scan_entry_bloc.dart';
 import 'saving_scan_entry_bottom_sheet_content.dart';
 
-@RoutePage()
-class SavingScanEntryBottomSheetScreen extends StatelessWidget
-    implements AutoRouteWrapper {
+@nav.RoutePage()
+class SavingScanEntryBottomSheetScreen extends StatelessWidget implements nav.AutoRouteWrapper {
   final String scanPath;
 
   const SavingScanEntryBottomSheetScreen({
@@ -19,6 +18,8 @@ class SavingScanEntryBottomSheetScreen extends StatelessWidget
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<SavingScanEntryBloc>(
       create: (_) => SavingScanEntryBloc(
+        appRouter: appLocator<nav.AppRouter>(),
+        getFoldersUseCase: appLocator<GetFoldersUseCase>(),
         appRouter: appLocator<AppRouter>(),
         getAllFoldersUseCase: appLocator<GetAllFoldersUseCase>(),
         getUserCategoriesUseCase: appLocator<GetUserCategoriesUseCase>(),

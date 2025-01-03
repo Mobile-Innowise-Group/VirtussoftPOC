@@ -5,6 +5,10 @@ abstract class ScanEntriesRepository {
     required GetScanEntriesPayload payload,
   });
 
+  Future<List<ScanEntryModel>> getScanEntriesByFolderId({
+    required GetScanEntriesByFolderIdPayload payload,
+  });
+
   Future<ScanEntryModel> createScanEntry({
     required CreateScanEntryPayload payload,
   });

@@ -3,24 +3,25 @@ import '../../auth/auth.dart';
 import '../../auth/entities/user/user_entity.dart';
 import '../../categories/categories.dart';
 import '../../folders/folders.dart';
+import '../requests/get_scan_entries_by_folder_id_request.dart';
 import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
 class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   final ScanEntriesProvider _scanEntriesProvider;
   final FolderRemoteProvider _folderProvider;
-  final CategoryRemoteProvider _categoryProvider;
+  final CategoryLocalProvider _categoryLocalProvider;
   final AuthorizationProvider _authorizationProvider;
 
   ScanEntriesRepositoryImpl({
     required ScanEntriesProvider scanEntriesProvider,
     required FolderRemoteProvider folderProvider,
-    required CategoryRemoteProvider categoryProvider,
     required AuthorizationProvider authorizationProvider,
+    required CategoryLocalProvider categoryLocalProvider,
   })  : _scanEntriesProvider = scanEntriesProvider,
         _folderProvider = folderProvider,
-        _categoryProvider = categoryProvider,
-        _authorizationProvider = authorizationProvider;
+        _authorizationProvider = authorizationProvider,
+        _categoryLocalProvider = categoryLocalProvider;
 
   @override
   Future<ScanEntryModel> createScanEntry({
@@ -58,7 +59,7 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
       ),
     );
 
-    final CategoryModel category = await _categoryProvider.getUserCategoryById(
+    final CategoryModel category = await _categoryLocalProvider.getCategoryById(
       request: GetUserCategoryByIdRequest(
         categoryId: scanEntryEntity.categoryId,
       ),
@@ -85,5 +86,32 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   }) {
     // TODO: implement getScanEntries
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<ScanEntryModel>> getScanEntriesByFolderId({
+    required GetScanEntriesByFolderIdPayload payload,
+  }) async {
+    final List<ScanEntryEntity> scanEntries = await _scanEntriesProvider.getScanEntriesByFolderId(
+      request: GetScanEntriesByFolderIdRequest(folderId: payload.folder.id),
+    );
+
+    final List<Future<ScanEntryModel>> futures = scanEntries.map((ScanEntryEntity scanEntryEntity) async {
+      final CategoryModel category = await _categoryLocalProvider.getCategoryById(
+        request: GetUserCategoryByIdRequest(
+          categoryId: scanEntryEntity.categoryId,
+        ),
+      );
+
+      return ScanEntryMapper.toModel(
+        scanEntryEntity: scanEntryEntity,
+        folder: payload.folder,
+        category: category,
+      );
+    }).toList();
+
+    final List<ScanEntryModel> scanEntryModels = await Future.wait(futures);
+
+    return scanEntryModels;
   }
 }

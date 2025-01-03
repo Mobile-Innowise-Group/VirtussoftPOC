@@ -43,4 +43,11 @@ class CategoryLocalProviderImpl implements CategoryLocalProvider {
         await _databaseProvider.getCategoriesWithOffset(offset: row - 1);
     return CategoryMapper.toModel(CategoryEntity.fromJson(categories.first));
   }
+
+  @override
+  Future<CategoryModel> getCategoryById({required GetUserCategoryByIdRequest request}) async {
+    final List<Map<String, dynamic>> categories = await _databaseProvider.getCategoryById(request.categoryId);
+
+    return CategoryMapper.toModel(CategoryEntity.fromJson(categories.first));
+  }
 }

@@ -76,6 +76,11 @@ class DatabaseProvider {
     return db.query('categories');
   }
 
+  Future<List<Map<String, dynamic>>> getCategoryById(String id) async {
+    final Database db = await database;
+    return db.query('categories', where: 'id = ?', whereArgs: <String>[id], limit: 1);
+  }
+
   Future<List<Map<String, dynamic>>> getFoldersWithOffset({
     required int offset,
     int limit = 1,

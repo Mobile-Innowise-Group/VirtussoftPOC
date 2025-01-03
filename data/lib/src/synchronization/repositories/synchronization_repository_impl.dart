@@ -32,13 +32,11 @@ class SynchronizationRepositoryImpl implements SynchronizationRepository {
       return;
     }
 
-    final List<FolderModel> remoteFolders =
-        await _folderRemoteProvider.getFolders(
+    final List<FolderModel> remoteFolders = await _folderRemoteProvider.getFolders(
       request: GetFoldersRequest(),
     );
 
-    final List<CategoryModel> remoteCategories =
-        await _categoryRemoteProvider.getCategories(
+    final List<CategoryModel> remoteCategories = await _categoryRemoteProvider.getCategories(
       request: GetCategoriesRequest(),
     );
 
@@ -46,6 +44,7 @@ class SynchronizationRepositoryImpl implements SynchronizationRepository {
       await _folderLocalProvider.createFolder(
         request: CreateFolderLocalRequest(
           name: remoteFolder.name,
+          id: remoteFolder.id,
           isPrivate: remoteFolder.isPrivate ? 1 : 0,
         ),
       );
@@ -55,6 +54,7 @@ class SynchronizationRepositoryImpl implements SynchronizationRepository {
       await _categoryLocalProvider.createCategory(
         request: CreateCategoryLocalRequest(
           name: remoteCategory.name,
+          id: remoteCategory.id,
         ),
       );
     }

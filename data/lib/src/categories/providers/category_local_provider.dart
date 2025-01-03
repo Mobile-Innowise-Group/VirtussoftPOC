@@ -14,4 +14,8 @@ abstract class CategoryLocalProvider {
   Future<List<CategoryModel>> getCategories({
     required GetCategoriesRequest request,
   });
+
+  Future<CategoryModel> getCategoryById({
+    required GetUserCategoryByIdRequest request,
+  });
 }

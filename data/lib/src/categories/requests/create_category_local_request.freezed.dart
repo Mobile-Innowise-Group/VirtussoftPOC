@@ -22,6 +22,7 @@ CreateCategoryLocalRequest _$CreateCategoryLocalRequestFromJson(
 /// @nodoc
 mixin _$CreateCategoryLocalRequest {
   String get name => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
 
   /// Serializes this CreateCategoryLocalRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +41,7 @@ abstract class $CreateCategoryLocalRequestCopyWith<$Res> {
       _$CreateCategoryLocalRequestCopyWithImpl<$Res,
           CreateCategoryLocalRequest>;
   @useResult
-  $Res call({String name});
+  $Res call({String name, String? id});
 }
 
 /// @nodoc
@@ -60,12 +61,17 @@ class _$CreateCategoryLocalRequestCopyWithImpl<$Res,
   @override
   $Res call({
     Object? name = null,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -79,7 +85,7 @@ abstract class _$$CreateCategoryLocalRequestImplCopyWith<$Res>
       __$$CreateCategoryLocalRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name});
+  $Res call({String name, String? id});
 }
 
 /// @nodoc
@@ -98,12 +104,17 @@ class __$$CreateCategoryLocalRequestImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? id = freezed,
   }) {
     return _then(_$CreateCategoryLocalRequestImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -111,7 +122,7 @@ class __$$CreateCategoryLocalRequestImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
-  const _$CreateCategoryLocalRequestImpl({required this.name});
+  const _$CreateCategoryLocalRequestImpl({required this.name, this.id});
 
   factory _$CreateCategoryLocalRequestImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -119,10 +130,12 @@ class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
 
   @override
   final String name;
+  @override
+  final String? id;
 
   @override
   String toString() {
-    return 'CreateCategoryLocalRequest(name: $name)';
+    return 'CreateCategoryLocalRequest(name: $name, id: $id)';
   }
 
   @override
@@ -130,12 +143,13 @@ class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateCategoryLocalRequestImpl &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name);
+  int get hashCode => Object.hash(runtimeType, name, id);
 
   /// Create a copy of CreateCategoryLocalRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -156,14 +170,17 @@ class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
 
 abstract class _CreateCategoryLocalRequest
     implements CreateCategoryLocalRequest {
-  const factory _CreateCategoryLocalRequest({required final String name}) =
-      _$CreateCategoryLocalRequestImpl;
+  const factory _CreateCategoryLocalRequest(
+      {required final String name,
+      final String? id}) = _$CreateCategoryLocalRequestImpl;
 
   factory _CreateCategoryLocalRequest.fromJson(Map<String, dynamic> json) =
       _$CreateCategoryLocalRequestImpl.fromJson;
 
   @override
   String get name;
+  @override
+  String? get id;
 
   /// Create a copy of CreateCategoryLocalRequest
   /// with the given fields replaced by the non-null parameter values.

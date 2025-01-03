@@ -1461,7 +1461,7 @@ packages:
     source: path
     version: "0.0.0"
   user_folders:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "../features/user_folders"
       relative: true

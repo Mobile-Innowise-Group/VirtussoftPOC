@@ -25,6 +25,8 @@ dependencies:
     path: ../features/user_data
   private_folders:
     path: ../features/private_folders
+  user_folders:
+    path: ../features/user_folders
 
   auto_route: ^9.2.2
 

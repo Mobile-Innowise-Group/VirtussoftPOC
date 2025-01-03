@@ -32,3 +32,11 @@ class ToggleFolderPrivacyEvent extends UserFoldersEvent {
 
   const ToggleFolderPrivacyEvent(this.folder);
 }
+
+class OpenFolderEvent extends UserFoldersEvent {
+  final FolderModel folder;
+
+  const OpenFolderEvent({
+    required this.folder,
+  });
+}

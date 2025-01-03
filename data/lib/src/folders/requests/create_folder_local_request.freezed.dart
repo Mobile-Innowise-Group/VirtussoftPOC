@@ -22,7 +22,7 @@ CreateFolderLocalRequest _$CreateFolderLocalRequestFromJson(
 /// @nodoc
 mixin _$CreateFolderLocalRequest {
   String get name => throw _privateConstructorUsedError;
-  int get isPrivate => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
 
   /// Serializes this CreateFolderLocalRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $CreateFolderLocalRequestCopyWith<$Res> {
           $Res Function(CreateFolderLocalRequest) then) =
       _$CreateFolderLocalRequestCopyWithImpl<$Res, CreateFolderLocalRequest>;
   @useResult
-  $Res call({String name, int isPrivate});
+  $Res call({String name, String? id});
 }
 
 /// @nodoc
@@ -60,17 +60,17 @@ class _$CreateFolderLocalRequestCopyWithImpl<$Res,
   @override
   $Res call({
     Object? name = null,
-    Object? isPrivate = null,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      isPrivate: null == isPrivate
-          ? _value.isPrivate
-          : isPrivate // ignore: cast_nullable_to_non_nullable
-              as int,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -84,7 +84,7 @@ abstract class _$$CreateFolderLocalRequestImplCopyWith<$Res>
       __$$CreateFolderLocalRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int isPrivate});
+  $Res call({String name, String? id});
 }
 
 /// @nodoc
@@ -103,17 +103,17 @@ class __$$CreateFolderLocalRequestImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? isPrivate = null,
+    Object? id = freezed,
   }) {
     return _then(_$CreateFolderLocalRequestImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      isPrivate: null == isPrivate
-          ? _value.isPrivate
-          : isPrivate // ignore: cast_nullable_to_non_nullable
-              as int,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -121,8 +121,7 @@ class __$$CreateFolderLocalRequestImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
-  const _$CreateFolderLocalRequestImpl(
-      {required this.name, required this.isPrivate});
+  const _$CreateFolderLocalRequestImpl({required this.name, this.id});
 
   factory _$CreateFolderLocalRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateFolderLocalRequestImplFromJson(json);
@@ -130,11 +129,11 @@ class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
   @override
   final String name;
   @override
-  final int isPrivate;
+  final String? id;
 
   @override
   String toString() {
-    return 'CreateFolderLocalRequest(name: $name, isPrivate: $isPrivate)';
+    return 'CreateFolderLocalRequest(name: $name, id: $id)';
   }
 
   @override
@@ -143,13 +142,12 @@ class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
         (other.runtimeType == runtimeType &&
             other is _$CreateFolderLocalRequestImpl &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.isPrivate, isPrivate) ||
-                other.isPrivate == isPrivate));
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, isPrivate);
+  int get hashCode => Object.hash(runtimeType, name, id);
 
   /// Create a copy of CreateFolderLocalRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -171,7 +169,7 @@ class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
 abstract class _CreateFolderLocalRequest implements CreateFolderLocalRequest {
   const factory _CreateFolderLocalRequest(
       {required final String name,
-      required final int isPrivate}) = _$CreateFolderLocalRequestImpl;
+      final String? id}) = _$CreateFolderLocalRequestImpl;
 
   factory _CreateFolderLocalRequest.fromJson(Map<String, dynamic> json) =
       _$CreateFolderLocalRequestImpl.fromJson;
@@ -179,7 +177,7 @@ abstract class _CreateFolderLocalRequest implements CreateFolderLocalRequest {
   @override
   String get name;
   @override
-  int get isPrivate;
+  String? get id;
 
   /// Create a copy of CreateFolderLocalRequest
   /// with the given fields replaced by the non-null parameter values.

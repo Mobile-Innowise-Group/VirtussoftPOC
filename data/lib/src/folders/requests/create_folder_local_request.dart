@@ -9,8 +9,8 @@ class CreateFolderLocalRequest with _$CreateFolderLocalRequest {
   const factory CreateFolderLocalRequest({
     required String name,
     required int isPrivate,
+    String? id,
   }) = _CreateFolderLocalRequest;
 
-  factory CreateFolderLocalRequest.fromJson(Map<String, dynamic> json) =>
-      _$CreateFolderLocalRequestFromJson(json);
+  factory CreateFolderLocalRequest.fromJson(Map<String, dynamic> json) => _$CreateFolderLocalRequestFromJson(json);
 }
