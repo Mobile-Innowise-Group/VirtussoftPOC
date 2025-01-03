@@ -17,7 +17,8 @@ class ScannerScreen extends StatelessWidget implements AutoRouteWrapper {
       create: (_) => ScannerBloc(
         appRouter: appLocator<AppRouter>(),
         appEventNotifier: appLocator<AppEventNotifier>(),
-      ),
+      )..add(const OpenScanner()),
+      lazy: false,
       child: this,
     );
   }

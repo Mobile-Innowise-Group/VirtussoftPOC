@@ -30,13 +30,12 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
           children: <Widget>[
             AutoTabsRouter.tabBar(
               routes: const <PageRouteInfo>[
-                ScannerRoute(),
                 UserDataRoute(),
+                ScannerRoute(),
                 PrivateFoldersRoute(),
                 UserProfileRoute(),
               ],
-              builder: (BuildContext context, Widget child,
-                  TabController controller) {
+              builder: (BuildContext context, Widget child, TabController controller) {
                 final TabsRouter tabsRouter = AutoTabsRouter.of(context);
 
                 return Scaffold(
@@ -50,12 +49,12 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                     unselectedItemColor: Colors.black54,
                     items: const <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.qr_code),
-                        label: 'Scanner',
-                      ),
-                      BottomNavigationBarItem(
                         icon: Icon(Icons.data_usage),
                         label: 'Data',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.qr_code),
+                        label: 'Scanner',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.lock),
