@@ -68,12 +68,29 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                             onTap: () {
                               AppBottomSheet.show(
                                 context: context,
-                                child: ListTile(
-                                  onTap: () => context.read<PrivateFoldersBloc>().add(TogglePrivateFolderPrivacyEvent(state.folders[index])),
-                                  title: Text(
-                                    'folder.makeFolderPublic'.tr(),
-                                  ),
-                                  leading: const Icon(Icons.lock),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    ListTile(
+                                      onTap: () => context
+                                          .read<PrivateFoldersBloc>()
+                                          .add(TogglePrivateFolderPrivacyEvent(
+                                              state.folders[index])),
+                                      title: Text(
+                                        'folder.makeFolderPublic'.tr(),
+                                      ),
+                                      leading: const Icon(Icons.lock),
+                                    ),
+                                    ListTile(
+                                      onTap: () => context
+                                          .read<PrivateFoldersBloc>()
+                                          .add(OpenPrivateFolderEvent(
+                                              folder: state.folders[index])),
+                                      title: Text('folder.openFolder'.tr()),
+                                      leading:
+                                          const Icon(Icons.open_in_browser),
+                                    ),
+                                  ],
                                 ),
                               );
                             },

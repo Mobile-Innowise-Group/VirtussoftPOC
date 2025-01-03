@@ -27,7 +27,8 @@
     "addFolder": "Add folder",
     "privateFolders": "Private folders",
     "makeFolderPrivate": "Make folder private",
-    "makeFolderPublic": "Make folder public"
+    "makeFolderPublic": "Make folder public",
+    "openFolder": "Open folder"
   },
   "category": {
     "createCategory": "Create category",

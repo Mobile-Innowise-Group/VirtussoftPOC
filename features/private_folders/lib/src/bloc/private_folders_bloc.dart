@@ -36,6 +36,7 @@ class PrivateFoldersBloc
         super(PrivateFoldersState.initial()) {
     on<CreatePrivateFolderEvent>(_onCreatePrivateFolder);
     on<TogglePrivateFolderPrivacyEvent>(_onToggleFolderPrivacy);
+    on<OpenPrivateFolderEvent>(_onOpenPrivateFolderEvent);
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -147,5 +148,13 @@ class PrivateFoldersBloc
         state.copyWith(isLoading: false),
       );
     }
+  }
+
+
+  FutureOr<void> _onOpenPrivateFolderEvent(
+      OpenPrivateFolderEvent event,
+      Emitter<PrivateFoldersState> emit,
+      ) async {
+    await _appRouter.push(FoldersScanListRoute(folder: event.folder));
   }
 }

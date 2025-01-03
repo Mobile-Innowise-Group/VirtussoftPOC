@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
@@ -31,17 +32,39 @@ class UserFolders extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     if (index < folders.length) {
-                      return GestureDetector(
+                      return ListTile(
                         onTap: () {
-                          context
-                              .read<UserFoldersBloc>()
-                              .add(OpenFolderEvent(folder: folders[index]));
+                          AppBottomSheet.show(
+                            context: context,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  onTap: () => context
+                                      .read<UserFoldersBloc>()
+                                      .add(ToggleFolderPrivacyEvent(
+                                          state.folders[index])),
+                                  title: Text(
+                                    'folder.makeFolderPrivate'.tr(),
+                                  ),
+                                  leading: const Icon(Icons.lock),
+                                ),
+                                ListTile(
+                                  onTap: () {
+                                    context.read<UserFoldersBloc>().add(
+                                        OpenFolderEvent(
+                                            folder: folders[index]));
+                                  },
+                                  title: Text('folder.openFolder'.tr()),
+                                  leading: const Icon(Icons.open_in_browser),
+                                ),
+                              ],
+                            ),
+                          );
                         },
-                        child: ListTile(
-                          leading: const Icon(Icons.folder),
-                          trailing: const Icon(Icons.arrow_forward_ios),
-                          title: Text(folders[index].name),
-                        ),
+                        leading: const Icon(Icons.folder),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        title: Text(folders[index].name),
                       );
                     } else if (index == folders.length &&
                         state.folders.length > 3) {

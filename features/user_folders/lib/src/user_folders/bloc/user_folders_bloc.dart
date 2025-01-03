@@ -37,7 +37,6 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     on<DeleteFolderEvent>(_onDeleteFolder);
     on<ToggleExpandedEvent>(_onToggleExpanded);
     on<ToggleFolderPrivacyEvent>(_onToggleFolderPrivacy);
-
     on<OpenFolderEvent>(_onOpenFolderEvent);
     on<InitEvent>(_onInit);
 
