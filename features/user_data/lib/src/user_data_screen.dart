@@ -6,13 +6,10 @@ import 'package:nested/nested.dart';
 import 'package:user_categories/src/bloc/user_categories_bloc.dart';
 import 'package:user_categories/src/user_categories.dart';
 import 'package:user_categories/src/widgets/create_category_dialog.dart';
-import 'package:user_folders/src/bloc/user_folders_bloc.dart';
-import 'package:user_folders/src/user_folders.dart';
-import 'package:user_folders/src/widgets/create_folder_dialog.dart';
-
-import 'bloc/user_data_bloc.dart';
 import 'package:user_folders/src/user_folders/user_folders.dart';
 import 'package:user_folders/src/user_folders/widgets/create_folder_dialog.dart';
+
+import 'bloc/user_data_bloc.dart';
 
 @RoutePage()
 class UserDataScreen extends StatefulWidget implements AutoRouteWrapper {

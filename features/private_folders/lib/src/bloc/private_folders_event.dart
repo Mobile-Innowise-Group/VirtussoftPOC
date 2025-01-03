@@ -17,8 +17,8 @@ class CreatePrivateFolderEvent extends PrivateFoldersEvent {
   });
 }
 
-class ToggleFolderPrivacyEvent extends PrivateFoldersEvent {
+class TogglePrivateFolderPrivacyEvent extends PrivateFoldersEvent {
   final FolderModel folder;
 
-  const ToggleFolderPrivacyEvent(this.folder);
+  const TogglePrivateFolderPrivacyEvent(this.folder);
 }

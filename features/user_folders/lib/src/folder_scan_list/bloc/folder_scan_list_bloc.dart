@@ -10,7 +10,8 @@ part 'folder_scan_list_event.dart';
 
 part 'folder_scan_list_state.dart';
 
-class FolderScanListBloc extends Bloc<FolderScanListEvent, FolderScanListState> {
+class FolderScanListBloc
+    extends Bloc<FolderScanListEvent, FolderScanListState> {
   final AppEventNotifier _appEventNotifier;
   final GetScanEntriesByFolderUseCase _getScanEntriesByFolderUseCase;
   final AppRouter _appRouter;
@@ -28,6 +29,8 @@ class FolderScanListBloc extends Bloc<FolderScanListEvent, FolderScanListState> 
         super(FolderScanListState.initial()) {
     on<InitEvent>(_onInit);
     on<ShareScanEvent>(_onShareScanEvent);
+
+    add(const InitEvent());
   }
 
   FutureOr<void> _onInit(
@@ -37,7 +40,8 @@ class FolderScanListBloc extends Bloc<FolderScanListEvent, FolderScanListState> 
     emit(state.copyWith(isLoading: true));
 
     try {
-      final List<ScanEntryModel> scans = await _getScanEntriesByFolderUseCase.execute(
+      final List<ScanEntryModel> scans =
+          await _getScanEntriesByFolderUseCase.execute(
         GetScanEntriesByFolderIdPayload(folder: _folder),
       );
       emit(

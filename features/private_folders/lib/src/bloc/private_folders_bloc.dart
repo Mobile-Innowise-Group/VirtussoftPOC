@@ -35,7 +35,7 @@ class PrivateFoldersBloc
         _appRouter = appRouter,
         super(PrivateFoldersState.initial()) {
     on<CreatePrivateFolderEvent>(_onCreatePrivateFolder);
-    on<ToggleFolderPrivacyEvent>(_onToggleFolderPrivacy);
+    on<TogglePrivateFolderPrivacyEvent>(_onToggleFolderPrivacy);
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -112,7 +112,7 @@ class PrivateFoldersBloc
   }
 
   FutureOr<void> _onToggleFolderPrivacy(
-    ToggleFolderPrivacyEvent event,
+    TogglePrivateFolderPrivacyEvent event,
     Emitter<PrivateFoldersState> emit,
   ) async {
     try {

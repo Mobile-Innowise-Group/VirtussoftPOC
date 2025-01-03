@@ -36,6 +36,8 @@ class SavingScanEntryBloc
     on<ChangeScanCategory>(_onChangeScanCategory);
     on<SaveScan>(_onSaveScan);
     on<CancelSavingProcess>(_onCancelSavingProcess);
+
+    add(const InitEvent());
   }
 
   Future<void> _onInitEvent(

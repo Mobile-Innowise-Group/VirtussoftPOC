@@ -7,8 +7,6 @@ import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../../user_folder.dart';
-
 part 'user_folders_event.dart';
 
 part 'user_folders_state.dart';
@@ -52,7 +50,8 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
   ) async {
     emit(state.copyWith(isLoading: true));
     try {
-      final List<FolderModel> folders = await _getFoldersUseCase.execute(GetPublicFoldersPayload());
+      final List<FolderModel> folders =
+          await _getFoldersUseCase.execute(GetPublicFoldersPayload());
       emit(
         state.copyWith(
           isLoading: false,
@@ -76,11 +75,11 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
       final FolderModel folder = await _createFolderUseCase.execute(
         CreateFolderPayload(name: event.folderName),
       );
-      final List<FolderModel> folders = List<FolderModel>.from(state.folders)..add(folder);
+      final List<FolderModel> folders = List<FolderModel>.from(state.folders)
+        ..add(folder);
       emit(state.copyWith(isLoading: false, folders: folders));
     } on FailedToCreateRemoteFolderException catch (_) {
       try {
-        final List<FolderModel> folders = await _getFoldersUseCase.execute(GetFoldersPayload());
         final List<FolderModel> folders =
             await _getFoldersUseCase.execute(GetPublicFoldersPayload());
         emit(

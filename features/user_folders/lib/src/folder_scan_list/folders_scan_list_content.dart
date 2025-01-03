@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'bloc/folder_scan_list_bloc.dart';
 
-// import 'bloc/folder_scan_list_bloc.dart';
-
 class FoldersScanListContent extends StatelessWidget {
   const FoldersScanListContent({super.key});
 

@@ -69,10 +69,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                               AppBottomSheet.show(
                                 context: context,
                                 child: ListTile(
-                                  onTap: () => context
-                                      .read<PrivateFoldersBloc>()
-                                      .add(ToggleFolderPrivacyEvent(
-                                          state.folders[index])),
+                                  onTap: () => context.read<PrivateFoldersBloc>().add(TogglePrivateFolderPrivacyEvent(state.folders[index])),
                                   title: Text(
                                     'folder.makeFolderPublic'.tr(),
                                   ),

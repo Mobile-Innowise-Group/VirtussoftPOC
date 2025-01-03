@@ -1,13 +1,14 @@
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:navigation/navigation.dart' as nav;
+import 'package:navigation/navigation.dart';
 
 import 'bloc/folder_scan_list_bloc.dart';
 import 'folders_scan_list_content.dart';
 
-@nav.RoutePage()
-class FoldersScanListScreen extends StatelessWidget implements nav.AutoRouteWrapper {
+@RoutePage()
+class FoldersScanListScreen extends StatelessWidget
+    implements AutoRouteWrapper {
   final FolderModel folder;
 
   const FoldersScanListScreen({
@@ -19,11 +20,12 @@ class FoldersScanListScreen extends StatelessWidget implements nav.AutoRouteWrap
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<FolderScanListBloc>(
       create: (_) => FolderScanListBloc(
-        appRouter: appLocator<nav.AppRouter>(),
+        appRouter: appLocator<AppRouter>(),
         appEventNotifier: appLocator.get<AppEventNotifier>(),
-        getScanEntriesByFolderUseCase: appLocator.get<GetScanEntriesByFolderUseCase>(),
+        getScanEntriesByFolderUseCase:
+            appLocator.get<GetScanEntriesByFolderUseCase>(),
         folder: folder,
-      )..add(const InitEvent()),
+      ),
       child: this,
     );
   }
