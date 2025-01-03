@@ -27,6 +27,7 @@ abstract class  LocaleKeys {
   static const folder_privateFolders = 'folder.privateFolders';
   static const folder_makeFolderPrivate = 'folder.makeFolderPrivate';
   static const folder_makeFolderPublic = 'folder.makeFolderPublic';
+  static const folder_openFolder = 'folder.openFolder';
   static const folder = 'folder';
   static const category_createCategory = 'category.createCategory';
   static const category_categoryName = 'category.categoryName';

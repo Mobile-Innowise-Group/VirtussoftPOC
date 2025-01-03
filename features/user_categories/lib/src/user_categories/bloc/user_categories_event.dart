@@ -26,3 +26,12 @@ class DeleteCategoryEvent extends UserCategoriesEvent {
 class ToggleExpandedEvent extends UserCategoriesEvent {
   const ToggleExpandedEvent();
 }
+
+class OpenCategoryEvent extends UserCategoriesEvent {
+  final CategoryModel category;
+
+  const OpenCategoryEvent({
+    required this.category,
+  });
+}
+

@@ -7,6 +7,8 @@ import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
 
+import '../../user_categories.dart';
+
 part 'user_categories_event.dart';
 
 part 'user_categories_state.dart';
@@ -34,6 +36,7 @@ class UserCategoriesBloc
     on<CreateCategoryEvent>(_onCreateCategory);
     on<DeleteCategoryEvent>(_onDeleteCategory);
     on<ToggleExpandedEvent>(_onToggleExpanded);
+    on<OpenCategoryEvent>(_onOpenCategory);
 
     on<InitEvent>(_onInit);
 
@@ -148,5 +151,13 @@ class UserCategoriesBloc
     Emitter<UserCategoriesState> emit,
   ) async {
     emit(state.copyWith(isExpanded: !state.isExpanded));
+  }
+
+  FutureOr<void> _onOpenCategory(
+    OpenCategoryEvent event,
+    Emitter<UserCategoriesState> emit,
+  ) async {
+    await _appRouter
+        .push(CategorizedDocumentListRoute(category: event.category));
   }
 }
