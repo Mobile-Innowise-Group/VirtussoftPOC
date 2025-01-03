@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../auth/auth.dart';
 import '../../auth/entities/user/user_entity.dart';
@@ -12,13 +13,16 @@ class FolderRepositoryImpl implements FolderRepository {
   final FolderRemoteProvider _folderRemoteProvider;
   final FolderLocalProvider _folderLocalProvider;
   final AuthorizationProvider _authorizationProvider;
+  final Uuid _uuid;
 
   FolderRepositoryImpl({
     required FolderRemoteProvider folderRemoteProvider,
     required FolderLocalProvider folderLocalProvider,
     required AuthorizationProvider authorizationProvider,
+    required Uuid uuid,
   })  : _folderRemoteProvider = folderRemoteProvider,
         _folderLocalProvider = folderLocalProvider,
+        _uuid = uuid,
         _authorizationProvider = authorizationProvider;
 
   @override
@@ -36,6 +40,7 @@ class FolderRepositoryImpl implements FolderRepository {
       request: CreateFolderLocalRequest(
         name: payload.name,
         isPrivate: payload.isPrivate ? 1 : 0,
+        id: _uuid.v4(),
       ),
     );
 

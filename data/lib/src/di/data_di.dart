@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../data.dart';
 import '../auth/auth.dart';
@@ -173,6 +174,7 @@ abstract class DataDI {
       () => CategoryRepositoryImpl(
         categoryRemoteProvider: locator<CategoryRemoteProvider>(),
         categoryLocalProvider: locator<CategoryLocalProvider>(),
+        uuid: locator<Uuid>(),
         authorizationProvider: locator.get<AuthorizationProvider>(
           instanceName: provider.name,
         ),
@@ -191,6 +193,7 @@ abstract class DataDI {
       () => FolderRepositoryImpl(
         folderRemoteProvider: locator<FolderRemoteProvider>(),
         folderLocalProvider: locator<FolderLocalProvider>(),
+        uuid: locator<Uuid>(),
         authorizationProvider: locator.get<AuthorizationProvider>(
           instanceName: provider.name,
         ),
@@ -271,6 +274,10 @@ abstract class DataDI {
     );
     locator.registerLazySingleton<FlutterSecureStorage>(
       () => const FlutterSecureStorage(),
+    );
+
+    locator.registerLazySingleton<Uuid>(
+      () => const Uuid(),
     );
   }
 }

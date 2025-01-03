@@ -32,11 +32,13 @@ class SynchronizationRepositoryImpl implements SynchronizationRepository {
       return;
     }
 
-    final List<FolderModel> remoteFolders = await _folderRemoteProvider.getFolders(
+    final List<FolderModel> remoteFolders =
+        await _folderRemoteProvider.getFolders(
       request: GetFoldersRequest(),
     );
 
-    final List<CategoryModel> remoteCategories = await _categoryRemoteProvider.getCategories(
+    final List<CategoryModel> remoteCategories =
+        await _categoryRemoteProvider.getCategories(
       request: GetCategoriesRequest(),
     );
 

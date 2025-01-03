@@ -6,9 +6,6 @@ class DatabaseProvider {
   static final DatabaseProvider _instance = DatabaseProvider._internal();
   static Database? _database;
 
-  final String _generateUUID =
-      "(lower(hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-4' || substr(hex(randomblob(2)), 2) || '-' || substr('89ab', abs(random() % 4) + 1, 1) || substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6))))";
-
   factory DatabaseProvider() {
     return _instance;
   }
@@ -27,14 +24,13 @@ class DatabaseProvider {
       path,
       version: 2,
       onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
     );
   }
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE folders(
-        id TEXT PRIMARY KEY DEFAULT $_generateUUID,
+        id TEXT PRIMARY KEY,
         name TEXT,
         is_private INTEGER DEFAULT 0
       )
@@ -42,18 +38,10 @@ class DatabaseProvider {
 
     await db.execute('''
       CREATE TABLE categories(
-        id TEXT PRIMARY KEY DEFAULT $_generateUUID,
+        id TEXT PRIMARY KEY,
         name TEXT
       )
     ''');
-  }
-
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      await db.execute('''
-        ALTER TABLE folders ADD COLUMN is_private INTEGER DEFAULT 0
-      ''');
-    }
   }
 
   Future<int> createFolder(Map<String, dynamic> row) async {
@@ -78,7 +66,8 @@ class DatabaseProvider {
 
   Future<List<Map<String, dynamic>>> getCategoryById(String id) async {
     final Database db = await database;
-    return db.query('categories', where: 'id = ?', whereArgs: <String>[id], limit: 1);
+    return db.query('categories',
+        where: 'id = ?', whereArgs: <String>[id], limit: 1);
   }
 
   Future<List<Map<String, dynamic>>> getFoldersWithOffset({

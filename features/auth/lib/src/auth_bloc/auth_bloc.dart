@@ -113,7 +113,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         debugPrint('User logged in event occurred!');
         await _appRouter.replace(const HomeRoute());
       }
-    } on Exception catch (e) {
+    } catch (e) {
       _appEventNotifier.notify(
         SnackBarErrorNotification(
           message: e.toString(),

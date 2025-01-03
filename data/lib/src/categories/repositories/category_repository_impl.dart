@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:uuid/uuid.dart';
 import '../../auth/auth.dart';
 import '../../auth/entities/entities.dart';
 import '../categories.dart';
@@ -7,13 +8,16 @@ class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryLocalProvider _categoryLocalProvider;
   final CategoryRemoteProvider _categoryRemoteProvider;
   final AuthorizationProvider _authorizationProvider;
+  final Uuid _uuid;
 
   CategoryRepositoryImpl({
     required CategoryLocalProvider categoryLocalProvider,
     required CategoryRemoteProvider categoryRemoteProvider,
     required AuthorizationProvider authorizationProvider,
+    required Uuid uuid,
   })  : _categoryRemoteProvider = categoryRemoteProvider,
         _categoryLocalProvider = categoryLocalProvider,
+        _uuid = uuid,
         _authorizationProvider = authorizationProvider;
 
   @override
@@ -30,6 +34,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
     final CategoryModel category = await _categoryLocalProvider.createCategory(
       request: CreateCategoryLocalRequest(
         name: payload.name,
+        id: _uuid.v4(),
       ),
     );
 

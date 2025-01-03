@@ -10,8 +10,9 @@ class UserEntity with _$UserEntity {
   const factory UserEntity({
     @JsonKey(name: 'sub') required String id,
     required String email,
-    required String username,
+    String? username,
   }) = _UserEntity;
 
-  factory UserEntity.fromJson(Map<String, Object?> json) => _$UserEntityFromJson(json);
+  factory UserEntity.fromJson(Map<String, Object?> json) =>
+      _$UserEntityFromJson(json);
 }

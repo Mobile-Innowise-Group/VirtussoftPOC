@@ -8,8 +8,9 @@ part 'create_category_local_request.g.dart';
 class CreateCategoryLocalRequest with _$CreateCategoryLocalRequest {
   const factory CreateCategoryLocalRequest({
     required String name,
-    String? id,
+    required String id,
   }) = _CreateCategoryLocalRequest;
 
-  factory CreateCategoryLocalRequest.fromJson(Map<String, dynamic> json) => _$CreateCategoryLocalRequestFromJson(json);
+  factory CreateCategoryLocalRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreateCategoryLocalRequestFromJson(json);
 }

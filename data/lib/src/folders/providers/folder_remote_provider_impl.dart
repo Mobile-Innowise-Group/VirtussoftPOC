@@ -25,6 +25,7 @@ class FolderRemoteProviderImpl implements FolderRemoteProvider {
           'folder_id': request.id,
           'name': request.name,
           'user_id': request.userId,
+          'is_private': request.isPrivate,
         });
 
         return FolderMapper.toModel(FolderEntity.fromJson(response.first));

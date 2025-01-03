@@ -11,7 +11,7 @@ _$CreateFolderLocalRequestImpl _$$CreateFolderLocalRequestImplFromJson(
     _$CreateFolderLocalRequestImpl(
       name: json['name'] as String,
       isPrivate: (json['is_private'] as num).toInt(),
-      id: json['id'] as String?,
+      id: json['id'] as String,
     );
 
 Map<String, dynamic> _$$CreateFolderLocalRequestImplToJson(

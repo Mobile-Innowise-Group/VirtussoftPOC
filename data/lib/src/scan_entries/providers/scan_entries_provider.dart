@@ -3,7 +3,6 @@ import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
 abstract class ScanEntriesProvider {
-
   Future<List<ScanEntryEntity>> getScanEntriesByFolderId({
     required GetScanEntriesByFolderIdRequest request,
   });

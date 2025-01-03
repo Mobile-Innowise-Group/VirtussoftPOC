@@ -10,7 +10,7 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
     _$UserEntityImpl(
       id: json['sub'] as String,
       email: json['email'] as String,
-      username: json['username'] as String,
+      username: json['username'] as String?,
     );
 
 Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
