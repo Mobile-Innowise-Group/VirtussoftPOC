@@ -32,7 +32,6 @@ class FolderScanListBloc
     on<ShareQrEvent>(_onShareQrEvent);
     on<OpenScanEvent>(_onOpenScanEvent);
     on<CloseShareQrDialogEvent>(_onCloseShareQrDialogEvent);
-    on<ShareScanEvent>(_onShareScanEvent);
 
     add(const InitEvent());
   }
