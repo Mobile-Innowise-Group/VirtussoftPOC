@@ -8,6 +8,7 @@ part 'user_entity.g.dart';
 @freezed
 class UserEntity with _$UserEntity {
   const factory UserEntity({
+    @JsonKey(name: 'sub') required String id,
     required String email,
     required String username,
   }) = _UserEntity;

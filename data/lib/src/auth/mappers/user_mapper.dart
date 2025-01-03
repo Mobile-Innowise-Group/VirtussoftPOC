@@ -11,6 +11,7 @@ class UserMapper {
     }
 
     return UserModel(
+      id: entity.id,
       email: entity.email,
       username: entity.username,
     );
@@ -22,6 +23,7 @@ class UserMapper {
     }
 
     return UserEntity(
+      id: model.id,
       email: model.email,
       username: '',
     );
@@ -34,11 +36,17 @@ class UserMapper {
       return null;
     }
 
-    return UserEntity(email: email, username: '');
+    return UserEntity(
+      id: firebaseUser.uid,
+      email: email,
+      username: '',
+    );
   }
 
   static UserEntity? fromSupabaseUser({required supabase_auth.User? supabaseUser}) {
-    if (supabaseUser == null) {
+    final String? email = supabaseUser?.email;
+
+    if (supabaseUser == null || email == null) {
       return null;
     }
 

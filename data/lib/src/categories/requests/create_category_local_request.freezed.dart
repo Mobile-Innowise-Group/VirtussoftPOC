@@ -24,12 +24,8 @@ mixin _$CreateCategoryLocalRequest {
   String get name => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
 
-  /// Serializes this CreateCategoryLocalRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CreateCategoryLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $CreateCategoryLocalRequestCopyWith<CreateCategoryLocalRequest>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -55,8 +51,6 @@ class _$CreateCategoryLocalRequestCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CreateCategoryLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,8 +92,6 @@ class __$$CreateCategoryLocalRequestImplCopyWithImpl<$Res>
       $Res Function(_$CreateCategoryLocalRequestImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CreateCategoryLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -147,13 +139,11 @@ class _$CreateCategoryLocalRequestImpl implements _CreateCategoryLocalRequest {
             (identical(other.id, id) || other.id == id));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, id);
 
-  /// Create a copy of CreateCategoryLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateCategoryLocalRequestImplCopyWith<_$CreateCategoryLocalRequestImpl>
@@ -181,11 +171,8 @@ abstract class _CreateCategoryLocalRequest
   String get name;
   @override
   String? get id;
-
-  /// Create a copy of CreateCategoryLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$CreateCategoryLocalRequestImplCopyWith<_$CreateCategoryLocalRequestImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

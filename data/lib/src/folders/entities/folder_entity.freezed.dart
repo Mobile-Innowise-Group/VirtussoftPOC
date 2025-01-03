@@ -24,12 +24,8 @@ mixin _$FolderEntity {
   String get name => throw _privateConstructorUsedError;
   bool get isPrivate => throw _privateConstructorUsedError;
 
-  /// Serializes this FolderEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of FolderEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $FolderEntityCopyWith<FolderEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -53,8 +49,6 @@ class _$FolderEntityCopyWithImpl<$Res, $Val extends FolderEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of FolderEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,8 +92,6 @@ class __$$FolderEntityImplCopyWithImpl<$Res>
       _$FolderEntityImpl _value, $Res Function(_$FolderEntityImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of FolderEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -156,13 +148,11 @@ class _$FolderEntityImpl implements _FolderEntity {
                 other.isPrivate == isPrivate));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, isPrivate);
 
-  /// Create a copy of FolderEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$FolderEntityImplCopyWith<_$FolderEntityImpl> get copyWith =>
@@ -191,11 +181,8 @@ abstract class _FolderEntity implements FolderEntity {
   String get name;
   @override
   bool get isPrivate;
-
-  /// Create a copy of FolderEntity
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$FolderEntityImplCopyWith<_$FolderEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

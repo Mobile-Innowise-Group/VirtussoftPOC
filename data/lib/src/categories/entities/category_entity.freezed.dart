@@ -23,12 +23,8 @@ mixin _$CategoryEntity {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
-  /// Serializes this CategoryEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CategoryEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $CategoryEntityCopyWith<CategoryEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,8 +48,6 @@ class _$CategoryEntityCopyWithImpl<$Res, $Val extends CategoryEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CategoryEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,8 +86,6 @@ class __$$CategoryEntityImplCopyWithImpl<$Res>
       _$CategoryEntityImpl _value, $Res Function(_$CategoryEntityImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CategoryEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -140,13 +132,11 @@ class _$CategoryEntityImpl implements _CategoryEntity {
             (identical(other.name, name) || other.name == name));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name);
 
-  /// Create a copy of CategoryEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryEntityImplCopyWith<_$CategoryEntityImpl> get copyWith =>
@@ -173,11 +163,8 @@ abstract class _CategoryEntity implements CategoryEntity {
   String get id;
   @override
   String get name;
-
-  /// Create a copy of CategoryEntity
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$CategoryEntityImplCopyWith<_$CategoryEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

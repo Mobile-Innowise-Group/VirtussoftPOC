@@ -25,12 +25,8 @@ mixin _$CreateFolderLocalRequest {
   int get isPrivate => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
 
-  /// Serializes this CreateFolderLocalRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CreateFolderLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $CreateFolderLocalRequestCopyWith<CreateFolderLocalRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,8 +51,6 @@ class _$CreateFolderLocalRequestCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CreateFolderLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -103,8 +97,6 @@ class __$$CreateFolderLocalRequestImplCopyWithImpl<$Res>
       $Res Function(_$CreateFolderLocalRequestImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CreateFolderLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,13 +153,11 @@ class _$CreateFolderLocalRequestImpl implements _CreateFolderLocalRequest {
             (identical(other.id, id) || other.id == id));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, isPrivate, id);
 
-  /// Create a copy of CreateFolderLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateFolderLocalRequestImplCopyWith<_$CreateFolderLocalRequestImpl>
@@ -197,11 +187,8 @@ abstract class _CreateFolderLocalRequest implements CreateFolderLocalRequest {
   int get isPrivate;
   @override
   String? get id;
-
-  /// Create a copy of CreateFolderLocalRequest
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$CreateFolderLocalRequestImplCopyWith<_$CreateFolderLocalRequestImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
