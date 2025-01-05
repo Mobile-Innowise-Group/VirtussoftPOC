@@ -30,9 +30,8 @@ class UserCategories extends StatelessWidget {
                   (BuildContext context, int index) {
                     if (index < categories.length) {
                       return ListTile(
-                        onTap: () => context
-                            .read<UserCategoriesBloc>()
-                            .add(OpenCategoryEvent(category: categories[index])),
+                        onTap: () => context.read<UserCategoriesBloc>().add(
+                            OpenCategoryEvent(category: categories[index])),
                         leading: const Icon(Icons.tag),
                         trailing: const Icon(Icons.arrow_forward_ios),
                         title: Text(categories[index].name),

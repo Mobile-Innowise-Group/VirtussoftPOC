@@ -104,14 +104,15 @@ abstract class DomainDI {
       ),
     );
 
-    locator.registerLazySingleton<GetScanEntriesUseCase>(
-      () => GetScanEntriesUseCase(
+    locator.registerLazySingleton<GetAllUserScanEntriesUseCase>(
+      () => GetAllUserScanEntriesUseCase(
         scanEntriesRepository: locator.get<ScanEntriesRepository>(),
       ),
     );
 
     locator.registerLazySingleton<SynchronizeDataUseCase>(
-      () => SynchronizeDataUseCase(synchronizationRepository: locator.get<SynchronizationRepository>()),
+      () => SynchronizeDataUseCase(
+          synchronizationRepository: locator.get<SynchronizationRepository>()),
     );
 
     locator.registerLazySingleton<CreatePrivateFolderUseCase>(

@@ -34,4 +34,3 @@ class OpenCategoryEvent extends UserCategoriesEvent {
     required this.category,
   });
 }
-

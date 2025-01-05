@@ -81,11 +81,11 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   }
 
   @override
-  Future<List<ScanEntryModel>> getScanEntries({
+  Future<List<ScanEntryModel>> getAllUserScanEntries({
     required GetScanEntriesPayload payload,
-  }) {
-    // TODO: implement getScanEntries
-    throw UnimplementedError();
+  }) async {
+    return _scanEntriesProvider.getAllUserScanEntries(
+        request: GetAllUserScanEntriesRequest());
   }
 
   @override

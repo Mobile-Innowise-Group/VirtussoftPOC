@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
@@ -80,5 +81,13 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         return response.map(ScanEntryEntity.fromJson).toList();
       },
     );
+  }
+
+  @override
+  Future<List<ScanEntryModel>> getAllUserScanEntries({
+    required GetAllUserScanEntriesRequest request,
+  }) {
+    // TODO: implement getAllUserScanEntries
+    throw UnimplementedError();
   }
 }

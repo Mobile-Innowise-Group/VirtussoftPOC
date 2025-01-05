@@ -28,4 +28,3 @@ class OpenScanEvent extends FolderScanListEvent {
     required this.localUrl,
   });
 }
-

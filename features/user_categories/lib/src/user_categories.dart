@@ -10,8 +10,8 @@ export 'user_categories.gr.dart';
 class UserCategoriesRoute extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      page: CategorizedDocumentListRoute.page,
-    ),
-  ];
+        AutoRoute(
+          page: CategorizedDocumentListRoute.page,
+        ),
+      ];
 }

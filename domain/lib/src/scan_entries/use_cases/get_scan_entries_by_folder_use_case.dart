@@ -1,6 +1,7 @@
 import '../../../domain.dart';
 
-class GetScanEntriesByFolderUseCase extends FutureUseCase<GetScanEntriesByFolderIdPayload, List<ScanEntryModel>> {
+class GetScanEntriesByFolderUseCase extends FutureUseCase<
+    GetScanEntriesByFolderIdPayload, List<ScanEntryModel>> {
   final ScanEntriesRepository _scanEntriesRepository;
 
   GetScanEntriesByFolderUseCase({
@@ -8,7 +9,8 @@ class GetScanEntriesByFolderUseCase extends FutureUseCase<GetScanEntriesByFolder
   }) : _scanEntriesRepository = scanEntriesRepository;
 
   @override
-  Future<List<ScanEntryModel>> execute(GetScanEntriesByFolderIdPayload input) async {
+  Future<List<ScanEntryModel>> execute(
+      GetScanEntriesByFolderIdPayload input) async {
     return _scanEntriesRepository.getScanEntriesByFolderId(
       payload: input,
     );

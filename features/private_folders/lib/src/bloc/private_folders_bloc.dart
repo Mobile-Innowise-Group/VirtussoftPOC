@@ -150,11 +150,10 @@ class PrivateFoldersBloc
     }
   }
 
-
   FutureOr<void> _onOpenPrivateFolderEvent(
-      OpenPrivateFolderEvent event,
-      Emitter<PrivateFoldersState> emit,
-      ) async {
+    OpenPrivateFolderEvent event,
+    Emitter<PrivateFoldersState> emit,
+  ) async {
     await _appRouter.push(FoldersScanListRoute(folder: event.folder));
   }
 }

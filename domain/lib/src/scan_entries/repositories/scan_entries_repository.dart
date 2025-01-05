@@ -1,7 +1,7 @@
 import '../scan_entries.dart';
 
 abstract class ScanEntriesRepository {
-  Future<List<ScanEntryModel>> getScanEntries({
+  Future<List<ScanEntryModel>> getAllUserScanEntries({
     required GetScanEntriesPayload payload,
   });
 

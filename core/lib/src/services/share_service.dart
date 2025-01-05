@@ -10,6 +10,14 @@ class ShareService {
     required Uint8List bites,
   }) async {
     try {
+      //   final Directory tempDir = await getApplicationDocumentsDirectory();
+      //   final File file = File('${tempDir.path}/qr_code.png');
+      //    if (!await file.exists()) {
+      //      await file.create(recursive: true);
+      //      file.writeAsStringSync("test for share documents file");
+      //    }
+      //    ShareExtend.share(file.path, "file");
+
       final Directory tempDir = await getTemporaryDirectory();
       final File file = File('${tempDir.path}/qr_code.png');
 

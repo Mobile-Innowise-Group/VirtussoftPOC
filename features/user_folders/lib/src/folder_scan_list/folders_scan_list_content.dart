@@ -5,7 +5,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/folder_scan_list_bloc.dart';
-import 'share_scan_dialog/create_folder_dialog.dart';
+import 'share_scan_dialog/share_scan_dialog.dart';
 
 class FoldersScanListContent extends StatelessWidget {
   const FoldersScanListContent({super.key});
@@ -44,10 +44,14 @@ class FoldersScanListContent extends StatelessWidget {
                     builder: (BuildContext _) {
                       return ShareScanDialog(
                         onShare: (Uint8List qrCodeBites) {
-                          context.read<FolderScanListBloc>().add(ShareQrEvent(qrCodeBites: qrCodeBites));
+                          context
+                              .read<FolderScanListBloc>()
+                              .add(ShareQrEvent(qrCodeBites: qrCodeBites));
                         },
                         onClose: () {
-                          context.read<FolderScanListBloc>().add(const CloseShareQrDialogEvent());
+                          context
+                              .read<FolderScanListBloc>()
+                              .add(const CloseShareQrDialogEvent());
                         },
                         remoteUrl: scan.remotePath,
                       );

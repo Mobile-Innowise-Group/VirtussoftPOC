@@ -7,4 +7,4 @@ export 'repositories/scan_entries_repository.dart';
 export 'use_cases/create_scan_entry_use_case.dart';
 export 'use_cases/delete_scan_entry_use_case.dart';
 export 'use_cases/get_scan_entries_by_folder_use_case.dart';
-export 'use_cases/get_scan_entries_use_case.dart';
+export 'use_cases/get_all_user_scan_entries_use_case.dart';

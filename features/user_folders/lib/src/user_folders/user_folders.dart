@@ -32,8 +32,11 @@ class UserFolders extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     if (index < folders.length) {
-                      return ListTile(
-                        onTap: () {
+                      return GestureDetector(
+                        onTap: () => context
+                            .read<UserFoldersBloc>()
+                            .add(OpenFolderEvent(folder: folders[index])),
+                        onLongPress: () {
                           AppBottomSheet.show(
                             context: context,
                             child: Column(
@@ -49,22 +52,15 @@ class UserFolders extends StatelessWidget {
                                   ),
                                   leading: const Icon(Icons.lock),
                                 ),
-                                ListTile(
-                                  onTap: () {
-                                    context.read<UserFoldersBloc>().add(
-                                        OpenFolderEvent(
-                                            folder: folders[index]));
-                                  },
-                                  title: Text('folder.openFolder'.tr()),
-                                  leading: const Icon(Icons.open_in_browser),
-                                ),
                               ],
                             ),
                           );
                         },
-                        leading: const Icon(Icons.folder),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        title: Text(folders[index].name),
+                        child: ListTile(
+                          leading: const Icon(Icons.folder),
+                          trailing: const Icon(Icons.arrow_forward_ios),
+                          title: Text(folders[index].name),
+                        ),
                       );
                     } else if (index == folders.length &&
                         state.folders.length > 3) {

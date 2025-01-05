@@ -20,6 +20,8 @@ class CategorizedDocumentListScreen extends StatelessWidget
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<CategorizedDocumentsListBloc>(
       create: (_) => CategorizedDocumentsListBloc(
+        getScanEntriesUseCase: appLocator<GetAllUserScanEntriesUseCase>(),
+        appEventNotifier: appLocator.get<AppEventNotifier>(),
       ),
       child: this,
     );

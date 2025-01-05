@@ -35,7 +35,8 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                 PrivateFoldersRoute(),
                 UserProfileRoute(),
               ],
-              builder: (BuildContext context, Widget child, TabController controller) {
+              builder: (BuildContext context, Widget child,
+                  TabController controller) {
                 final TabsRouter tabsRouter = AutoTabsRouter.of(context);
 
                 return Scaffold(
