@@ -43,7 +43,7 @@ class FoldersScanListContent extends StatelessWidget {
                     context: context,
                     builder: (BuildContext _) {
                       return ShareScanDialog(
-                        onShare: (Uint8List qrCodeBites) {
+                        onShareQr: (Uint8List qrCodeBites) {
                           context
                               .read<FolderScanListBloc>()
                               .add(ShareQrEvent(qrCodeBites: qrCodeBites));
@@ -53,6 +53,9 @@ class FoldersScanListContent extends StatelessWidget {
                               .read<FolderScanListBloc>()
                               .add(const CloseShareQrDialogEvent());
                         },
+                        onShareFile: () => context
+                            .read<FolderScanListBloc>()
+                            .add(ShareFileEvent(scan: scan)),
                         remoteUrl: scan.remotePath,
                       );
                     },

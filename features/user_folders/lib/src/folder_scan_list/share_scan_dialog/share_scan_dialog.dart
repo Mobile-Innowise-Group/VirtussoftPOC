@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 
 class ShareScanDialog extends StatefulWidget {
   final String remoteUrl;
-  final Function(Uint8List qrCodeBites) onShare;
+  final Function(Uint8List qrCodeBites) onShareQr;
+  final Function() onShareFile;
   final Function() onClose;
 
   const ShareScanDialog({
     Key? key,
-    required this.onShare,
+    required this.onShareQr,
     required this.onClose,
     required this.remoteUrl,
+    required this.onShareFile,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class ShareScanDialog extends StatefulWidget {
 }
 
 class _ShareScanDialogState extends State<ShareScanDialog> {
-  Uint8List? qrCodeBites;
+  Uint8List? fileBites;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class _ShareScanDialogState extends State<ShareScanDialog> {
             );
           }
 
-          qrCodeBites = data;
+          fileBites = data;
           return Image.memory(data);
         },
       ),
@@ -52,13 +54,17 @@ class _ShareScanDialogState extends State<ShareScanDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            final Uint8List? bites = qrCodeBites;
+            final Uint8List? bites = fileBites;
 
             if (bites != null) {
-              widget.onShare(bites);
+              widget.onShareQr(bites);
             }
           },
-          child: const Text('Share'),
+          child: const Text('Share qr'),
+        ),
+        ElevatedButton(
+          onPressed: widget.onShareFile,
+          child: const Text('Share file'),
         ),
       ],
     );
