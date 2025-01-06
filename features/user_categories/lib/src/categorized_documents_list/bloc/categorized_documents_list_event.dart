@@ -34,3 +34,7 @@ class ShareFileEvent extends CategorizedDocumentsListEvent {
     required this.scan,
   });
 }
+
+class ShowPrivateFilesEvent extends CategorizedDocumentsListEvent {
+  const ShowPrivateFilesEvent();
+}

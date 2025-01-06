@@ -16,21 +16,25 @@ class CategorizedDocumentsListBloc
   final CategoryModel _category;
   final AppEventNotifier _appEventNotifier;
   final AppRouter _appRouter;
+  final BiometricService _biometricService;
 
   CategorizedDocumentsListBloc({
     required GetScanEntriesByCategoryUseCase getScanEntriesByCategoryUseCase,
     required AppEventNotifier appEventNotifier,
     required AppRouter appRouter,
     required CategoryModel category,
+    required BiometricService biometricService,
   })  : _getScanEntriesByCategoryUseCase = getScanEntriesByCategoryUseCase,
         _category = category,
         _appRouter = appRouter,
         _appEventNotifier = appEventNotifier,
+        _biometricService = biometricService,
         super(CategorizedDocumentsListState.initial()) {
     on<InitEvent>(_onInit);
     on<OpenScanEvent>(_onOpenScanEvent);
     on<CloseShareQrDialogEvent>(_onCloseShareQrDialogEvent);
     on<ShareFileEvent>(_onShareFile);
+    on<ShowPrivateFilesEvent>(_onShowPrivateFilesEvent);
 
     add(const InitEvent());
   }
@@ -47,8 +51,12 @@ class CategorizedDocumentsListBloc
           category: _category,
         ),
       );
+      final List<ScanEntryModel> publicScanEntries = scanEntries
+          .where((ScanEntryModel scan) => !scan.folder.isPrivate)
+          .toList();
       emit(state.copyWith(
-        scanEntries: scanEntries,
+        allScanEntries: scanEntries,
+        shownScanEntries: publicScanEntries,
         isLoading: false,
       ));
     } catch (e) {
@@ -84,5 +92,25 @@ class CategorizedDocumentsListBloc
     );
 
     await _appRouter.maybePopTop();
+  }
+
+  FutureOr<void> _onShowPrivateFilesEvent(
+    ShowPrivateFilesEvent event,
+    Emitter<CategorizedDocumentsListState> emit,
+  ) async {
+    if (!await _biometricService.authenticateWithBiometrics()) {
+      emit(state.copyWith());
+      return;
+    }
+
+    final List<ScanEntryModel> showScanEntries =
+        List<ScanEntryModel>.of(state.allScanEntries);
+
+    emit(
+      state.copyWith(
+        shownScanEntries: showScanEntries,
+        isPrivateShown: true,
+      ),
+    );
   }
 }

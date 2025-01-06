@@ -3,30 +3,40 @@ part of 'categorized_documents_list_bloc.dart';
 @immutable
 class CategorizedDocumentsListState {
   final bool isLoading;
-  final List<ScanEntryModel> scanEntries;
+  final List<ScanEntryModel> allScanEntries;
   final CategoryModel? category;
+  final bool isPrivateShown;
+  final List<ScanEntryModel> shownScanEntries;
 
   const CategorizedDocumentsListState({
     required this.isLoading,
-    required this.scanEntries,
+    required this.allScanEntries,
+    required this.isPrivateShown,
+    required this.shownScanEntries,
     this.category,
   });
 
   factory CategorizedDocumentsListState.initial() {
     return const CategorizedDocumentsListState(
       isLoading: false,
-      scanEntries: <ScanEntryModel>[],
+      isPrivateShown: false,
+      allScanEntries: <ScanEntryModel>[],
+      shownScanEntries: <ScanEntryModel>[],
     );
   }
 
   CategorizedDocumentsListState copyWith({
     bool? isLoading,
-    List<ScanEntryModel>? scanEntries,
+    bool? isPrivateShown,
+    List<ScanEntryModel>? allScanEntries,
+    List<ScanEntryModel>? shownScanEntries,
     CategoryModel? category,
   }) {
     return CategorizedDocumentsListState(
       isLoading: isLoading ?? this.isLoading,
-      scanEntries: scanEntries ?? this.scanEntries,
+      isPrivateShown: isPrivateShown ?? this.isPrivateShown,
+      allScanEntries: allScanEntries ?? this.allScanEntries,
+      shownScanEntries: shownScanEntries ?? this.shownScanEntries,
       category: category ?? this.category,
     );
   }

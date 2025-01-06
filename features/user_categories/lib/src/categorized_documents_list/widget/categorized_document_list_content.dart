@@ -18,7 +18,7 @@ class CategorizedDocumentListContent extends StatelessWidget {
         if (state.isLoading) {
           return const Center(child: CircularProgressIndicator());
         }
-        final List<ScanEntryModel> scanEntryModels = state.scanEntries;
+        final List<ScanEntryModel> scanEntryModels = state.shownScanEntries;
 
         if (scanEntryModels.isEmpty) {
           return const Center(

@@ -23,6 +23,7 @@ class CategorizedDocumentListScreen extends StatelessWidget
         getScanEntriesByCategoryUseCase:
             appLocator.get<GetScanEntriesByCategoryUseCase>(),
         appEventNotifier: appLocator.get<AppEventNotifier>(),
+        biometricService: appLocator.get<BiometricService>(),
         category: category,
         appRouter: appLocator.get<AppRouter>(),
       ),
@@ -35,6 +36,16 @@ class CategorizedDocumentListScreen extends StatelessWidget
     return Scaffold(
       appBar: AppBar(
         title: Text(category.name),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.lock),
+            onPressed: () {
+              context.read<CategorizedDocumentsListBloc>().add(
+                    const ShowPrivateFilesEvent(),
+                  );
+            },
+          )
+        ],
       ),
       body: const CategorizedDocumentListContent(),
     );
