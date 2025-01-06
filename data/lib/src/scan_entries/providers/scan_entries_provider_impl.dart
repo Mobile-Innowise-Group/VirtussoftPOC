@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
@@ -103,6 +104,21 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         });
 
         return response.map(ScanEntryEntity.fromJson).toList();
+      },
+    );
+  }
+
+  @override
+  Future<Uint8List> downloadScanFile({
+    required DownloadScanFileRequest request,
+  }) {
+    final String path = request.remotePath.split('/').last;
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        return _supabaseClient.storage
+            .from(
+                'files') // TODO(Karatysh): do we have any class to collect supabase configs?
+            .download(path);
       },
     );
   }

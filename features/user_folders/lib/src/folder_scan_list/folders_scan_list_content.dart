@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
+import 'package:document_scan/document_scan.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
@@ -30,43 +30,26 @@ class FoldersScanListContent extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             final ScanEntryModel scan = scanEntryModels[index];
 
-            return ListTile(
+            return DocumentScan(
+              scan: scan,
               onTap: () {
                 context.read<FolderScanListBloc>().add(
                       OpenScanEvent(localUrl: scan.localPath),
                     );
               },
-              leading: const Icon(Icons.tag),
-              trailing: GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext _) {
-                      return ShareScanDialog(
-                        onShareQr: (Uint8List qrCodeBites) {
-                          context
-                              .read<FolderScanListBloc>()
-                              .add(ShareQrEvent(qrCodeBites: qrCodeBites));
-                        },
-                        onClose: () {
-                          context
-                              .read<FolderScanListBloc>()
-                              .add(const CloseShareQrDialogEvent());
-                        },
-                        onShareFile: () => context
-                            .read<FolderScanListBloc>()
-                            .add(ShareFileEvent(scan: scan)),
-                        remoteUrl: scan.remotePath,
-                      );
-                    },
-                  );
-                },
-                child: const Icon(Icons.share),
-              ),
-              title: Text(
-                PdfService.getFileNameByPath(scanEntryModels[index].localPath),
-                overflow: TextOverflow.ellipsis,
-              ),
+              onShareQr: (Uint8List qrCodeBites) {
+                context
+                    .read<FolderScanListBloc>()
+                    .add(ShareQrEvent(qrCodeBites: qrCodeBites));
+              },
+              onClose: () {
+                context
+                    .read<FolderScanListBloc>()
+                    .add(const CloseShareQrDialogEvent());
+              },
+              onShareFile: () => context
+                  .read<FolderScanListBloc>()
+                  .add(ShareFileEvent(scan: scan)),
             );
           },
         );

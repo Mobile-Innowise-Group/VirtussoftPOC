@@ -5,5 +5,6 @@ export 'providers/scan_entries_provider_impl.dart';
 export 'repositories/scan_entries_repository_impl.dart';
 export 'requests/create_scan_entry_request.dart';
 export 'requests/delete_scan_entry_request.dart';
+export 'requests/download_scan_file_request.dart';
 export 'requests/get_all_user_scan_entries_request.dart';
 export 'requests/get_user_scans_by_category_request.dart';

@@ -20,4 +20,8 @@ abstract class ScanEntriesRepository {
   Future<List<ScanEntryModel>> getScanEntriesByCategory({
     required GetScanEntriesByCategoryPayload payload,
   });
+
+  Future<void> downloadScanFile({
+    required DownloadScanFilePayload payload,
+  });
 }

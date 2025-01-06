@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:domain/domain.dart';
 import '../../auth/auth.dart';
 import '../../auth/entities/user/user_entity.dart';
@@ -145,5 +148,27 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
     final List<ScanEntryModel> scanEntryModels = await Future.wait(futures);
 
     return scanEntryModels;
+  }
+
+  @override
+  Future<void> downloadScanFile({
+    required DownloadScanFilePayload payload,
+  }) async {
+    final Uint8List downloadedData =
+        await _scanEntriesProvider.downloadScanFile(
+      request: DownloadScanFileRequest(
+        remotePath: payload.remotePath,
+      ),
+    );
+
+    final Directory targetDirectory = Directory(payload.localPath).parent;
+    if (!targetDirectory.existsSync()) {
+      await targetDirectory.create(recursive: true);
+    }
+
+    final File file = File(payload.localPath);
+    await file.create();
+
+    await file.writeAsBytes(downloadedData);
   }
 }

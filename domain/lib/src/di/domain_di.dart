@@ -126,8 +126,15 @@ abstract class DomainDI {
     );
 
     locator.registerLazySingleton<GetScanEntriesByCategoryUseCase>(
-        () => GetScanEntriesByCategoryUseCase(
-              scanEntriesRepository: locator.get<ScanEntriesRepository>(),
-            ));
+      () => GetScanEntriesByCategoryUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<DownloadScanFileUseCase>(
+      () => DownloadScanFileUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
   }
 }

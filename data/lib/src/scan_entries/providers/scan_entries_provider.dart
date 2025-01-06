@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:domain/domain.dart';
 
 import '../requests/get_scan_entries_by_folder_id_request.dart';
@@ -27,5 +29,9 @@ abstract class ScanEntriesProvider {
 
   Future<List<ScanEntryEntity>> getScanEntriesByCategory({
     required GetUserScansByCategoryRequest request,
+  });
+
+  Future<Uint8List> downloadScanFile({
+    required DownloadScanFileRequest request,
   });
 }

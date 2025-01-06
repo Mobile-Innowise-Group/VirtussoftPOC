@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:domain/domain.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../categories/categories.dart';
 import '../../folders/folders.dart';
@@ -42,7 +45,13 @@ class SynchronizationRepositoryImpl implements SynchronizationRepository {
       request: GetCategoriesRequest(),
     );
 
+    final Directory directory = await getApplicationDocumentsDirectory();
     for (final FolderModel remoteFolder in remoteFolders) {
+      final Directory folderDirectory =
+          Directory('${directory.path}/${remoteFolder.name}');
+      if (!folderDirectory.existsSync()) {
+        await folderDirectory.create();
+      }
       await _folderLocalProvider.createFolder(
         request: CreateFolderLocalRequest(
           name: remoteFolder.name,
