@@ -1,7 +1,7 @@
 import '../scan_entries.dart';
 
 abstract class ScanEntriesRepository {
-  Future<List<ScanEntryModel>> getScanEntries({
+  Future<List<ScanEntryModel>> getAllUserScanEntries({
     required GetScanEntriesPayload payload,
   });
 
@@ -15,5 +15,13 @@ abstract class ScanEntriesRepository {
 
   Future<bool> deleteScanEntry({
     required DeleteScanEntryPayload payload,
+  });
+
+  Future<List<ScanEntryModel>> getScanEntriesByCategory({
+    required GetScanEntriesByCategoryPayload payload,
+  });
+
+  Future<void> downloadScanFile({
+    required DownloadScanFilePayload payload,
   });
 }

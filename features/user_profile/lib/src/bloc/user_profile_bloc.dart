@@ -27,7 +27,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     InitUserProfileEvent event,
     Emitter<UserProfileState> emit,
   ) {
-    final UserModel? currentUser = _getCurrentUserUseCase.execute(const NoParams());
+    final UserModel? currentUser =
+        _getCurrentUserUseCase.execute(const NoParams());
 
     if (currentUser == null) {
       emit(

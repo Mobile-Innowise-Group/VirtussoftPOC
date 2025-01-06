@@ -23,7 +23,6 @@ class TogglePrivateFolderPrivacyEvent extends PrivateFoldersEvent {
   const TogglePrivateFolderPrivacyEvent(this.folder);
 }
 
-
 class OpenPrivateFolderEvent extends PrivateFoldersEvent {
   final FolderModel folder;
 
@@ -31,4 +30,3 @@ class OpenPrivateFolderEvent extends PrivateFoldersEvent {
     required this.folder,
   });
 }
-

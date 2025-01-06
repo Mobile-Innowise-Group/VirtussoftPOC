@@ -3,9 +3,9 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 import 'package:nested/nested.dart';
-import 'package:user_categories/src/bloc/user_categories_bloc.dart';
-import 'package:user_categories/src/user_categories.dart';
-import 'package:user_categories/src/widgets/create_category_dialog.dart';
+import 'package:user_categories/src/user_categories/bloc/user_categories_bloc.dart';
+import 'package:user_categories/src/user_categories/user_categories.dart';
+import 'package:user_categories/src/user_categories/widgets/create_category_dialog.dart';
 import 'package:user_folders/src/user_folders/user_folders.dart';
 import 'package:user_folders/src/user_folders/widgets/create_folder_dialog.dart';
 

@@ -345,6 +345,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  document_scan:
+    dependency: transitive
+    description:
+      path: "../document_scan"
+      relative: true
+    source: path
+    version: "0.0.0"
   domain:
     dependency: "direct main"
     description:

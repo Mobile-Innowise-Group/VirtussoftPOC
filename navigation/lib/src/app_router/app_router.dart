@@ -15,5 +15,6 @@ class AppRouter extends RootStackRouter {
         ...HomeScreenRouter().routes,
         ...ScannerScreenRouter().routes,
         ...UserFolderRouter().routes,
+        ...UserCategoriesRoute().routes,
       ];
 }

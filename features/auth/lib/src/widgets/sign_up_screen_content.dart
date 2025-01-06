@@ -12,9 +12,12 @@ class SignUpScreenContent extends StatefulWidget {
 
 class _SignUpScreenContentState extends State<SignUpScreenContent> {
   late final AuthBloc _bloc;
-  final TextEditingController _emailTextEditingController = TextEditingController();
-  final TextEditingController _passwordTextEditingController = TextEditingController();
-  final TextEditingController _usernameTextEditingController = TextEditingController();
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
+  final TextEditingController _usernameTextEditingController =
+      TextEditingController();
 
   bool _obscurePassword = true;
 
