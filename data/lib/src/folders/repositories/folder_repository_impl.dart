@@ -45,7 +45,7 @@ class FolderRepositoryImpl implements FolderRepository {
     );
 
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String foldersPath = directory.path;
+    final String foldersPath = '${directory.path}/${folder.name}';
     final Directory foldersDirectory = Directory(foldersPath);
 
     if (!foldersDirectory.existsSync()) {
