@@ -11,7 +11,8 @@ class SavingScanEntryBottomSheetContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SavingScanEntryBloc bloc = BlocProvider.of<SavingScanEntryBloc>(context);
+    final SavingScanEntryBloc bloc =
+        BlocProvider.of<SavingScanEntryBloc>(context);
 
     return BlocBuilder<SavingScanEntryBloc, SavingScanEntryState>(
       bloc: bloc,

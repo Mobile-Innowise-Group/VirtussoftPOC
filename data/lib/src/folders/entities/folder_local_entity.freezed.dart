@@ -24,8 +24,12 @@ mixin _$FolderLocalEntity {
   String get name => throw _privateConstructorUsedError;
   int get isPrivate => throw _privateConstructorUsedError;
 
+  /// Serializes this FolderLocalEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FolderLocalEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FolderLocalEntityCopyWith<FolderLocalEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$FolderLocalEntityCopyWithImpl<$Res, $Val extends FolderLocalEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FolderLocalEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$FolderLocalEntityImplCopyWithImpl<$Res>
       $Res Function(_$FolderLocalEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FolderLocalEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,11 +156,13 @@ class _$FolderLocalEntityImpl implements _FolderLocalEntity {
                 other.isPrivate == isPrivate));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, isPrivate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FolderLocalEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FolderLocalEntityImplCopyWith<_$FolderLocalEntityImpl> get copyWith =>
@@ -182,8 +192,11 @@ abstract class _FolderLocalEntity implements FolderLocalEntity {
   String get name;
   @override
   int get isPrivate;
+
+  /// Create a copy of FolderLocalEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FolderLocalEntityImplCopyWith<_$FolderLocalEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

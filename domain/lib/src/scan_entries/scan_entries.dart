@@ -1,10 +1,14 @@
 export 'models/scan_entry_model.dart';
 export 'payloads/create_scan_entry_payload.dart';
 export 'payloads/delete_scan_entry_payload.dart';
+export 'payloads/download_scan_file_payload.dart';
 export 'payloads/get_scan_entries_by_folder_id_payload.dart';
 export 'payloads/get_scan_entries_payload.dart';
+export 'payloads/get_user_scans_by_category_payload.dart';
 export 'repositories/scan_entries_repository.dart';
 export 'use_cases/create_scan_entry_use_case.dart';
 export 'use_cases/delete_scan_entry_use_case.dart';
+export 'use_cases/download_scan_file_use_case.dart';
+export 'use_cases/get_all_user_scan_entries_use_case.dart';
 export 'use_cases/get_scan_entries_by_folder_use_case.dart';
-export 'use_cases/get_scan_entries_use_case.dart';
+export 'use_cases/get_user_scans_by_category_use_case.dart';

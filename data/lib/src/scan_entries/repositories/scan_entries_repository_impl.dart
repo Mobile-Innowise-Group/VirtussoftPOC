@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:domain/domain.dart';
 import '../../auth/auth.dart';
 import '../../auth/entities/user/user_entity.dart';
@@ -81,11 +84,11 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   }
 
   @override
-  Future<List<ScanEntryModel>> getScanEntries({
+  Future<List<ScanEntryModel>> getAllUserScanEntries({
     required GetScanEntriesPayload payload,
-  }) {
-    // TODO: implement getScanEntries
-    throw UnimplementedError();
+  }) async {
+    return _scanEntriesProvider.getAllUserScanEntries(
+        request: GetAllUserScanEntriesRequest());
   }
 
   @override
@@ -116,5 +119,56 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
     final List<ScanEntryModel> scanEntryModels = await Future.wait(futures);
 
     return scanEntryModels;
+  }
+
+  @override
+  Future<List<ScanEntryModel>> getScanEntriesByCategory({
+    required GetScanEntriesByCategoryPayload payload,
+  }) async {
+    final List<ScanEntryEntity> scanEntries =
+        await _scanEntriesProvider.getScanEntriesByCategory(
+      request: GetUserScansByCategoryRequest(payload.category.id),
+    );
+
+    final List<Future<ScanEntryModel>> futures =
+        scanEntries.map((ScanEntryEntity scanEntryEntity) async {
+      final FolderModel folder = await _folderProvider.getUserFolderById(
+        request: GetFolderByIdRequest(
+          folderId: scanEntryEntity.folderId,
+        ),
+      );
+
+      return ScanEntryMapper.toModel(
+        scanEntryEntity: scanEntryEntity,
+        folder: folder,
+        category: payload.category,
+      );
+    }).toList();
+
+    final List<ScanEntryModel> scanEntryModels = await Future.wait(futures);
+
+    return scanEntryModels;
+  }
+
+  @override
+  Future<void> downloadScanFile({
+    required DownloadScanFilePayload payload,
+  }) async {
+    final Uint8List downloadedData =
+        await _scanEntriesProvider.downloadScanFile(
+      request: DownloadScanFileRequest(
+        remotePath: payload.remotePath,
+      ),
+    );
+
+    final Directory targetDirectory = Directory(payload.localPath).parent;
+    if (!targetDirectory.existsSync()) {
+      await targetDirectory.create(recursive: true);
+    }
+
+    final File file = File(payload.localPath);
+    await file.create();
+
+    await file.writeAsBytes(downloadedData);
   }
 }

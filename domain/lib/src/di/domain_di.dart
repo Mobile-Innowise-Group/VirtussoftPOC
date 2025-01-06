@@ -104,14 +104,15 @@ abstract class DomainDI {
       ),
     );
 
-    locator.registerLazySingleton<GetScanEntriesUseCase>(
-      () => GetScanEntriesUseCase(
+    locator.registerLazySingleton<GetAllUserScanEntriesUseCase>(
+      () => GetAllUserScanEntriesUseCase(
         scanEntriesRepository: locator.get<ScanEntriesRepository>(),
       ),
     );
 
     locator.registerLazySingleton<SynchronizeDataUseCase>(
-      () => SynchronizeDataUseCase(synchronizationRepository: locator.get<SynchronizationRepository>()),
+      () => SynchronizeDataUseCase(
+          synchronizationRepository: locator.get<SynchronizationRepository>()),
     );
 
     locator.registerLazySingleton<CreatePrivateFolderUseCase>(
@@ -122,6 +123,18 @@ abstract class DomainDI {
     locator.registerLazySingleton<ToggleFolderPrivacyUseCase>(
       () => ToggleFolderPrivacyUseCase(
           folderRepository: locator.get<FolderRepository>()),
+    );
+
+    locator.registerLazySingleton<GetScanEntriesByCategoryUseCase>(
+      () => GetScanEntriesByCategoryUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<DownloadScanFileUseCase>(
+      () => DownloadScanFileUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
     );
   }
 }

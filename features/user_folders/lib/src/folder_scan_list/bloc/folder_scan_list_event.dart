@@ -17,6 +17,14 @@ class ShareQrEvent extends FolderScanListEvent {
   });
 }
 
+class ShareFileEvent extends FolderScanListEvent {
+  final ScanEntryModel scan;
+
+  const ShareFileEvent({
+    required this.scan,
+  });
+}
+
 class CloseShareQrDialogEvent extends FolderScanListEvent {
   const CloseShareQrDialogEvent();
 }
@@ -28,4 +36,3 @@ class OpenScanEvent extends FolderScanListEvent {
     required this.localUrl,
   });
 }
-

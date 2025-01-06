@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
@@ -78,6 +80,45 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         });
 
         return response.map(ScanEntryEntity.fromJson).toList();
+      },
+    );
+  }
+
+  @override
+  Future<List<ScanEntryModel>> getAllUserScanEntries({
+    required GetAllUserScanEntriesRequest request,
+  }) {
+    // TODO: implement getAllUserScanEntries
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<ScanEntryEntity>> getScanEntriesByCategory({
+    required GetUserScansByCategoryRequest request,
+  }) {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('get_user_scans_by_category', params: <String, dynamic>{
+          'p_category_id': request.categoryId,
+        });
+
+        return response.map(ScanEntryEntity.fromJson).toList();
+      },
+    );
+  }
+
+  @override
+  Future<Uint8List> downloadScanFile({
+    required DownloadScanFileRequest request,
+  }) {
+    final String path = request.remotePath.split('/').last;
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        return _supabaseClient.storage
+            .from(
+                'files') // TODO(Karatysh): do we have any class to collect supabase configs?
+            .download(path);
       },
     );
   }

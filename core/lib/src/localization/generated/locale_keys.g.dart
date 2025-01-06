@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const auth_signUp = 'auth.signUp';
   static const auth_login = 'auth.login';
   static const auth_email = 'auth.email';
@@ -27,12 +27,14 @@ abstract class  LocaleKeys {
   static const folder_privateFolders = 'folder.privateFolders';
   static const folder_makeFolderPrivate = 'folder.makeFolderPrivate';
   static const folder_makeFolderPublic = 'folder.makeFolderPublic';
+  static const folder_openFolder = 'folder.openFolder';
   static const folder = 'folder';
   static const category_createCategory = 'category.createCategory';
   static const category_categoryName = 'category.categoryName';
   static const category_enterCategoryName = 'category.enterCategoryName';
   static const category_deleteCategory = 'category.deleteCategory';
-  static const category_deleteCategoryMessage = 'category.deleteCategoryMessage';
+  static const category_deleteCategoryMessage =
+      'category.deleteCategoryMessage';
   static const category_editCategory = 'category.editCategory';
   static const category_editCategoryMessage = 'category.editCategoryMessage';
   static const category_noAddedCategories = 'category.noAddedCategories';
@@ -66,5 +68,4 @@ abstract class  LocaleKeys {
   static const data = 'data';
   static const docScanner_docScanner = 'docScanner.docScanner';
   static const docScanner = 'docScanner';
-
 }

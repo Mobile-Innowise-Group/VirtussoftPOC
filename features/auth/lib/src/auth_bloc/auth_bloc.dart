@@ -59,7 +59,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isLoading: true));
 
     try {
-      final UserModel? createdUser = await _signUpWithCredentialsUseCase.execute(
+      final UserModel? createdUser =
+          await _signUpWithCredentialsUseCase.execute(
         SignUpPayloadModel(
           email: event.login,
           password: event.password,
@@ -102,7 +103,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isLoading: true));
 
     try {
-      final UserModel? userModel = await _authoriseWithCredentialsUseCase.execute(
+      final UserModel? userModel =
+          await _authoriseWithCredentialsUseCase.execute(
         SignInPayloadModel(
           login: event.login,
           password: event.password,
@@ -129,7 +131,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     try {
-      final UserModel? currentUser = _getCurrentUserUseCase.execute(const NoParams());
+      final UserModel? currentUser =
+          _getCurrentUserUseCase.execute(const NoParams());
 
       if (currentUser == null) {
         return;
@@ -183,7 +186,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   bool _isLoginValid(String email) {
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
   }
 

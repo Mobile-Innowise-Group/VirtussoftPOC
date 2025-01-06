@@ -27,6 +27,8 @@ dependencies:
     path: ../features/private_folders
   user_folders:
     path: ../features/user_folders
+  document_scan:
+    path: ../features/document_scan
 
   auto_route: ^9.2.2
 

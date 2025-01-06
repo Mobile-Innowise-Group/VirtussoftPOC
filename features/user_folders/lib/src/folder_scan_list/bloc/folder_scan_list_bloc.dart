@@ -32,6 +32,7 @@ class FolderScanListBloc
     on<ShareQrEvent>(_onShareQrEvent);
     on<OpenScanEvent>(_onOpenScanEvent);
     on<CloseShareQrDialogEvent>(_onCloseShareQrDialogEvent);
+    on<ShareFileEvent>(_onShareFile);
 
     add(const InitEvent());
   }
@@ -73,7 +74,7 @@ class FolderScanListBloc
     ShareQrEvent event,
     Emitter<FolderScanListState> emit,
   ) async {
-    await ShareService.shareFile(
+    await ShareService.shareQr(
       message: 'Use this qr-code to download file',
       bites: event.qrCodeBites,
     );
@@ -86,5 +87,16 @@ class FolderScanListBloc
     Emitter<FolderScanListState> emit,
   ) async {
     await PdfService.openFile(event.localUrl);
+  }
+
+  FutureOr<void> _onShareFile(
+    ShareFileEvent event,
+    Emitter<FolderScanListState> emit,
+  ) async {
+    await ShareService.shareFile(
+      path: event.scan.localPath,
+    );
+
+    await _appRouter.maybePopTop();
   }
 }

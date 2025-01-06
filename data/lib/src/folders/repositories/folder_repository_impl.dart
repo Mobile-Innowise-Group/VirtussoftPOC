@@ -45,7 +45,7 @@ class FolderRepositoryImpl implements FolderRepository {
     );
 
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String foldersPath = '${directory.path}/folders';
+    final String foldersPath = '${directory.path}/${folder.name}';
     final Directory foldersDirectory = Directory(foldersPath);
 
     if (!foldersDirectory.existsSync()) {
@@ -88,8 +88,7 @@ class FolderRepositoryImpl implements FolderRepository {
     );
 
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String categoryPath =
-        '${directory.path}/folders/${payload.folder.name}';
+    final String categoryPath = '${directory.path}/${payload.folder.name}';
     final Directory folder = Directory(categoryPath);
 
     if (folder.existsSync()) {

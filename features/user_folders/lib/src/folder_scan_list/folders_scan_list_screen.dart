@@ -35,7 +35,6 @@ class FoldersScanListScreen extends StatelessWidget
     return Scaffold(
       appBar: AppBar(
         title: Text(folder.name),
-        automaticallyImplyLeading: false,
       ),
       body: const FoldersScanListContent(),
     );
