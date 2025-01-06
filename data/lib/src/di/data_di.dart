@@ -14,7 +14,7 @@ import '../categories/categories.dart';
 import '../folders/folders.dart';
 import '../scan_entries/providers/scan_entries_provider.dart';
 import '../scan_entries/providers/scan_entries_provider_impl.dart';
-import '../scan_entries/repositories/scan_antries_repository_impl.dart';
+import '../scan_entries/repositories/scan_entries_repository_impl.dart';
 import '../synchronization/synchronization.dart';
 
 abstract class DataDI {

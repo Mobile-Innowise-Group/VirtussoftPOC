@@ -117,4 +117,33 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
 
     return scanEntryModels;
   }
+
+  @override
+  Future<List<ScanEntryModel>> getScanEntriesByCategory({
+    required GetScanEntriesByCategoryPayload payload,
+  }) async {
+    final List<ScanEntryEntity> scanEntries =
+        await _scanEntriesProvider.getScanEntriesByCategory(
+      request: GetUserScansByCategoryRequest(payload.category.id),
+    );
+
+    final List<Future<ScanEntryModel>> futures =
+        scanEntries.map((ScanEntryEntity scanEntryEntity) async {
+      final FolderModel folder = await _folderProvider.getUserFolderById(
+        request: GetFolderByIdRequest(
+          folderId: scanEntryEntity.folderId,
+        ),
+      );
+
+      return ScanEntryMapper.toModel(
+        scanEntryEntity: scanEntryEntity,
+        folder: folder,
+        category: payload.category,
+      );
+    }).toList();
+
+    final List<ScanEntryModel> scanEntryModels = await Future.wait(futures);
+
+    return scanEntryModels;
+  }
 }

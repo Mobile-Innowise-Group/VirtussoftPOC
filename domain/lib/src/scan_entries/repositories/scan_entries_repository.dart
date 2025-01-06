@@ -16,4 +16,8 @@ abstract class ScanEntriesRepository {
   Future<bool> deleteScanEntry({
     required DeleteScanEntryPayload payload,
   });
+
+  Future<List<ScanEntryModel>> getScanEntriesByCategory({
+    required GetScanEntriesByCategoryPayload payload,
+  });
 }

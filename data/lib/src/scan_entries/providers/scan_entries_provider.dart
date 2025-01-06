@@ -24,4 +24,8 @@ abstract class ScanEntriesProvider {
   Future<String> uploadScanFile({
     required UploadScanFileRequest request,
   });
+
+  Future<List<ScanEntryEntity>> getScanEntriesByCategory({
+    required GetUserScansByCategoryRequest request,
+  });
 }

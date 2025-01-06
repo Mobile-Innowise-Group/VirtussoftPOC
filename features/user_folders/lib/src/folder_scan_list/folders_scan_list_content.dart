@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/folder_scan_list_bloc.dart';
-import 'share_scan_dialog/share_scan_dialog.dart';
 
 class FoldersScanListContent extends StatelessWidget {
   const FoldersScanListContent({super.key});

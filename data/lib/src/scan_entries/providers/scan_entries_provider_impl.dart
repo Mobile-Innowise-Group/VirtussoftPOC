@@ -90,4 +90,20 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     // TODO: implement getAllUserScanEntries
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<ScanEntryEntity>> getScanEntriesByCategory({
+    required GetUserScansByCategoryRequest request,
+  }) {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final List<Map<String, dynamic>> response = await _supabaseClient
+            .rpc('get_user_scans_by_category', params: <String, dynamic>{
+          'p_category_id': request.categoryId,
+        });
+
+        return response.map(ScanEntryEntity.fromJson).toList();
+      },
+    );
+  }
 }

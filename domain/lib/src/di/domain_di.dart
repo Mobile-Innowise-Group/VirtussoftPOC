@@ -124,5 +124,10 @@ abstract class DomainDI {
       () => ToggleFolderPrivacyUseCase(
           folderRepository: locator.get<FolderRepository>()),
     );
+
+    locator.registerLazySingleton<GetScanEntriesByCategoryUseCase>(
+        () => GetScanEntriesByCategoryUseCase(
+              scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+            ));
   }
 }
