@@ -17,6 +17,13 @@ class ScannerScreenRouter extends RootStackRouter {
           page: ScannerRoute.page,
         ),
         CustomRoute<AutoRoute>(
+          page: PreviewPdfResultRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+          durationInMilliseconds: 300,
+          opaque: false,
+          barrierColor: const Color.fromRGBO(0, 0, 0, 0.5),
+        ),
+        CustomRoute<AutoRoute>(
           page: SavingScanEntryBottomSheetRoute.page,
           transitionsBuilder: TransitionsBuilders.slideBottom,
           durationInMilliseconds: 300,

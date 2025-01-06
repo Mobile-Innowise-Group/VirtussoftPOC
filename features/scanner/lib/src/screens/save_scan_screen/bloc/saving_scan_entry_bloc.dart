@@ -4,11 +4,9 @@ import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
 part 'saving_scan_entry_event.dart';
-
 part 'saving_scan_entry_state.dart';
 
-class SavingScanEntryBloc
-    extends Bloc<SavingScanEntryEvent, SavingScanEntryState> {
+class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryState> {
   final AppRouter _appRouter;
   final GetAllFoldersUseCase _getAllFoldersUseCase;
   final GetUserCategoriesUseCase _getUserCategoriesUseCase;
@@ -45,8 +43,7 @@ class SavingScanEntryBloc
     Emitter<SavingScanEntryState> emit,
   ) async {
     try {
-      final List<FolderModel> folders =
-          await _getAllFoldersUseCase.execute(GetAllFoldersPayload());
+      final List<FolderModel> folders = await _getAllFoldersUseCase.execute(GetAllFoldersPayload());
       final List<CategoryModel> categories =
           await _getUserCategoriesUseCase.execute(GetUserCategoriesPayload());
 
@@ -117,7 +114,7 @@ class SavingScanEntryBloc
           ),
         );
 
-        await _appRouter.maybePop();
+        await _appRouter.replace(const UserDataRoute());
         emit(
           const SavingScanEntryState.initial(isLoading: false),
         );
@@ -134,10 +131,8 @@ class SavingScanEntryBloc
     } else {
       emit(
         state.copyWith(
-          selectedFolderFieldError:
-              folder == null ? 'Folder field is required' : null,
-          selectedCategoryFieldError:
-              categoryId == null ? 'Category field is required' : null,
+          selectedFolderFieldError: folder == null ? 'Folder field is required' : null,
+          selectedCategoryFieldError: categoryId == null ? 'Category field is required' : null,
         ),
       );
     }
