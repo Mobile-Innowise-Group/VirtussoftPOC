@@ -53,16 +53,6 @@ class _ShareScanDialogState extends State<ShareScanDialog> {
           child: Text('common.cancel'.tr()),
         ),
         ElevatedButton(
-          onPressed: () {
-            final Uint8List? bites = fileBites;
-
-            if (bites != null) {
-              widget.onShareQr(bites);
-            }
-          },
-          child: const Text('Share qr'),
-        ),
-        ElevatedButton(
           onPressed: widget.onShareFile,
           child: const Text('Share file'),
         ),

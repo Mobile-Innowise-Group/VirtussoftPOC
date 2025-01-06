@@ -39,20 +39,14 @@ class UserFolders extends StatelessWidget {
                         onLongPress: () {
                           AppBottomSheet.show(
                             context: context,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ListTile(
-                                  onTap: () => context
-                                      .read<UserFoldersBloc>()
-                                      .add(ToggleFolderPrivacyEvent(
-                                          state.folders[index])),
-                                  title: Text(
-                                    'folder.makeFolderPrivate'.tr(),
-                                  ),
-                                  leading: const Icon(Icons.lock),
-                                ),
-                              ],
+                            child: ListTile(
+                              onTap: () => context.read<UserFoldersBloc>().add(
+                                  ToggleFolderPrivacyEvent(
+                                      state.folders[index])),
+                              title: Text(
+                                'folder.makeFolderPrivate'.tr(),
+                              ),
+                              leading: const Icon(Icons.lock),
                             ),
                           );
                         },

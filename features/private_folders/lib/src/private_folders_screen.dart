@@ -64,39 +64,30 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () {
+                          return GestureDetector(
+                            onTap: () => context.read<PrivateFoldersBloc>().add(
+                                OpenPrivateFolderEvent(
+                                    folder: state.folders[index])),
+                            onLongPress: () {
                               AppBottomSheet.show(
                                 context: context,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    ListTile(
-                                      onTap: () => context
-                                          .read<PrivateFoldersBloc>()
-                                          .add(TogglePrivateFolderPrivacyEvent(
-                                              state.folders[index])),
-                                      title: Text(
-                                        'folder.makeFolderPublic'.tr(),
-                                      ),
-                                      leading: const Icon(Icons.lock),
-                                    ),
-                                    ListTile(
-                                      onTap: () => context
-                                          .read<PrivateFoldersBloc>()
-                                          .add(OpenPrivateFolderEvent(
-                                              folder: state.folders[index])),
-                                      title: Text('folder.openFolder'.tr()),
-                                      leading:
-                                          const Icon(Icons.open_in_browser),
-                                    ),
-                                  ],
+                                child: ListTile(
+                                  onTap: () => context
+                                      .read<PrivateFoldersBloc>()
+                                      .add(TogglePrivateFolderPrivacyEvent(
+                                          state.folders[index])),
+                                  title: Text(
+                                    'folder.makeFolderPublic'.tr(),
+                                  ),
+                                  leading: const Icon(Icons.lock),
                                 ),
                               );
                             },
-                            leading: const Icon(Icons.folder),
-                            trailing: const Icon(Icons.arrow_forward_ios),
-                            title: Text(state.folders[index].name),
+                            child: ListTile(
+                              leading: const Icon(Icons.folder),
+                              trailing: const Icon(Icons.arrow_forward_ios),
+                              title: Text(state.folders[index].name),
+                            ),
                           );
                         },
                         childCount: state.folders.length,
