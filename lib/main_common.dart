@@ -56,7 +56,7 @@ class App extends StatelessWidget {
         builder: (BuildContext context) {
           return AppErrorHandlerProvider(
             child: MaterialApp.router(
-              onGenerateTitle: (BuildContext context) => 'Title',
+              onGenerateTitle: (BuildContext context) => 'Virtussoft',
               debugShowCheckedModeBanner: false,
               routerConfig: appRouter.config(
                 navigatorObservers: () => <NavigatorObserver>[
