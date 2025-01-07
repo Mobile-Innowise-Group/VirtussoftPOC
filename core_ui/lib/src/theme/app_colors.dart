@@ -27,6 +27,8 @@ abstract class AppColors {
   Color get error;
 
   Color get transparent;
+
+  Color get darkIcon;
 }
 
 class DarkColors extends LightColors {
@@ -47,13 +49,13 @@ class LightColors implements AppColors {
   Color get textColor => const Color.fromRGBO(0, 0, 0, 1);
 
   @override
-  Color get hintGray => const Color.fromRGBO(128, 128, 128, 1);
+  Color get hintGray => const Color(0xFF8F9098);
 
   @override
   Color get border => const Color.fromRGBO(113, 125, 126, 1);
 
   @override
-  Color get primary => const Color.fromRGBO(0, 48, 73, 1);
+  Color get primary => const Color.fromRGBO(59, 96, 106, 1);
 
   @override
   Color get error => const Color.fromRGBO(220, 47, 2, 1);
@@ -65,5 +67,8 @@ class LightColors implements AppColors {
   Color get transparent => const Color.fromRGBO(0, 0, 0, 0);
 
   @override
-  Color get lightBorder => const Color.fromRGBO(190, 207, 217, 1);
+  Color get lightBorder => const Color(0xFFC5C6CC);
+
+  @override
+  Color get darkIcon => const Color(0xFF8F9098);
 }

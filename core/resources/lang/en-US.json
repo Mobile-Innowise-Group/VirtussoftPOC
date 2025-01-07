@@ -1,9 +1,13 @@
 {
   "auth": {
+    "welcome!": "Welcome!",
     "signUp": "Sign up",
     "login": "Login",
-    "email": "email",
-    "password": "password",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "notAMember": "Not a member?",
+    "registerNow": "Register now",
+    "forgotPassword": "Forgot password?",
     "enterEmail": "Enter your email, please",
     "enterPassword": "Enter your password, please",
     "createAccount": "Create account",
