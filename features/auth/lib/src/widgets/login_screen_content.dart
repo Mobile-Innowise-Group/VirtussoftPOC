@@ -95,8 +95,8 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   isObscured
-                                      ? Icons.remove_red_eye
-                                      : Icons.remove_red_eye_outlined,
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
                                   color: AppColors.of(context).darkIcon,
                                 ),
                                 onPressed: () => _obscureNotifier.value =

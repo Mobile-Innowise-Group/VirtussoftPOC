@@ -80,7 +80,7 @@ class LightColors implements AppColors {
   Color get darkIcon => const Color(0xFF8F9098);
 
   @override
-  Color get textSecondary => const Color(0xFF71727A);
+  Color get textSecondary => const Color.fromRGBO(113, 114, 122, 1);
 
   @override
   Color get onSurface => const Color.fromRGBO(31, 32, 36, 1);
