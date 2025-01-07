@@ -12,48 +12,43 @@ class UserCategories extends StatelessWidget {
     return BlocBuilder<UserCategoriesBloc, UserCategoriesState>(
       builder: (BuildContext context, UserCategoriesState state) {
         if (state.isLoading) {
-          return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return Center(child: CircularProgressIndicator());
         }
         final List<CategoryModel> categories = state.isExpanded
             ? state.categories
             : state.categories.take(3).toList();
         return categories.isEmpty
-            ? SliverToBoxAdapter(
-                child: ListTile(
-                  title: Text('category.noAddedCategories'.tr()),
-                ),
+            ? ListTile(
+                title: Text('category.noAddedCategories'.tr()),
               )
-            : SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (index < categories.length) {
-                      return ListTile(
-                        onTap: () => context.read<UserCategoriesBloc>().add(
-                            OpenCategoryEvent(category: categories[index])),
-                        leading: const Icon(Icons.tag),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        title: Text(categories[index].name),
-                      );
-                    } else if (index == categories.length &&
-                        state.categories.length > 3) {
-                      return TextButton(
-                        onPressed: () => context
-                            .read<UserCategoriesBloc>()
-                            .add(const ToggleExpandedEvent()),
-                        child: Text(
-                          state.isExpanded
-                              ? 'common.showLess'.tr()
-                              : 'common.showMore'.tr(),
-                        ),
-                      );
-                    } else {
-                      return null;
-                    }
-                  },
-                  childCount: categories.length + 1,
-                ),
+            : ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  if (index < categories.length) {
+                    return ListTile(
+                      onTap: () => context
+                          .read<UserCategoriesBloc>()
+                          .add(OpenCategoryEvent(category: categories[index])),
+                      leading: const Icon(Icons.tag),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      title: Text(categories[index].name),
+                    );
+                  } else if (index == categories.length &&
+                      state.categories.length > 3) {
+                    return TextButton(
+                      onPressed: () => context
+                          .read<UserCategoriesBloc>()
+                          .add(const ToggleExpandedEvent()),
+                      child: Text(
+                        state.isExpanded
+                            ? 'common.showLess'.tr()
+                            : 'common.showMore'.tr(),
+                      ),
+                    );
+                  } else {
+                    return null;
+                  }
+                },
+                itemCount: categories.length + 1,
               );
       },
     );

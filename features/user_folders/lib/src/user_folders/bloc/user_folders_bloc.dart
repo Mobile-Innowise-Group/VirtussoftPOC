@@ -35,7 +35,6 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
         super(UserFoldersState.initial()) {
     on<CreateFolderEvent>(_onCreateFolder);
     on<DeleteFolderEvent>(_onDeleteFolder);
-    on<ToggleExpandedEvent>(_onToggleExpanded);
     on<ToggleFolderPrivacyEvent>(_onToggleFolderPrivacy);
     on<OpenFolderEvent>(_onOpenFolderEvent);
     on<InitEvent>(_onInit);
@@ -123,13 +122,6 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
         ),
       );
     }
-  }
-
-  FutureOr<void> _onToggleExpanded(
-    ToggleExpandedEvent event,
-    Emitter<UserFoldersState> emit,
-  ) async {
-    emit(state.copyWith(isExpanded: !state.isExpanded));
   }
 
   FutureOr<void> _onToggleFolderPrivacy(

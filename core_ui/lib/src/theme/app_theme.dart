@@ -11,6 +11,7 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
   textTheme: _getTextTheme(),
   inputDecorationTheme: _getInputDecorationTheme(),
   primaryColor: _appColors.primary,
+  canvasColor: _appColors.primaryBg,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       minimumSize: WidgetStateProperty.all<Size>(const Size.fromHeight(48)),
@@ -32,6 +33,7 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
   colorScheme: ColorScheme.fromSwatch().copyWith(
     secondary: _appColors.secondary,
     surface: _appColors.white,
+    onSurface: _appColors.onSurface,
     primary: _appColors.primary,
   ),
 );

@@ -10,6 +10,12 @@ abstract class AppFonts {
     color: Colors.black,
   );
 
+  static TextStyle actionS = GoogleFonts.inter(
+    fontWeight: FontWeight.w600,
+    fontSize: 10,
+    color: Colors.black,
+  );
+
   static TextStyle headingH1 = GoogleFonts.inter(
     fontWeight: FontWeight.w800,
     fontSize: 24,
@@ -19,6 +25,12 @@ abstract class AppFonts {
   static TextStyle headingH3 = GoogleFonts.inter(
     fontWeight: FontWeight.w800,
     fontSize: 16,
+    color: Colors.black,
+  );
+
+  static TextStyle headingH4 = GoogleFonts.inter(
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
     color: Colors.black,
   );
 

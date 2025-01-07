@@ -9,6 +9,7 @@ class AppDimens {
   static const double BORDER_RADIUS_10 = 10.0;
   static const double BORDER_RADIUS_12 = 12.0;
   static const double BORDER_RADIUS_15 = 15.0;
+  static const double BORDER_RADIUS_16 = 16.0;
   static const double BORDER_RADIUS_18 = 18.0;
   static const double BORDER_RADIUS_19 = 19.0;
   static const double BORDER_RADIUS_20 = 20.0;

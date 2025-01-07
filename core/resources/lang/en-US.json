@@ -24,6 +24,7 @@
     "pleaseAuthenticate": "Please authenticate to access this feature"
   },
   "folder": {
+    "byFolders": "By Folders",
     "createFolder": "Create folder",
     "folderName": "Folder name",
     "enterFolderName": "Enter folder name",
@@ -32,13 +33,14 @@
     "editFolder": "Edit folder",
     "editFolderMessage": "Edit folder name",
     "noAddedFolders": "No added folders",
-    "addFolder": "Add folder",
+    "addNewFolder": "Add new Folder",
     "privateFolders": "Private folders",
     "makeFolderPrivate": "Make folder private",
     "makeFolderPublic": "Make folder public",
     "openFolder": "Open folder"
   },
   "category": {
+    "byCategory": "By Category",
     "createCategory": "Create category",
     "categoryName": "Category name",
     "enterCategoryName": "Enter category name",
@@ -75,7 +77,7 @@
   },
   "data": {
     "data": "Data",
-    "userData": "User data"
+    "userData": "User Data"
   },
   "docScanner": {
     "docScanner": "Doc Scanner"

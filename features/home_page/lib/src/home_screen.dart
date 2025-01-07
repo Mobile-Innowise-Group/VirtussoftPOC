@@ -1,6 +1,8 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:navigation/navigation.dart';
 
 import 'bloc/home_bloc.dart';
@@ -45,29 +47,65 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                           child: CircularProgressIndicator(),
                         )
                       : child,
-                  bottomNavigationBar: BottomNavigationBar(
-                    selectedItemColor: Theme.of(context).primaryColor,
-                    unselectedItemColor: Colors.black54,
-                    items: const <BottomNavigationBarItem>[
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.data_usage),
-                        label: 'Data',
+                  bottomNavigationBar: SizedBox(
+                    height: 88,
+                    child: BottomNavigationBar(
+                      elevation: 0,
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      selectedIconTheme: IconThemeData(
+                          color: Theme.of(context).colorScheme.primary),
+                      unselectedIconTheme: IconThemeData(
+                          color: AppColors.of(context).unSelectedIcon),
+                      selectedItemColor: Theme.of(context).colorScheme.primary,
+                      unselectedItemColor: AppColors.of(context).unSelectedIcon,
+                      selectedLabelStyle: AppFonts.actionS.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
                       ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.qr_code),
-                        label: 'Scanner',
+                      unselectedLabelStyle: AppFonts.actionS.copyWith(
+                        color: AppColors.of(context).unSelectedIcon,
                       ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.lock),
-                        label: 'Private Folders',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.person),
-                        label: 'Profile',
-                      ),
-                    ],
-                    onTap: tabsRouter.setActiveIndex,
-                    currentIndex: tabsRouter.activeIndex,
+                      showUnselectedLabels: true,
+                      items: const <BottomNavigationBarItem>[
+                        BottomNavigationBarItem(
+                          icon: Column(
+                            children: <Widget>[
+                              Icon(Icons.menu),
+                              SizedBox(height: 8),
+                            ],
+                          ),
+                          label: 'Data',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Column(
+                            children: <Widget>[
+                              Icon(Icons.qr_code),
+                              SizedBox(height: 8),
+                            ],
+                          ),
+                          label: 'Scan',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Column(
+                            children: <Widget>[
+                              Icon(Icons.lock),
+                              SizedBox(height: 8),
+                            ],
+                          ),
+                          label: 'Private',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Column(
+                            children: <Widget>[
+                              Icon(Icons.person),
+                              SizedBox(height: 8),
+                            ],
+                          ),
+                          label: 'Profile',
+                        ),
+                      ],
+                      onTap: tabsRouter.setActiveIndex,
+                      currentIndex: tabsRouter.activeIndex,
+                    ),
                   ),
                 );
               },
