@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../core_ui.dart';
 
@@ -23,7 +24,7 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
         ),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        AppFonts.thick12.copyWith(color: _appColors.white),
+        AppFonts.actionM.copyWith(color: _appColors.white),
       ),
       minimumSize: WidgetStateProperty.all<Size>(const Size.fromHeight(48)),
     ),
@@ -36,12 +37,7 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
 );
 
 TextTheme _getTextTheme() {
-  return TextTheme(
-    titleMedium: AppFonts.normal24,
-    bodyMedium: AppFonts.thick12,
-    bodyLarge: AppFonts.normal14,
-    bodySmall: AppFonts.normal12,
-  ).apply(
+  return const TextTheme().apply(
     bodyColor: _appColors.textColor,
     displayColor: _appColors.textColor,
   );
@@ -49,7 +45,7 @@ TextTheme _getTextTheme() {
 
 InputDecorationTheme _getInputDecorationTheme() {
   return InputDecorationTheme(
-    hintStyle: AppFonts.normal14.copyWith(color: _appColors.hintGray),
+    hintStyle: AppFonts.bodyM.copyWith(color: _appColors.hintGray),
     border: const OutlineInputBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(AppDimens.BORDER_RADIUS_12),
@@ -81,6 +77,5 @@ InputDecorationTheme _getInputDecorationTheme() {
         width: 2,
       ),
     ),
-    labelStyle: AppFonts.normal14.copyWith(color: _appColors.hintGray),
   );
 }

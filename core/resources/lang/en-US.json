@@ -11,9 +11,13 @@
     "enterEmail": "Enter your email, please",
     "enterPassword": "Enter your password, please",
     "createAccount": "Create account",
-    "alreadyCreatedAccount": "Already have an account?",
+    "alreadyHaveAccount": "Already have an account?",
     "doNotHaveAccount": "Don't have an account?",
     "loginButton": "Login",
+    "createPassword": "Create password",
+    "confirmPassword": "Confirm password",
+    "username": "Username",
+    "createAccountToGetStarted": "Create an account to get started",
     "signUpButton": "Sign up"
   },
   "biometrics": {

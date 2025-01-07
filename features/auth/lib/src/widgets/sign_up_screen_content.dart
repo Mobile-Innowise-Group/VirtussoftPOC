@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
 import '../auth_bloc/auth_bloc.dart';
@@ -11,118 +12,178 @@ class SignUpScreenContent extends StatefulWidget {
 }
 
 class _SignUpScreenContentState extends State<SignUpScreenContent> {
-  late final AuthBloc _bloc;
-  final TextEditingController _emailTextEditingController =
-      TextEditingController();
-  final TextEditingController _passwordTextEditingController =
-      TextEditingController();
-  final TextEditingController _usernameTextEditingController =
-      TextEditingController();
-
-  bool _obscurePassword = true;
+  late final TextEditingController _emailTextEditingController;
+  late final TextEditingController _passwordTextEditingController;
+  late final TextEditingController _passwordConfirmTextEditingController;
+  late final TextEditingController _usernameTextEditingController;
+  late final ValueNotifier<bool> _obscureNotifier;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.read<AuthBloc>();
+    _emailTextEditingController = TextEditingController();
+    _passwordTextEditingController = TextEditingController();
+    _usernameTextEditingController = TextEditingController();
+    _passwordConfirmTextEditingController = TextEditingController();
+    _obscureNotifier = ValueNotifier<bool>(true);
+  }
+
+  @override
+  void dispose() {
+    _emailTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
+    _usernameTextEditingController.dispose();
+    _passwordConfirmTextEditingController.dispose();
+    _obscureNotifier.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'auth.signUp'.tr(),
-        ),
-      ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: EdgeInsets.only(
+          left: 24.0,
+          right: 24,
+          top: MediaQuery.of(context).padding.top,
+        ),
         child: BlocBuilder<AuthBloc, AuthState>(
-          bloc: _bloc,
           builder: (BuildContext context, AuthState state) {
             if (state.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextField(
-                    style: const TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                      label: Text(
-                        'auth.email'.tr(),
-                      ),
-                      hintText: 'auth.enterEmail'.tr(),
-                      prefixIcon: const Icon(Icons.email_outlined),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailTextEditingController,
-                  ),
-                  const SizedBox(height: 12),
-                  TextField(
-                    style: const TextStyle(color: Colors.black),
-                    decoration: const InputDecoration(
-                      label: Text(
-                        'Username',
-                      ),
-                      hintText: 'Enter your username, please',
-                      prefixIcon: Icon(Icons.person),
-                    ),
-                    controller: _usernameTextEditingController,
-                  ),
-                  const SizedBox(height: 12),
-                  TextField(
-                    style: const TextStyle(color: Colors.black),
-                    obscureText: _obscurePassword,
-                    decoration: InputDecoration(
-                      label: Text(
-                        'auth.password'.tr(),
-                      ),
-                      hintText: 'auth.enterPassword'.tr(),
-                      prefixIcon: const Icon(Icons.password_outlined),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.remove_red_eye_outlined),
-                        onPressed: () {
-                          setState(
-                            () => _obscurePassword = !_obscurePassword,
-                          );
-                        },
-                      ),
-                    ),
-                    controller: _passwordTextEditingController,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => _bloc.add(
-                      SignUpWithCredentials(
-                        login: _emailTextEditingController.text,
-                        password: _passwordTextEditingController.text,
-                        username: _usernameTextEditingController.text,
-                      ),
-                    ),
-                    child: Text('auth.createAccount'.tr()),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'auth.alreadyCreatedAccount'.tr(),
-                      ),
-                      TextButton(
-                        onPressed: () => _bloc.add(
-                          NavigateToLogin(),
-                        ),
-                        child: Text(
-                          'auth.login'.tr(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              return const Center(
+                child: CircularProgressIndicator(),
               );
             }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 24),
+                Text(
+                  'auth.signUp'.tr(),
+                  style: AppFonts.headingH3,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'auth.createAccountToGetStarted'.tr(),
+                  style: AppFonts.bodyS.copyWith(
+                    color: AppColors.of(context).textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'auth.username'.tr(),
+                  style: AppFonts.headingH5,
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  style: const TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    hintText: 'auth.username'.tr(),
+                  ),
+                  controller: _usernameTextEditingController,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'auth.emailAddress'.tr(),
+                  style: AppFonts.headingH5,
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  style: const TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    hintText: 'auth.emailAddress'.tr(),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  controller: _emailTextEditingController,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'auth.password'.tr(),
+                  style: AppFonts.headingH5,
+                ),
+                const SizedBox(height: 8),
+                ValueListenableBuilder<bool>(
+                  valueListenable: _obscureNotifier,
+                  builder:
+                      (BuildContext context, bool isObscured, Widget? child) {
+                    return Column(
+                      children: <Widget>[
+                        TextField(
+                          style: const TextStyle(color: Colors.black),
+                          obscureText: isObscured,
+                          decoration: InputDecoration(
+                            hintText: 'auth.createPassword'.tr(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isObscured
+                                    ? Icons.remove_red_eye
+                                    : Icons.remove_red_eye_outlined,
+                                color: AppColors.of(context).darkIcon,
+                              ),
+                              onPressed: () => _obscureNotifier.value =
+                                  !_obscureNotifier.value,
+                            ),
+                          ),
+                          controller: _passwordTextEditingController,
+                        ),
+                        const SizedBox(height: 16),
+                        TextField(
+                          style: const TextStyle(color: Colors.black),
+                          obscureText: isObscured,
+                          decoration: InputDecoration(
+                            hintText: 'auth.confirmPassword'.tr(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isObscured
+                                    ? Icons.remove_red_eye
+                                    : Icons.remove_red_eye_outlined,
+                                color: AppColors.of(context).darkIcon,
+                              ),
+                              onPressed: () => _obscureNotifier.value =
+                                  !_obscureNotifier.value,
+                            ),
+                          ),
+                          controller: _passwordConfirmTextEditingController,
+                        )
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                FilledButton(
+                  onPressed: () => context.read<AuthBloc>().add(
+                        SignUpWithCredentials(
+                          login: _emailTextEditingController.text,
+                          password: _passwordTextEditingController.text,
+                          username: _usernameTextEditingController.text,
+                        ),
+                      ),
+                  child: Text('auth.signUp'.tr()),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '${'auth.alreadyHaveAccount'.tr()} ',
+                      style: AppFonts.bodyS,
+                    ),
+                    GestureDetector(
+                      onTap: () =>
+                          context.read<AuthBloc>().add(NavigateToLogin()),
+                      child: Text(
+                        'auth.login'.tr(),
+                        style: AppFonts.actionM.copyWith(
+                          color: AppColors.of(context).primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
           },
         ),
       ),

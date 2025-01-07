@@ -1,24 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core_ui.dart';
+
 abstract class AppFonts {
-  static TextStyle normal14 = GoogleFonts.inter(
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-  );
-
-  static TextStyle normal24 = GoogleFonts.inter(
-    fontWeight: FontWeight.w800,
-    fontSize: 24,
-  );
-
-  static TextStyle thick12 = GoogleFonts.inter(
+  static TextStyle actionM = GoogleFonts.inter(
     fontWeight: FontWeight.w600,
     fontSize: 12,
+    color: Colors.black,
   );
 
-  static TextStyle normal12 = GoogleFonts.inter(
+  static TextStyle headingH1 = GoogleFonts.inter(
+    fontWeight: FontWeight.w800,
+    fontSize: 24,
+    color: Colors.black,
+  );
+
+  static TextStyle headingH3 = GoogleFonts.inter(
+    fontWeight: FontWeight.w800,
+    fontSize: 16,
+    color: Colors.black,
+  );
+
+  static TextStyle headingH5 = GoogleFonts.inter(
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    color: Colors.black,
+  );
+
+  static TextStyle bodyM = GoogleFonts.inter(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: Colors.black,
+  );
+
+  static TextStyle bodyS = GoogleFonts.inter(
     fontWeight: FontWeight.w400,
     fontSize: 12,
+    color: Colors.black,
   );
 }

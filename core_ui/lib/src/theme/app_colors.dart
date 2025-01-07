@@ -29,6 +29,8 @@ abstract class AppColors {
   Color get transparent;
 
   Color get darkIcon;
+
+  Color get textSecondary;
 }
 
 class DarkColors extends LightColors {
@@ -39,8 +41,7 @@ class LightColors implements AppColors {
   const LightColors();
 
   @override
-  // RGBO(236, 239, 241, 1)
-  Color get primaryBg => const Color.fromRGBO(238, 244, 237, 1);
+  Color get primaryBg => const Color.fromRGBO(255, 255, 255, 1);
 
   @override
   Color get white => const Color.fromRGBO(255, 255, 255, 1);
@@ -71,4 +72,7 @@ class LightColors implements AppColors {
 
   @override
   Color get darkIcon => const Color(0xFF8F9098);
+
+  @override
+  Color get textSecondary => const Color(0xFF71727A);
 }

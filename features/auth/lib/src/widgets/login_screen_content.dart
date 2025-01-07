@@ -14,32 +14,33 @@ class LoginScreenContent extends StatefulWidget {
 class _LoginScreenContentState extends State<LoginScreenContent> {
   late final TextEditingController _emailTextEditingController;
   late final TextEditingController _passwordTextEditingController;
-  late final ValueNotifier<bool> obscureNotifier;
+  late final ValueNotifier<bool> _obscureNotifier;
 
   @override
   void initState() {
     super.initState();
     _emailTextEditingController = TextEditingController();
     _passwordTextEditingController = TextEditingController();
-    obscureNotifier = ValueNotifier<bool>(true);
+    _obscureNotifier = ValueNotifier<bool>(true);
   }
 
   @override
   void dispose() {
     _emailTextEditingController.dispose();
     _passwordTextEditingController.dispose();
+    _obscureNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
-        padding: const EdgeInsets.only(
+        padding: EdgeInsets.only(
           left: 24.0,
           right: 24.0,
           bottom: 120,
+          top: MediaQuery.of(context).padding.top,
         ),
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (BuildContext context, AuthState state) {
@@ -70,7 +71,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                     children: <Widget>[
                       Text(
                         'auth.welcome!'.tr(),
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: AppFonts.headingH1,
                       ),
                       const SizedBox(height: 24),
                       TextField(
@@ -83,7 +84,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                       ),
                       const SizedBox(height: 16),
                       ValueListenableBuilder<bool>(
-                        valueListenable: obscureNotifier,
+                        valueListenable: _obscureNotifier,
                         builder: (BuildContext context, bool isObscured,
                             Widget? child) {
                           return TextField(
@@ -98,8 +99,8 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                                       : Icons.remove_red_eye_outlined,
                                   color: AppColors.of(context).darkIcon,
                                 ),
-                                onPressed: () => obscureNotifier.value =
-                                    !obscureNotifier.value,
+                                onPressed: () => _obscureNotifier.value =
+                                    !_obscureNotifier.value,
                               ),
                             ),
                             controller: _passwordTextEditingController,
@@ -111,10 +112,9 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                         onTap: () {},
                         child: Text(
                           'auth.forgotPassword'.tr(),
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.of(context).primary,
-                                  ),
+                          style: AppFonts.actionM.copyWith(
+                            color: AppColors.of(context).primary,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -134,21 +134,18 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'auth.notAMember'.tr(),
-                            style: Theme.of(context).textTheme.bodySmall,
+                            '${'auth.notAMember'.tr()} ',
+                            style: AppFonts.bodyS,
                           ),
-                          TextButton(
-                            onPressed: () => context.read<AuthBloc>().add(
+                          GestureDetector(
+                            onTap: () => context.read<AuthBloc>().add(
                                   NavigateToSignUp(),
                                 ),
                             child: Text(
                               'auth.registerNow'.tr(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: AppColors.of(context).primary,
-                                  ),
+                              style: AppFonts.actionM.copyWith(
+                                color: AppColors.of(context).primary,
+                              ),
                             ),
                           ),
                         ],
