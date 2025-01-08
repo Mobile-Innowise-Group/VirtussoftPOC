@@ -3,30 +3,19 @@ import 'package:flutter/material.dart';
 
 import 'bloc/scanner_bloc.dart';
 
-class ScannerScreenContent extends StatefulWidget {
+class ScannerScreenContent extends StatelessWidget {
   const ScannerScreenContent({super.key});
 
   @override
-  State<ScannerScreenContent> createState() => _ScannerScreenContentState();
-}
-
-class _ScannerScreenContentState extends State<ScannerScreenContent> {
-  late final ScannerBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = context.read<ScannerBloc>();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          _bloc.add(const OpenScanner());
-        },
-        child: const Text("Scan Document"),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Center(
+        child: FilledButton(
+          onPressed: () =>
+            context.read<ScannerBloc>().add(const OpenScanner()),
+          child: const Text('Scan Document'),
+        ),
       ),
     );
   }

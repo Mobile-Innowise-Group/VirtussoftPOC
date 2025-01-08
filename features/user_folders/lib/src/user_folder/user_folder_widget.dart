@@ -27,7 +27,10 @@ class UserFolderWidget extends StatelessWidget {
                 title: Text(
                   'folder.makeFolderPrivate'.tr(),
                 ),
-                leading: const Icon(Icons.lock),
+                leading: Icon(
+                  Icons.lock,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             );
           },
