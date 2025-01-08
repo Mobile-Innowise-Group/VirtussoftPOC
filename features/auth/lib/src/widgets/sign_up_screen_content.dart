@@ -14,7 +14,6 @@ class SignUpScreenContent extends StatefulWidget {
 class _SignUpScreenContentState extends State<SignUpScreenContent> {
   late final TextEditingController _emailTextEditingController;
   late final TextEditingController _passwordTextEditingController;
-  late final TextEditingController _passwordConfirmTextEditingController;
   late final TextEditingController _usernameTextEditingController;
   late final ValueNotifier<bool> _obscureNotifier;
 
@@ -24,7 +23,6 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
     _emailTextEditingController = TextEditingController();
     _passwordTextEditingController = TextEditingController();
     _usernameTextEditingController = TextEditingController();
-    _passwordConfirmTextEditingController = TextEditingController();
     _obscureNotifier = ValueNotifier<bool>(true);
   }
 
@@ -33,7 +31,6 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
     _emailTextEditingController.dispose();
     _passwordTextEditingController.dispose();
     _usernameTextEditingController.dispose();
-    _passwordConfirmTextEditingController.dispose();
     _obscureNotifier.dispose();
     super.dispose();
   }
@@ -128,25 +125,6 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                           ),
                           controller: _passwordTextEditingController,
                         ),
-                        const SizedBox(height: 16),
-                        TextField(
-                          style: const TextStyle(color: Colors.black),
-                          obscureText: isObscured,
-                          decoration: InputDecoration(
-                            hintText: 'auth.confirmPassword'.tr(),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                isObscured
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: AppColors.of(context).darkIcon,
-                              ),
-                              onPressed: () => _obscureNotifier.value =
-                                  !_obscureNotifier.value,
-                            ),
-                          ),
-                          controller: _passwordConfirmTextEditingController,
-                        )
                       ],
                     );
                   },

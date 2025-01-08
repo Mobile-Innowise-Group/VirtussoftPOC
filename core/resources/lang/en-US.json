@@ -1,7 +1,7 @@
 {
   "auth": {
     "welcome!": "Welcome!",
-    "signUp": "Sign up",
+    "signUp": "Sign Up",
     "login": "Login",
     "emailAddress": "Email Address",
     "password": "Password",
@@ -49,7 +49,7 @@
     "editCategory": "Edit category",
     "editCategoryMessage": "Edit category name",
     "noAddedCategories": "No added categories",
-    "addCategory": "Add category"
+    "addNewCategory": "Add new Category"
   },
   "common": {
     "cancel": "Cancel",

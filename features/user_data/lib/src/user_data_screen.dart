@@ -6,7 +6,6 @@ import 'package:navigation/navigation.dart';
 import 'package:nested/nested.dart';
 import 'package:user_categories/src/user_categories/bloc/user_categories_bloc.dart';
 import 'package:user_categories/src/user_categories/user_categories.dart';
-import 'package:user_categories/src/user_categories/widgets/create_category_dialog.dart';
 import 'package:user_folders/src/user_folders/user_folders.dart';
 
 import 'bloc/user_data_bloc.dart';
@@ -169,53 +168,6 @@ class UserDataScreen extends StatelessWidget implements AutoRouteWrapper {
           },
         ),
       ),
-      // body: CustomScrollView(
-      //   slivers: <Widget>[
-      //     const UserFolders(),
-      //     SliverToBoxAdapter(
-      //       child: ListTile(
-      //         leading: const Icon(Icons.add),
-      //         onTap: () {
-      //           showDialog(
-      //             context: context,
-      //             builder: (BuildContext _) {
-      //               return CreateFolderDialog(
-      //                 onCreate: (String folderName) {
-      //                   context.read<UserFoldersBloc>().add(
-      //                         CreateFolderEvent(folderName: folderName),
-      //                       );
-      //                 },
-      //               );
-      //             },
-      //           );
-      //         },
-      //         title: Text('folder.addFolder'.tr()),
-      //       ),
-      //     ),
-      //     const SliverToBoxAdapter(child: Divider()),
-      //     const UserCategories(),
-      //     SliverToBoxAdapter(
-      //       child: ListTile(
-      //         leading: const Icon(Icons.add),
-      //         onTap: () {
-      //           showDialog(
-      //             context: context,
-      //             builder: (BuildContext _) {
-      //               return CreateCategoryDialog(
-      //                 onCreate: (String folderName) {
-      //                   context.read<UserCategoriesBloc>().add(
-      //                         CreateCategoryEvent(categoryName: folderName),
-      //                       );
-      //                 },
-      //               );
-      //             },
-      //           );
-      //         },
-      //         title: Text('category.addCategory'.tr()),
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

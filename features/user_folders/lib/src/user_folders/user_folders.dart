@@ -6,7 +6,6 @@ import 'package:navigation/navigation.dart';
 
 import '../user_folder/bloc/user_folder_bloc.dart';
 import '../user_folder/user_folder_widget.dart';
-import 'bloc/user_folders_bloc.dart';
 import 'widgets/create_folder_dialog.dart';
 
 class UserFolders extends StatelessWidget {
@@ -57,7 +56,9 @@ class UserFolders extends StatelessWidget {
                 ),
                 label: Text(
                   'folder.addNewFolder'.tr(),
-                  style: AppFonts.actionM,
+                  style: AppFonts.actionM.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
                 onPressed: () {
                   showDialog(

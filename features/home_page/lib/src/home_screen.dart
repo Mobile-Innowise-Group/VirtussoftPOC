@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                         )
                       : child,
                   bottomNavigationBar: SizedBox(
-                    height: 88,
+                    height: 90,
                     child: BottomNavigationBar(
                       elevation: 0,
                       backgroundColor: Theme.of(context).colorScheme.surface,

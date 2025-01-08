@@ -6,6 +6,7 @@ import 'package:navigation/navigation.dart';
 
 import 'bloc/private_folders_bloc.dart';
 import 'widgets/create_private_folder_dialog.dart';
+import 'widgets/private_folder_widget.dart';
 
 @RoutePage()
 class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -32,90 +33,84 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('folder.privateFolders'.tr()),
+        title: Text(
+          'folder.privateFolders'.tr(),
+          style: AppFonts.headingH4,
+        ),
         automaticallyImplyLeading: false,
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          BlocBuilder<PrivateFoldersBloc, PrivateFoldersState>(
-            builder: (BuildContext context, PrivateFoldersState state) {
-              if (!state.isAuthenticated) {
-                return const SliverToBoxAdapter(
-                  child: Center(
-                    child: Text('Biometric authentication failed'),
-                  ),
-                );
-              }
+      body: BlocBuilder<PrivateFoldersBloc, PrivateFoldersState>(
+        builder: (BuildContext context, PrivateFoldersState state) {
+          if (!state.isAuthenticated) {
+            return Center(
+              child: Text(
+                'Biometric authentication failed',
+                style: AppFonts.headingH5,
+              ),
+            );
+          }
 
-              if (state.isLoading) {
-                return const SliverToBoxAdapter(
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
+          if (state.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-              return state.folders.isEmpty
-                  ? SliverToBoxAdapter(
-                      child: ListTile(
-                        title: Text(
-                          'folder.noAddedFolders'.tr(),
-                        ),
-                      ),
-                    )
-                  : SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () => context.read<PrivateFoldersBloc>().add(
-                                OpenPrivateFolderEvent(
-                                    folder: state.folders[index])),
-                            onLongPress: () {
-                              AppBottomSheet.show(
-                                context: context,
-                                child: ListTile(
-                                  onTap: () => context
-                                      .read<PrivateFoldersBloc>()
-                                      .add(TogglePrivateFolderPrivacyEvent(
-                                          state.folders[index])),
-                                  title: Text(
-                                    'folder.makeFolderPublic'.tr(),
-                                  ),
-                                  leading: const Icon(Icons.lock),
-                                ),
-                              );
-                            },
-                            child: ListTile(
-                              leading: const Icon(Icons.folder),
-                              trailing: const Icon(Icons.arrow_forward_ios),
-                              title: Text(state.folders[index].name),
+          final List<FolderModel> privateFolders = state.folders;
+
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: privateFolders.isEmpty
+                    ? Text(
+                        'folder.noAddedFolders'.tr(),
+                        style: AppFonts.headingH5,
+                      )
+                    : CustomScrollView(
+                        slivers: <Widget>[
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return PrivateFolderWidget(
+                                    folder: privateFolders[index]);
+                              },
+                              childCount: privateFolders.length,
                             ),
-                          );
-                        },
-                        childCount: state.folders.length,
+                          ),
+                        ],
                       ),
-                    );
-            },
-          ),
-          SliverToBoxAdapter(
-            child: ListTile(
-              leading: const Icon(Icons.add),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext _) {
-                    return CreatePrivateFolderDialog(
-                      onCreate: (String folderName) {
-                        context.read<PrivateFoldersBloc>().add(
-                              CreatePrivateFolderEvent(folderName: folderName),
-                            );
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: TextButton.icon(
+                  icon: Icon(
+                    Icons.add,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  label: Text(
+                    'folder.addNewFolder'.tr(),
+                    style: AppFonts.actionM.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext _) {
+                        return CreatePrivateFolderDialog(
+                          onCreate: (String folderName) {
+                            context.read<PrivateFoldersBloc>().add(
+                                  CreatePrivateFolderEvent(
+                                      folderName: folderName),
+                                );
+                          },
+                        );
                       },
                     );
                   },
-                );
-              },
-              title: Text('folder.addFolder'.tr()),
-            ),
-          ),
-        ],
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
