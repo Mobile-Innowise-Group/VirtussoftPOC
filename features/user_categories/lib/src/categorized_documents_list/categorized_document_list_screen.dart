@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
@@ -35,10 +36,16 @@ class CategorizedDocumentListScreen extends StatelessWidget
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(category.name),
-        actions: [
+        title: Text(
+          category.name,
+          style: AppFonts.headingH4,
+        ),
+        actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.lock),
+            icon: Icon(
+              Icons.lock,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onPressed: () {
               context.read<CategorizedDocumentsListBloc>().add(
                     const ShowPrivateFilesEvent(),

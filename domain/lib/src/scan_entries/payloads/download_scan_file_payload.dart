@@ -1,9 +1,9 @@
+import '../../../domain.dart';
+
 class DownloadScanFilePayload {
-  final String remotePath;
-  final String localPath;
+  final ScanEntryModel scan;
 
   DownloadScanFilePayload({
-    required this.remotePath,
-    required this.localPath,
+    required this.scan,
   });
 }

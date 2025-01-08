@@ -29,10 +29,20 @@ class _PreviewPdfResultScreenState extends State<PreviewPdfResultScreen> {
   }
 
   @override
+  void dispose() {
+    pdfPinchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Preview saving file'),
+        title: Text(
+          'Preview saving file',
+          style: AppFonts.headingH4,
+        ),
+        centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -48,6 +58,7 @@ class _PreviewPdfResultScreenState extends State<PreviewPdfResultScreen> {
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       onPressed: () => context.router.push(
                         SavingScanEntryBottomSheetRoute(
                           previewFilePath: widget.previewFilePath,

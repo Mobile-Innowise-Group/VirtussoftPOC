@@ -25,32 +25,33 @@ class AppAlertDialog extends StatelessWidget {
     final AppColors colors = AppColors.of(context);
 
     return AlertDialog(
-      title: Text(title),
+      title: Text(title, style: AppFonts.headingH3),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text(text),
+            Text(
+              text,
+              style: AppFonts.bodyM,
+            ),
           ],
         ),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: optionNoCallback,
-          style: ButtonStyle(
-            foregroundColor: WidgetStatePropertyAll<Color>(
-              Colors.black.withOpacity(AppDimens.OPACITY_0_6),
-            ),
-            overlayColor: WidgetStatePropertyAll<Color>(colors.primaryBg),
-          ),
           child: Text(optionNoText),
         ),
         TextButton(
           onPressed: optionYesCallback,
           style: ButtonStyle(
-            foregroundColor: WidgetStatePropertyAll<Color>(colors.primary),
-            overlayColor: WidgetStatePropertyAll<Color>(colors.primaryBg),
+            backgroundColor: WidgetStatePropertyAll<Color>(colors.primary),
           ),
-          child: Text(optionYesText),
+          child: Text(
+            optionYesText,
+            style: AppFonts.bodyM.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
         ),
       ],
     );

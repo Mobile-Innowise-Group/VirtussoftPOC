@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core_ui.dart';
+
 class ShareScanDialog extends StatefulWidget {
   final String remoteUrl;
   final Function(Uint8List qrCodeBites) onShareQr;
@@ -27,7 +29,10 @@ class _ShareScanDialogState extends State<ShareScanDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Share qr code'),
+      title: Text(
+        'Share qr code',
+        style: AppFonts.headingH3,
+      ),
       content: FutureBuilder<Uint8List>(
         future: QrService.generateQRCode(widget.remoteUrl),
         builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
@@ -52,9 +57,19 @@ class _ShareScanDialogState extends State<ShareScanDialog> {
           onPressed: widget.onClose,
           child: Text('common.cancel'.tr()),
         ),
-        ElevatedButton(
+        TextButton(
           onPressed: widget.onShareFile,
-          child: const Text('Share file'),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll<Color>(
+              Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          child: Text(
+            'Share file'.tr(),
+            style: AppFonts.bodyM.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
         ),
       ],
     );

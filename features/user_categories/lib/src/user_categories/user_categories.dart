@@ -1,8 +1,12 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation/navigation.dart';
 
 import 'bloc/user_categories_bloc.dart';
+import 'widgets/create_category_dialog.dart';
+import 'widgets/user_category_widget.dart';
 
 class UserCategories extends StatelessWidget {
   const UserCategories({super.key});
@@ -12,49 +16,71 @@ class UserCategories extends StatelessWidget {
     return BlocBuilder<UserCategoriesBloc, UserCategoriesState>(
       builder: (BuildContext context, UserCategoriesState state) {
         if (state.isLoading) {
-          return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
-        final List<CategoryModel> categories = state.isExpanded
-            ? state.categories
-            : state.categories.take(3).toList();
-        return categories.isEmpty
-            ? SliverToBoxAdapter(
-                child: ListTile(
-                  title: Text('category.noAddedCategories'.tr()),
-                ),
-              )
-            : SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (index < categories.length) {
-                      return ListTile(
-                        onTap: () => context.read<UserCategoriesBloc>().add(
-                            OpenCategoryEvent(category: categories[index])),
-                        leading: const Icon(Icons.tag),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        title: Text(categories[index].name),
-                      );
-                    } else if (index == categories.length &&
-                        state.categories.length > 3) {
-                      return TextButton(
-                        onPressed: () => context
-                            .read<UserCategoriesBloc>()
-                            .add(const ToggleExpandedEvent()),
-                        child: Text(
-                          state.isExpanded
-                              ? 'common.showLess'.tr()
-                              : 'common.showMore'.tr(),
+
+        final List<CategoryModel> categories = state.categories;
+
+        return Column(
+          children: <Widget>[
+            Expanded(
+              child: categories.isEmpty
+                  ? Text(
+                      'category.noAddedCategories'.tr(),
+                      style: AppFonts.headingH5,
+                    )
+                  : CustomScrollView(
+                      slivers: <Widget>[
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return UserCategoryWidget(
+                                category: categories[index],
+                              );
+                            },
+                            childCount: categories.length,
+                          ),
                         ),
-                      );
-                    } else {
-                      return null;
-                    }
-                  },
-                  childCount: categories.length + 1,
+                      ],
+                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: TextButton.icon(
+                icon: Icon(
+                  Icons.add,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-              );
+                label: Text(
+                  'category.addNewCategory'.tr(),
+                  style: AppFonts.actionM.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext _) {
+                      return CreateCategoryDialog(
+                        optionNoCallback: () {
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
+                        },
+                        optionYesCallback: (String categoryName) {
+                          context.read<UserCategoriesBloc>().add(
+                                CreateCategoryEvent(categoryName: categoryName),
+                              );
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            )
+          ],
+        );
       },
     );
   }

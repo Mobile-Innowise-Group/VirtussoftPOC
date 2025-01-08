@@ -2,8 +2,10 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation/navigation.dart';
 
-import 'bloc/user_folders_bloc.dart';
+import '../user_folder/bloc/user_folder_bloc.dart';
+import '../user_folder/user_folder_widget.dart';
 
 class UserFolders extends StatelessWidget {
   const UserFolders({super.key});
@@ -13,68 +15,74 @@ class UserFolders extends StatelessWidget {
     return BlocBuilder<UserFoldersBloc, UserFoldersState>(
       builder: (BuildContext context, UserFoldersState state) {
         if (state.isLoading) {
-          return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
-        final List<FolderModel> folders =
-            state.isExpanded ? state.folders : state.folders.take(3).toList();
+        final List<FolderModel> folders = state.folders;
 
-        return folders.isEmpty
-            ? SliverToBoxAdapter(
-                child: ListTile(
-                  title: Text(
-                    'folder.noAddedFolders'.tr(),
+        return Column(
+          children: <Widget>[
+            Expanded(
+              child: folders.isEmpty
+                  ? Text(
+                      'folder.noAddedFolders'.tr(),
+                      style: AppFonts.headingH5,
+                    )
+                  : CustomScrollView(
+                      slivers: <Widget>[
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return BlocProvider<UserFolderBloc>(
+                                create: (_) => UserFolderBloc(
+                                  folder: folders[index],
+                                  appRouter: appLocator<AppRouter>(),
+                                ),
+                                child: const UserFolderWidget(),
+                              );
+                            },
+                            childCount: folders.length,
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: TextButton.icon(
+                icon: Icon(
+                  Icons.add,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                label: Text(
+                  'folder.addNewFolder'.tr(),
+                  style: AppFonts.actionM.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
-              )
-            : SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (index < folders.length) {
-                      return GestureDetector(
-                        onTap: () => context
-                            .read<UserFoldersBloc>()
-                            .add(OpenFolderEvent(folder: folders[index])),
-                        onLongPress: () {
-                          AppBottomSheet.show(
-                            context: context,
-                            child: ListTile(
-                              onTap: () => context.read<UserFoldersBloc>().add(
-                                  ToggleFolderPrivacyEvent(
-                                      state.folders[index])),
-                              title: Text(
-                                'folder.makeFolderPrivate'.tr(),
-                              ),
-                              leading: const Icon(Icons.lock),
-                            ),
-                          );
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext _) {
+                      return CreateFolderDialog(
+                        optionNoCallback: () {
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
                         },
-                        child: ListTile(
-                          leading: const Icon(Icons.folder),
-                          trailing: const Icon(Icons.arrow_forward_ios),
-                          title: Text(folders[index].name),
-                        ),
+                        optionYesCallback: (String folderName) {
+                          context.read<UserFoldersBloc>().add(
+                                CreateFolderEvent(folderName: folderName),
+                              );
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
+                        },
                       );
-                    } else if (index == folders.length &&
-                        state.folders.length > 3) {
-                      return TextButton(
-                        onPressed: () => context
-                            .read<UserFoldersBloc>()
-                            .add(const ToggleExpandedEvent()),
-                        child: Text(
-                          state.isExpanded
-                              ? 'common.showLess'.tr()
-                              : 'common.showMore'.tr(),
-                        ),
-                      );
-                    } else {
-                      return null;
-                    }
-                  },
-                  childCount: folders.length + 1,
-                ),
-              );
+                    },
+                  );
+                },
+              ),
+            )
+          ],
+        );
       },
     );
   }

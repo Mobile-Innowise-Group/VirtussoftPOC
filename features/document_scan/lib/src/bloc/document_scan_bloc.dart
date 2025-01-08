@@ -4,6 +4,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../enum/file_status.dart';
 
 part 'document_scan_event.dart';
@@ -33,7 +35,10 @@ class DocumentScanBloc extends Bloc<DocumentScanEvent, DocumentScanState> {
     InitEvent event,
     Emitter<DocumentScanState> emit,
   ) async {
-    final File file = File(_scan.localPath);
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final String fileName = _scan.localPath.split('/').last;
+
+    final File file = File('${directory.path}/${_scan.folder.name}/$fileName');
     if (file.existsSync()) {
       emit(state.copyWith(fileStatus: FileStatus.downloaded));
     } else {
@@ -49,8 +54,7 @@ class DocumentScanBloc extends Bloc<DocumentScanEvent, DocumentScanState> {
       emit(state.copyWith(fileStatus: FileStatus.downloading));
       await _downloadScanFileUseCase.execute(
         DownloadScanFilePayload(
-          remotePath: _scan.remotePath,
-          localPath: _scan.localPath,
+          scan: _scan,
         ),
       );
       emit(state.copyWith(fileStatus: FileStatus.downloaded));

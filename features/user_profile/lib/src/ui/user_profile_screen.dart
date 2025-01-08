@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
@@ -30,8 +31,12 @@ class UserProfileScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User profile'),
+        title: Text(
+          'User profile',
+          style: AppFonts.headingH4,
+        ),
         automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
       body: const UserProfileContent(),
     );

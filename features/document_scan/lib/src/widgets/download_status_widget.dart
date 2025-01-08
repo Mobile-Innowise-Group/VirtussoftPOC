@@ -15,32 +15,41 @@ class DownLoadStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DocumentScanBloc, DocumentScanState>(
-      builder: (BuildContext context, DocumentScanState state) {
-        return switch (state.fileStatus) {
-          FileStatus.empty => IconButton(
-              onPressed: () => context.read<DocumentScanBloc>().add(
-                    DownloadFileEvent(
-                      remotePath: scan.remotePath,
-                      localPath: scan.localPath,
+    return SizedBox(
+      child: BlocBuilder<DocumentScanBloc, DocumentScanState>(
+        builder: (BuildContext context, DocumentScanState state) {
+          return switch (state.fileStatus) {
+            FileStatus.empty => GestureDetector(
+                onTap: () => context.read<DocumentScanBloc>().add(
+                      DownloadFileEvent(
+                        remotePath: scan.remotePath,
+                        localPath: scan.localPath,
+                      ),
                     ),
-                  ),
-              icon: const Icon(Icons.download),
-            ),
-          FileStatus.downloading =>
-            const Center(child: CircularProgressIndicator()),
-          FileStatus.downloaded => const SizedBox.shrink(),
-          FileStatus.error => IconButton(
-              onPressed: () => context.read<DocumentScanBloc>().add(
-                    DownloadFileEvent(
-                      remotePath: scan.remotePath,
-                      localPath: scan.localPath,
+                child: Icon(
+                  Icons.download,
+                  size: 24,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            FileStatus.downloading =>
+              const Center(child: CircularProgressIndicator()),
+            FileStatus.downloaded => const SizedBox.shrink(),
+            FileStatus.error => GestureDetector(
+                onTap: () => context.read<DocumentScanBloc>().add(
+                      DownloadFileEvent(
+                        remotePath: scan.remotePath,
+                        localPath: scan.localPath,
+                      ),
                     ),
-                  ),
-              icon: const Icon(Icons.error),
-            ),
-        };
-      },
+                child: Icon(
+                  Icons.error,
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+          };
+        },
+      ),
     );
   }
 }

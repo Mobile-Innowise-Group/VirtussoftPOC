@@ -35,9 +35,7 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
         super(UserFoldersState.initial()) {
     on<CreateFolderEvent>(_onCreateFolder);
     on<DeleteFolderEvent>(_onDeleteFolder);
-    on<ToggleExpandedEvent>(_onToggleExpanded);
     on<ToggleFolderPrivacyEvent>(_onToggleFolderPrivacy);
-    on<OpenFolderEvent>(_onOpenFolderEvent);
     on<InitEvent>(_onInit);
 
     add(const InitEvent());
@@ -125,13 +123,6 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
     }
   }
 
-  FutureOr<void> _onToggleExpanded(
-    ToggleExpandedEvent event,
-    Emitter<UserFoldersState> emit,
-  ) async {
-    emit(state.copyWith(isExpanded: !state.isExpanded));
-  }
-
   FutureOr<void> _onToggleFolderPrivacy(
     ToggleFolderPrivacyEvent event,
     Emitter<UserFoldersState> emit,
@@ -166,12 +157,5 @@ class UserFoldersBloc extends Bloc<UserFoldersEvent, UserFoldersState> {
         state.copyWith(isLoading: false),
       );
     }
-  }
-
-  FutureOr<void> _onOpenFolderEvent(
-    OpenFolderEvent event,
-    Emitter<UserFoldersState> emit,
-  ) async {
-    await _appRouter.push(FoldersScanListRoute(folder: event.folder));
   }
 }

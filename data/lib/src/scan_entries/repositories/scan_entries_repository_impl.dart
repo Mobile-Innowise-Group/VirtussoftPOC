@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:domain/domain.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../../auth/auth.dart';
 import '../../auth/entities/user/user_entity.dart';
 import '../../categories/categories.dart';
@@ -157,16 +159,20 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
     final Uint8List downloadedData =
         await _scanEntriesProvider.downloadScanFile(
       request: DownloadScanFileRequest(
-        remotePath: payload.remotePath,
+        remotePath: payload.scan.remotePath,
       ),
     );
 
-    final Directory targetDirectory = Directory(payload.localPath).parent;
-    if (!targetDirectory.existsSync()) {
-      await targetDirectory.create(recursive: true);
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final Directory folderDirectory =
+        Directory('${directory.path}/${payload.scan.folder.name}');
+    if (!folderDirectory.existsSync()) {
+      await folderDirectory.create();
     }
 
-    final File file = File(payload.localPath);
+    final String fileName = payload.scan.localPath.split('/').last;
+
+    final File file = File('${folderDirectory.path}/$fileName');
     await file.create();
 
     await file.writeAsBytes(downloadedData);

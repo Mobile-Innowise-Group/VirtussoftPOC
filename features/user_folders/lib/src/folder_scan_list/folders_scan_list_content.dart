@@ -34,7 +34,7 @@ class FoldersScanListContent extends StatelessWidget {
               scan: scan,
               onTap: () {
                 context.read<FolderScanListBloc>().add(
-                      OpenScanEvent(localUrl: scan.localPath),
+                      OpenScanEvent(scan: scan),
                     );
               },
               onShareQr: (Uint8List qrCodeBites) {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:core/core.dart';
@@ -6,6 +7,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'folder_scan_list_event.dart';
 
@@ -86,7 +88,10 @@ class FolderScanListBloc
     OpenScanEvent event,
     Emitter<FolderScanListState> emit,
   ) async {
-    await PdfService.openFile(event.localUrl);
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final String fileName = event.scan.localPath.split('/').last;
+    await PdfService.openFile(
+        '${directory.path}/${event.scan.folder.name}/$fileName');
   }
 
   FutureOr<void> _onShareFile(
