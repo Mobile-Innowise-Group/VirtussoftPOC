@@ -6,7 +6,6 @@ import 'package:navigation/navigation.dart';
 
 import '../user_folder/bloc/user_folder_bloc.dart';
 import '../user_folder/user_folder_widget.dart';
-import 'widgets/create_folder_dialog.dart';
 
 class UserFolders extends StatelessWidget {
   const UserFolders({super.key});
@@ -65,10 +64,16 @@ class UserFolders extends StatelessWidget {
                     context: context,
                     builder: (BuildContext _) {
                       return CreateFolderDialog(
-                        onCreate: (String folderName) {
+                        optionNoCallback: () {
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
+                        },
+                        optionYesCallback: (String folderName) {
                           context.read<UserFoldersBloc>().add(
                                 CreateFolderEvent(folderName: folderName),
                               );
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
                         },
                       );
                     },

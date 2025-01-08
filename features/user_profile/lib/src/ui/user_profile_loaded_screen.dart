@@ -24,7 +24,6 @@ class UserProfileLoadedScreen extends StatelessWidget {
             userEmail: userEmail,
             username: username ?? '',
           ),
-          const SizedBox(height: AppDimens.PADDING_12),
           const AccountSettingsWidget(),
         ],
       ),

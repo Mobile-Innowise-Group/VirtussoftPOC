@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 import 'bloc/private_folders_bloc.dart';
-import 'widgets/create_private_folder_dialog.dart';
 import 'widgets/private_folder_widget.dart';
 
 @RoutePage()
@@ -38,6 +37,16 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
           style: AppFonts.headingH4,
         ),
         automaticallyImplyLeading: false,
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: BlocBuilder<PrivateFoldersBloc, PrivateFoldersState>(
         builder: (BuildContext context, PrivateFoldersState state) {
@@ -95,12 +104,18 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                     showDialog(
                       context: context,
                       builder: (BuildContext _) {
-                        return CreatePrivateFolderDialog(
-                          onCreate: (String folderName) {
+                        return CreateFolderDialog(
+                          optionNoCallback: () {
+                            final AppRouter appRouter = appLocator<AppRouter>();
+                            appRouter.maybePop();
+                          },
+                          optionYesCallback: (String folderName) {
                             context.read<PrivateFoldersBloc>().add(
                                   CreatePrivateFolderEvent(
                                       folderName: folderName),
                                 );
+                            final AppRouter appRouter = appLocator<AppRouter>();
+                            appRouter.maybePop();
                           },
                         );
                       },

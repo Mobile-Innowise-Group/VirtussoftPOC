@@ -1,22 +1,23 @@
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-class CreateCategoryDialog extends StatefulWidget {
-  final void Function(String categoryName) optionYesCallback;
+import '../../../core_ui.dart';
+
+class CreateFolderDialog extends StatefulWidget {
+  final void Function(String folderName) optionYesCallback;
   final VoidCallback optionNoCallback;
 
-  const CreateCategoryDialog({
+  const CreateFolderDialog({
     required this.optionNoCallback,
     required this.optionYesCallback,
     super.key,
   });
 
   @override
-  _CreateCategoryDialogState createState() => _CreateCategoryDialogState();
+  _CreateFolderDialogState createState() => _CreateFolderDialogState();
 }
 
-class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
+class _CreateFolderDialogState extends State<CreateFolderDialog> {
   late final TextEditingController _controller;
 
   @override
@@ -35,7 +36,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        'category.addNewCategory'.tr(),
+        'folder.addNewFolder'.tr(),
         style: AppFonts.headingH3,
       ),
       content: SingleChildScrollView(
@@ -44,8 +45,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
             TextField(
               style: const TextStyle(color: Colors.black),
               controller: _controller,
-              decoration:
-                  InputDecoration(hintText: 'category.categoryName'.tr()),
+              decoration: InputDecoration(hintText: 'folder.folderName'.tr()),
             )
           ],
         ),

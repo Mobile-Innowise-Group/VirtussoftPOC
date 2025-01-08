@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core_ui.dart';
 
@@ -12,9 +11,16 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
   inputDecorationTheme: _getInputDecorationTheme(),
   primaryColor: _appColors.primary,
   canvasColor: _appColors.primaryBg,
-  elevatedButtonTheme: ElevatedButtonThemeData(
+  textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
-      minimumSize: WidgetStateProperty.all<Size>(const Size.fromHeight(48)),
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+      textStyle: WidgetStateProperty.all<TextStyle>(
+        AppFonts.actionM.copyWith(color: _appColors.primary),
+      ),
     ),
   ),
   filledButtonTheme: FilledButtonThemeData(

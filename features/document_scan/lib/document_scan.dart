@@ -33,15 +33,13 @@ class DocumentScan extends StatelessWidget {
         appEventNotifier: appLocator.get<AppEventNotifier>(),
         scan: scan,
       ),
-      child: Builder(builder: (BuildContext context) {
-        return DocumentScanWidget(
-          scan: scan,
-          onTap: onTap,
-          onClose: onClose,
-          onShareFile: onShareFile,
-          onShareQr: onShareQr,
-        );
-      }),
+      child: DocumentScanWidget(
+        scan: scan,
+        onTap: onTap,
+        onClose: onClose,
+        onShareFile: onShareFile,
+        onShareQr: onShareQr,
+      ),
     );
   }
 }

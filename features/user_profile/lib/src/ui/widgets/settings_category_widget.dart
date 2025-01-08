@@ -3,30 +3,32 @@ import 'package:flutter/material.dart';
 
 class SettingsCategoryWidget extends StatelessWidget {
   final String title;
-  final List<Widget> settings;
+  final VoidCallback onTap;
 
   const SettingsCategoryWidget({
     required this.title,
-    required this.settings,
+    required this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Text(
-          title,
-          style: textTheme.titleLarge,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(title, style: AppFonts.bodyM),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 12,
+              color: AppColors.of(context).hintGray,
+            )
+          ],
         ),
-        for (int i = 0; i < settings.length; i++) ...<Widget>[
-          const SizedBox(height: AppDimens.PADDING_12),
-          settings[i],
-        ],
-      ],
+      ),
     );
   }
 }

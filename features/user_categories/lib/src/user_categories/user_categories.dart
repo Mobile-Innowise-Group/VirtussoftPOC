@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation/navigation.dart';
 
 import 'bloc/user_categories_bloc.dart';
 import 'widgets/create_category_dialog.dart';
@@ -61,10 +62,16 @@ class UserCategories extends StatelessWidget {
                     context: context,
                     builder: (BuildContext _) {
                       return CreateCategoryDialog(
-                        onCreate: (String folderName) {
+                        optionNoCallback: () {
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
+                        },
+                        optionYesCallback: (String categoryName) {
                           context.read<UserCategoriesBloc>().add(
-                                CreateCategoryEvent(categoryName: folderName),
+                                CreateCategoryEvent(categoryName: categoryName),
                               );
+                          final AppRouter appRouter = appLocator<AppRouter>();
+                          appRouter.maybePop();
                         },
                       );
                     },

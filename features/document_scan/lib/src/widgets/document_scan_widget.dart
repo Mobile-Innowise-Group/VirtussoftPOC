@@ -4,6 +4,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'download_status_widget.dart';
 
 class DocumentScanWidget extends StatelessWidget {
@@ -24,35 +26,54 @@ class DocumentScanWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return InkWell(
       onTap: onTap,
-      leading: const Icon(Icons.tag),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          DownLoadStatusWidget(
-            scan: scan,
-          ),
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext _) {
-                    return ShareScanDialog(
-                      onShareQr: onShareQr,
-                      onClose: onClose,
-                      onShareFile: onShareFile,
-                      remoteUrl: scan.remotePath,
-                    );
-                  });
-            },
-          ),
-        ],
-      ),
-      title: Text(
-        PdfService.getFileNameByPath(scan.localPath),
-        overflow: TextOverflow.ellipsis,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        height: 72,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: <Widget>[
+            SvgPicture.asset(
+              'assets/icons/file.svg',
+              colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+              width: 40,
+              height: 40,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                PdfService.getFileNameByPath(scan.localPath),
+                overflow: TextOverflow.ellipsis,
+                style: AppFonts.headingH5,
+              ),
+            ),
+            DownLoadStatusWidget(
+              scan: scan,
+            ),
+            const SizedBox(width: 16),
+            GestureDetector(
+              child: Icon(
+                Icons.share,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext _) {
+                      return ShareScanDialog(
+                        onShareQr: onShareQr,
+                        onClose: onClose,
+                        onShareFile: onShareFile,
+                        remoteUrl: scan.remotePath,
+                      );
+                    });
+              },
+            )
+          ],
+        ),
       ),
     );
   }
