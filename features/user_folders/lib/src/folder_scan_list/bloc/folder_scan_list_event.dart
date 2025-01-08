@@ -30,9 +30,9 @@ class CloseShareQrDialogEvent extends FolderScanListEvent {
 }
 
 class OpenScanEvent extends FolderScanListEvent {
-  final String localUrl;
+  final ScanEntryModel scan;
 
   const OpenScanEvent({
-    required this.localUrl,
+    required this.scan,
   });
 }

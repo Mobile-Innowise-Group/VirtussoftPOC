@@ -10,9 +10,9 @@ class InitEvent extends CategorizedDocumentsListEvent {
 }
 
 class OpenScanEvent extends CategorizedDocumentsListEvent {
-  final String localUrl;
+  final ScanEntryModel scan;
 
-  const OpenScanEvent({required this.localUrl});
+  const OpenScanEvent({required this.scan});
 }
 
 class ShareQrEvent extends CategorizedDocumentsListEvent {
