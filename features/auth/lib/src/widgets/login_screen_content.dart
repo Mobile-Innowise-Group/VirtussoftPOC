@@ -76,9 +76,16 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                       const SizedBox(height: 24),
                       TextField(
                         style: const TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: 'auth.emailAddress'.tr(),
-                        ),
+                        decoration: state.errorMessage == null
+                            ? InputDecoration(
+                                hintText: 'auth.emailAddress'.tr(),
+                              )
+                            : InputDecoration(
+                                hintText: 'auth.emailAddress'.tr(),
+                                enabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder,
+                              ),
                         keyboardType: TextInputType.emailAddress,
                         controller: _emailTextEditingController,
                       ),
@@ -92,6 +99,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                             obscureText: isObscured,
                             decoration: InputDecoration(
                               hintText: 'auth.password'.tr(),
+                              errorText: state.errorMessage,
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   isObscured

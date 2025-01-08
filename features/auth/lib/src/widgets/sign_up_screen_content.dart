@@ -76,9 +76,16 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                 const SizedBox(height: 8),
                 TextField(
                   style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: 'auth.username'.tr(),
-                  ),
+                  decoration: state.errorMessage == null
+                      ? InputDecoration(
+                          hintText: 'auth.username'.tr(),
+                        )
+                      : InputDecoration(
+                          hintText: 'auth.username'.tr(),
+                          enabledBorder: Theme.of(context)
+                              .inputDecorationTheme
+                              .errorBorder,
+                        ),
                   controller: _usernameTextEditingController,
                 ),
                 const SizedBox(height: 16),
@@ -89,9 +96,16 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                 const SizedBox(height: 8),
                 TextField(
                   style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: 'auth.emailAddress'.tr(),
-                  ),
+                  decoration: state.errorMessage == null
+                      ? InputDecoration(
+                          hintText: 'auth.emailAddress'.tr(),
+                        )
+                      : InputDecoration(
+                          hintText: 'auth.emailAddress'.tr(),
+                          enabledBorder: Theme.of(context)
+                              .inputDecorationTheme
+                              .errorBorder,
+                        ),
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailTextEditingController,
                 ),
@@ -112,6 +126,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                           obscureText: isObscured,
                           decoration: InputDecoration(
                             hintText: 'auth.createPassword'.tr(),
+                            errorText: state.errorMessage,
                             suffixIcon: IconButton(
                               icon: Icon(
                                 isObscured

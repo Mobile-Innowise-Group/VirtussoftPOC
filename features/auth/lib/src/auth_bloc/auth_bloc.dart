@@ -12,9 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final BiometricService _biometricService;
   final SignUpWithCredentialsUseCase _signUpWithCredentialsUseCase;
   final SignInWithCredentialsUseCase _authoriseWithCredentialsUseCase;
-
   final GetCurrentUserUseCase _getCurrentUserUseCase;
-  final AppEventNotifier _appEventNotifier;
 
   AuthBloc({
     required AppRouter appRouter,
@@ -22,14 +20,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required SignUpWithCredentialsUseCase signUpWithCredentialsUseCase,
     required SignInWithCredentialsUseCase signInWithCredentialsUseCase,
     required GetCurrentUserUseCase getCurrentUserUseCase,
-    required AppEventNotifier appEventNotifier,
   })  : _signUpWithCredentialsUseCase = signUpWithCredentialsUseCase,
         _authoriseWithCredentialsUseCase = signInWithCredentialsUseCase,
         _getCurrentUserUseCase = getCurrentUserUseCase,
         _appRouter = appRouter,
         _biometricService = biometricService,
-        _appEventNotifier = appEventNotifier,
-        super(const AuthState.initial()) {
+        super(AuthState.initial()) {
     on<SignUpWithCredentials>(_onSignUpWithCredentials);
     on<SignInWithCredentials>(_onSignInWithCredentials);
     on<NavigateToLogin>(_onNavigateToLogin);
@@ -48,11 +44,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     );
     if (errorMessage != null) {
-      _appEventNotifier.notify(
-        SnackBarErrorNotification(
-          message: errorMessage,
-        ),
-      );
+      emit(state.copyWith(errorMessage: errorMessage));
+      await Future<void>.delayed(const Duration(seconds: 4));
+      emit(state.copyWith());
       return;
     }
 
@@ -73,11 +67,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _appRouter.replace(const HomeRoute());
       }
     } on Exception catch (e) {
-      _appEventNotifier.notify(
-        SnackBarErrorNotification(
-          message: e.toString(),
-        ),
-      );
+      emit(state.copyWith(errorMessage: e.toString()));
+      await Future<void>.delayed(const Duration(seconds: 4));
     } finally {
       emit(state.copyWith(isLoading: false));
     }
@@ -92,11 +83,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     );
     if (errorMessage != null) {
-      _appEventNotifier.notify(
-        SnackBarErrorNotification(
-          message: errorMessage,
-        ),
-      );
+      emit(state.copyWith(errorMessage: errorMessage));
+      await Future<void>.delayed(const Duration(seconds: 4));
+      emit(state.copyWith());
       return;
     }
 
@@ -116,11 +105,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _appRouter.replace(const HomeRoute());
       }
     } catch (e) {
-      _appEventNotifier.notify(
-        SnackBarErrorNotification(
-          message: e.toString(),
-        ),
-      );
+      emit(state.copyWith(errorMessage: e.toString()));
+      await Future<void>.delayed(const Duration(seconds: 4));
     } finally {
       emit(state.copyWith(isLoading: false));
     }
@@ -148,11 +134,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await _appRouter.replace(const HomeRoute());
     } on Exception catch (e) {
-      _appEventNotifier.notify(
-        SnackBarErrorNotification(
-          message: e.toString(),
-        ),
-      );
+      emit(state.copyWith(errorMessage: e.toString()));
+      await Future<void>.delayed(const Duration(seconds: 4));
     }
   }
 

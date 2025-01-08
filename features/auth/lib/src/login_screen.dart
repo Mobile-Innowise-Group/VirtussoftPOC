@@ -21,7 +21,6 @@ class LoginScreen extends StatelessWidget {
         signInWithCredentialsUseCase:
             appLocator.get<SignInWithCredentialsUseCase>(),
         getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
-        appEventNotifier: appLocator.get<AppEventNotifier>(),
       ),
       child: const LoginScreenContent(),
     );
