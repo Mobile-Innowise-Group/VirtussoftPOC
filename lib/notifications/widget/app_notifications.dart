@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,10 @@ class AppNotifications extends StatelessWidget {
                     duration: const Duration(seconds: 20),
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: Colors.transparent,
-                    content: _getNotificationContent(state.appEvent),
+                    content: _getNotificationContent(
+                      state.appEvent,
+                      context,
+                    ),
                   ),
                   snackBarAnimationStyle:
                       AnimationStyle(duration: Duration.zero),
@@ -43,30 +45,62 @@ class AppNotifications extends StatelessWidget {
     );
   }
 
-  Widget _getNotificationContent(AppEvent? appEvent) {
+  Widget _getNotificationContent(
+    AppEvent? appEvent,
+    BuildContext context,
+  ) {
     if (appEvent == null) {
       return const SizedBox.shrink();
     }
-    switch (appEvent.runtimeType) {
-      case SnackBarErrorNotification:
-        return AwesomeSnackbarContent(
-          contentType: ContentType.failure,
-          title: 'Error',
-          message: (appEvent as SnackBarErrorNotification).message,
-        );
-      case SnackBarSuccessNotification:
-        return AwesomeSnackbarContent(
-          contentType: ContentType.success,
-          title: 'Success',
-          message: (appEvent as SnackBarSuccessNotification).message,
-        );
-      case SnackBarWarningNotification:
-        return AwesomeSnackbarContent(
-          contentType: ContentType.warning,
-          title: 'Warning',
-          message: (appEvent as SnackBarWarningNotification).message,
-        );
-    }
-    return const SizedBox.shrink();
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Theme.of(context).colorScheme.surface,
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
+            color: Color.fromRGBO(59, 96, 106, 0.25),
+            blurRadius: 12,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      height: 107,
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Error',
+                style: AppFonts.headingH3,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  },
+                  child: const Icon(Icons.close)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: Text(
+              switch (appEvent.runtimeType) {
+                SnackBarErrorNotification =>
+                  (appEvent as SnackBarErrorNotification).message,
+                SnackBarWarningNotification =>
+                  (appEvent as SnackBarWarningNotification).message,
+                SnackBarSuccessNotification =>
+                  (appEvent as SnackBarSuccessNotification).message,
+                _ => throw Exception('Unknown event type: $appEvent'),
+              },
+              style: AppFonts.bodyS,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
