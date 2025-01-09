@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
@@ -27,6 +27,7 @@ class DocumentScanBloc extends Bloc<DocumentScanEvent, DocumentScanState> {
         super(DocumentScanState.initial()) {
     on<InitEvent>(_onInit);
     on<DownloadFileEvent>(_onDownloadFile);
+    on<OpenScanEvent>(_onOpenScanEvent);
 
     add(const InitEvent());
   }
@@ -58,6 +59,35 @@ class DocumentScanBloc extends Bloc<DocumentScanEvent, DocumentScanState> {
         ),
       );
       emit(state.copyWith(fileStatus: FileStatus.downloaded));
+    } catch (e) {
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(
+          message: e.toString(),
+        ),
+      );
+      emit(state.copyWith(fileStatus: FileStatus.error));
+    }
+  }
+
+  FutureOr<void> _onOpenScanEvent(
+    OpenScanEvent event,
+    Emitter<DocumentScanState> emit,
+  ) async {
+    try {
+      if (state.fileStatus != FileStatus.downloaded) {
+        emit(state.copyWith(fileStatus: FileStatus.downloading));
+        await _downloadScanFileUseCase.execute(
+          DownloadScanFilePayload(
+            scan: _scan,
+          ),
+        );
+        emit(state.copyWith(fileStatus: FileStatus.downloaded));
+      }
+
+      final Directory directory = await getApplicationDocumentsDirectory();
+      final String fileName = event.scan.localPath.split('/').last;
+      await PdfService.openFile(
+          '${directory.path}/${event.scan.folder.name}/$fileName');
     } catch (e) {
       _appEventNotifier.notify(
         SnackBarErrorNotification(

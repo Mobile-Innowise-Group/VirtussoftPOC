@@ -6,11 +6,11 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../bloc/document_scan_bloc.dart';
 import 'download_status_widget.dart';
 
 class DocumentScanWidget extends StatelessWidget {
   final ScanEntryModel scan;
-  final VoidCallback onTap;
   final VoidCallback onClose;
   final VoidCallback onShareFile;
   final Function(Uint8List qrCodeBites) onShareQr;
@@ -18,7 +18,6 @@ class DocumentScanWidget extends StatelessWidget {
   const DocumentScanWidget({
     super.key,
     required this.scan,
-    required this.onTap,
     required this.onClose,
     required this.onShareFile,
     required this.onShareQr,
@@ -27,7 +26,11 @@ class DocumentScanWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        context.read<DocumentScanBloc>().add(
+              OpenScanEvent(scan: scan),
+            );
+      },
       borderRadius: BorderRadius.circular(8),
       child: Container(
         height: 72,
