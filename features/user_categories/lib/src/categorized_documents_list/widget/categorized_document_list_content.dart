@@ -33,11 +33,6 @@ class CategorizedDocumentListContent extends StatelessWidget {
 
             return DocumentScan(
               scan: scan,
-              onTap: () {
-                context.read<CategorizedDocumentsListBloc>().add(
-                      OpenScanEvent(scan: scan),
-                    );
-              },
               onShareQr: (Uint8List qrCodeBites) {
                 context
                     .read<CategorizedDocumentsListBloc>()

@@ -18,3 +18,11 @@ class DownloadFileEvent extends DocumentScanEvent {
 class InitEvent extends DocumentScanEvent {
   const InitEvent();
 }
+
+class OpenScanEvent extends DocumentScanEvent {
+  final ScanEntryModel scan;
+
+  const OpenScanEvent({
+    required this.scan,
+  });
+}

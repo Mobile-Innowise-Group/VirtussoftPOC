@@ -11,7 +11,6 @@ import 'src/widgets/document_scan_widget.dart';
 
 class DocumentScan extends StatelessWidget {
   final ScanEntryModel scan;
-  final VoidCallback onTap;
   final VoidCallback onClose;
   final VoidCallback onShareFile;
   final Function(Uint8List qrCodeBites) onShareQr;
@@ -19,7 +18,6 @@ class DocumentScan extends StatelessWidget {
   const DocumentScan({
     super.key,
     required this.scan,
-    required this.onTap,
     required this.onClose,
     required this.onShareFile,
     required this.onShareQr,
@@ -35,7 +33,6 @@ class DocumentScan extends StatelessWidget {
       ),
       child: DocumentScanWidget(
         scan: scan,
-        onTap: onTap,
         onClose: onClose,
         onShareFile: onShareFile,
         onShareQr: onShareQr,

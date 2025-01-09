@@ -28,11 +28,3 @@ class ShareFileEvent extends FolderScanListEvent {
 class CloseShareQrDialogEvent extends FolderScanListEvent {
   const CloseShareQrDialogEvent();
 }
-
-class OpenScanEvent extends FolderScanListEvent {
-  final ScanEntryModel scan;
-
-  const OpenScanEvent({
-    required this.scan,
-  });
-}

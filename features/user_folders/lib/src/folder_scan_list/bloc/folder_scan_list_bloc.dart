@@ -32,7 +32,6 @@ class FolderScanListBloc
         super(FolderScanListState.initial()) {
     on<InitEvent>(_onInit);
     on<ShareQrEvent>(_onShareQrEvent);
-    on<OpenScanEvent>(_onOpenScanEvent);
     on<CloseShareQrDialogEvent>(_onCloseShareQrDialogEvent);
     on<ShareFileEvent>(_onShareFile);
 
@@ -82,16 +81,6 @@ class FolderScanListBloc
     );
 
     await _appRouter.maybePopTop();
-  }
-
-  FutureOr<void> _onOpenScanEvent(
-    OpenScanEvent event,
-    Emitter<FolderScanListState> emit,
-  ) async {
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final String fileName = event.scan.localPath.split('/').last;
-    await PdfService.openFile(
-        '${directory.path}/${event.scan.folder.name}/$fileName');
   }
 
   FutureOr<void> _onShareFile(
