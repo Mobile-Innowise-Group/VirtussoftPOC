@@ -14,6 +14,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<AuthBloc>(
       create: (_) => AuthBloc(
+        signOutUseCase: appLocator<SignOutUseCase>(),
         biometricService: appLocator<BiometricService>(),
         appRouter: appLocator<AppRouter>(),
         signUpWithCredentialsUseCase:

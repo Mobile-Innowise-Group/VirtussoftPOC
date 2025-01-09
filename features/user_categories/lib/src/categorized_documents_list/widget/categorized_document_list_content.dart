@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:document_scan/document_scan.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,11 @@ class CategorizedDocumentListContent extends StatelessWidget {
         final List<ScanEntryModel> scanEntryModels = state.shownScanEntries;
 
         if (scanEntryModels.isEmpty) {
-          return const Center(
-            child: Text('No scans added'),
+          return Center(
+            child: Text(
+              'No scans added',
+              style: AppFonts.headingH4,
+            ),
           );
         }
 

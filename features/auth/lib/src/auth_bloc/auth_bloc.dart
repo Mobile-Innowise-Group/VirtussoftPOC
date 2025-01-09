@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -11,6 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final BiometricService _biometricService;
   final SignUpWithCredentialsUseCase _signUpWithCredentialsUseCase;
   final SignInWithCredentialsUseCase _authoriseWithCredentialsUseCase;
+  final SignOutUseCase _signOutUseCase;
   final GetCurrentUserUseCase _getCurrentUserUseCase;
 
   AuthBloc({
@@ -18,11 +20,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required BiometricService biometricService,
     required SignUpWithCredentialsUseCase signUpWithCredentialsUseCase,
     required SignInWithCredentialsUseCase signInWithCredentialsUseCase,
+    required SignOutUseCase signOutUseCase,
     required GetCurrentUserUseCase getCurrentUserUseCase,
   })  : _signUpWithCredentialsUseCase = signUpWithCredentialsUseCase,
         _authoriseWithCredentialsUseCase = signInWithCredentialsUseCase,
         _getCurrentUserUseCase = getCurrentUserUseCase,
         _appRouter = appRouter,
+        _signOutUseCase = signOutUseCase,
         _biometricService = biometricService,
         super(AuthState.initial()) {
     on<SignUpWithCredentials>(_onSignUpWithCredentials);
@@ -122,16 +126,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (currentUser == null) {
         return;
       }
-
-      // final bool isBiometricsVerified =
-      //     await _biometricService.authenticateWithBiometrics();
-      //
-      // if (!isBiometricsVerified) {
-      //   await _signOutUseCase.execute(const NoParams());
-      //   return;
-      // }
-
-      await _appRouter.replace(const HomeRoute());
+      try {
+        final bool isAuth =
+            await _biometricService.authenticateWithBiometrics();
+        if (!isAuth) {
+          await _signOutUseCase.execute(const NoParams());
+          return;
+        }
+        await _appRouter.replace(const HomeRoute());
+      } catch (_) {}
     } on Exception catch (e) {
       emit(state.copyWith(errorMessage: e.toString()));
       await Future<void>.delayed(const Duration(seconds: 4));
