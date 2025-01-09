@@ -3,6 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
+import 'package:user_folders/src/user_folder/bloc/user_folder_bloc.dart';
 
 import 'bloc/private_folders_bloc.dart';
 import 'widgets/private_folder_widget.dart';
@@ -78,8 +79,13 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
-                                return PrivateFolderWidget(
-                                    folder: privateFolders[index]);
+                                return BlocProvider<UserFolderBloc>(
+                                  create: (_) => UserFolderBloc(
+                                    folder: privateFolders[index],
+                                    appRouter: appLocator<AppRouter>(),
+                                  ),
+                                  child: const PrivateFolderWidget(),
+                                );
                               },
                               childCount: privateFolders.length,
                             ),
