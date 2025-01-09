@@ -114,16 +114,26 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                 top: MediaQuery.of(context).padding.top,
                 left: 48,
                 right: 48,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.errorContainer,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  height: 50,
-                  child: Center(
-                    child: Text(
-                      'No internet connection',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                child: Material(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Theme.of(context).colorScheme.surface,
+                      boxShadow: const <BoxShadow>[
+                        BoxShadow(
+                          color: Color.fromRGBO(59, 96, 106, 0.25),
+                          blurRadius: 12,
+                          offset: Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    height: 50,
+                    child: Center(
+                      child: Text(
+                        'No internet connection',
+                        style: AppFonts.bodyS,
+                      ),
                     ),
                   ),
                 ),
