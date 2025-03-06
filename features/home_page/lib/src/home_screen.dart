@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:navigation/navigation.dart';
 
 import 'bloc/home_bloc.dart';
@@ -31,13 +32,12 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
           children: <Widget>[
             AutoTabsRouter.tabBar(
               routes: const <PageRouteInfo>[
-                UserDataRoute(),
-                ScannerRoute(),
-                PrivateFoldersRoute(),
                 UserProfileRoute(),
+                UserDataRoute(),
+                PrivateFoldersRoute(),
+                ScannerRoute(),
               ],
-              builder: (BuildContext context, Widget child,
-                  TabController controller) {
+              builder: (BuildContext context, Widget child, TabController controller) {
                 final TabsRouter tabsRouter = AutoTabsRouter.of(context);
 
                 return Scaffold(
@@ -48,62 +48,113 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                       : child,
                   bottomNavigationBar: SizedBox(
                     height: 90,
-                    child: BottomNavigationBar(
-                      elevation: 0,
-                      backgroundColor: Theme.of(context).colorScheme.surface,
-                      selectedIconTheme: IconThemeData(
-                          color: Theme.of(context).colorScheme.primary),
-                      unselectedIconTheme: IconThemeData(
-                          color: AppColors.of(context).unSelectedIcon),
-                      selectedItemColor: Theme.of(context).colorScheme.primary,
-                      unselectedItemColor: AppColors.of(context).unSelectedIcon,
-                      selectedLabelStyle: AppFonts.actionS.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                       ),
-                      unselectedLabelStyle: AppFonts.actionS.copyWith(
-                        color: AppColors.of(context).unSelectedIcon,
+                      child: BottomNavigationBar(
+                        type: BottomNavigationBarType.fixed,
+                        elevation: 0,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        selectedItemColor: Theme.of(context).colorScheme.primary,
+                        unselectedItemColor: AppColors.of(context).unSelectedIcon,
+                        selectedLabelStyle: AppFonts.actionS.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        unselectedLabelStyle: AppFonts.actionS.copyWith(
+                          color: AppColors.of(context).unSelectedIcon,
+                        ),
+                        showUnselectedLabels: true,
+                        items: <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                            icon: SvgPicture.asset(
+                              AppImages.profile,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                AppColors.of(context).unSelectedIcon,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            activeIcon: SvgPicture.asset(
+                              AppImages.profile,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.primary,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            label: 'Profile',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: SvgPicture.asset(
+                              AppImages.data,
+                              width: 20,
+                              height: 20,
+                              colorFilter: ColorFilter.mode(
+                                AppColors.of(context).unSelectedIcon,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            activeIcon: SvgPicture.asset(
+                              AppImages.data,
+                              width: 20,
+                              height: 20,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.primary,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            label: 'Data',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: SvgPicture.asset(
+                              AppImages.private,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                AppColors.of(context).unSelectedIcon,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            activeIcon: SvgPicture.asset(
+                              AppImages.private,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.primary,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            label: 'Private',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: SvgPicture.asset(
+                              AppImages.scan,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                AppColors.of(context).unSelectedIcon,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            activeIcon: SvgPicture.asset(
+                              AppImages.scan,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.primary,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            label: 'Scan',
+                          ),
+                        ],
+                        onTap: tabsRouter.setActiveIndex,
+                        currentIndex: tabsRouter.activeIndex,
                       ),
-                      showUnselectedLabels: true,
-                      items: const <BottomNavigationBarItem>[
-                        BottomNavigationBarItem(
-                          icon: Column(
-                            children: <Widget>[
-                              Icon(Icons.menu),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                          label: 'Data',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Column(
-                            children: <Widget>[
-                              Icon(Icons.qr_code),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                          label: 'Scan',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Column(
-                            children: <Widget>[
-                              Icon(Icons.lock),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                          label: 'Private',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Column(
-                            children: <Widget>[
-                              Icon(Icons.person),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                          label: 'Profile',
-                        ),
-                      ],
-                      onTap: tabsRouter.setActiveIndex,
-                      currentIndex: tabsRouter.activeIndex,
                     ),
                   ),
                 );

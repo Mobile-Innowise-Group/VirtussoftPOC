@@ -6,3 +6,4 @@ export 'dialogs/create_folder_dialog.dart';
 export 'dialogs/share_scan_dialog.dart';
 export 'error_screen.dart';
 export 'loading_screen.dart';
+export 'buttons/custom_main_button.dart';

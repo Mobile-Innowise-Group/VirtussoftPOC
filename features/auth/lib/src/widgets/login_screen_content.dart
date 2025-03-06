@@ -86,9 +86,8 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                                   )
                                 : InputDecoration(
                                     hintText: 'auth.emailAddress'.tr(),
-                                    enabledBorder: Theme.of(context)
-                                        .inputDecorationTheme
-                                        .errorBorder,
+                                    enabledBorder:
+                                        Theme.of(context).inputDecorationTheme.errorBorder,
                                   ),
                             keyboardType: TextInputType.emailAddress,
                             controller: _emailTextEditingController,
@@ -96,8 +95,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                           const SizedBox(height: 16),
                           ValueListenableBuilder<bool>(
                             valueListenable: _obscureNotifier,
-                            builder: (BuildContext context, bool isObscured,
-                                Widget? child) {
+                            builder: (BuildContext context, bool isObscured, Widget? child) {
                               return TextField(
                                 style: const TextStyle(color: Colors.black),
                                 obscureText: isObscured,
@@ -106,13 +104,11 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                                   errorText: state.errorMessage,
                                   suffixIcon: IconButton(
                                     icon: Icon(
-                                      isObscured
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
+                                      isObscured ? Icons.visibility : Icons.visibility_off,
                                       color: AppColors.of(context).darkIcon,
                                     ),
-                                    onPressed: () => _obscureNotifier.value =
-                                        !_obscureNotifier.value,
+                                    onPressed: () =>
+                                        _obscureNotifier.value = !_obscureNotifier.value,
                                   ),
                                 ),
                                 controller: _passwordTextEditingController,
@@ -134,8 +130,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                             onPressed: () => context.read<AuthBloc>().add(
                                   SignInWithCredentials(
                                     login: _emailTextEditingController.text,
-                                    password:
-                                        _passwordTextEditingController.text,
+                                    password: _passwordTextEditingController.text,
                                   ),
                                 ),
                             child: Text(

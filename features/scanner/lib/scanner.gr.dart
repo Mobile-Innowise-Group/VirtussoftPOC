@@ -11,14 +11,17 @@
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:domain/domain.dart' as _i5;
 import 'package:flutter/material.dart' as _i6;
-import 'package:scanner/src/screens/home_scanner_screen/scanner_screen.dart' as _i3;
-import 'package:scanner/src/screens/save_scan_screen/preview_pdf_result_screen.dart' as _i1;
+import 'package:scanner/src/screens/home_scanner_screen/scanner_screen.dart'
+    as _i3;
+import 'package:scanner/src/screens/save_scan_screen/preview_pdf_result_screen.dart'
+    as _i1;
 import 'package:scanner/src/screens/save_scan_screen/saving_scan_entry_bottom_sheet_screen.dart'
     as _i2;
 
 /// generated route for
 /// [_i1.PreviewPdfResultScreen]
-class PreviewPdfResultRoute extends _i4.PageRouteInfo<PreviewPdfResultRouteArgs> {
+class PreviewPdfResultRoute
+    extends _i4.PageRouteInfo<PreviewPdfResultRouteArgs> {
   PreviewPdfResultRoute({
     required _i5.ReceiptModel receipt,
     required String photoPath,
