@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:cunning_document_scanner/cunning_document_scanner.dart';
@@ -33,19 +35,38 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
           await CunningDocumentScanner.getPictures(isGalleryImportAllowed: true) ?? <String>[];
 
       if (pictures.isNotEmpty) {
-        final Map<String, dynamic> json = await _uploadPhotosForRecognitionUseCase.execute(
+        emit(
+          state.copyWith(isProcessing: true),
+        );
+
+        final ReceiptModel receipt = await _uploadPhotosForRecognitionUseCase.execute(
           UploadPhotosForRecognitionPayload(
             localFilePaths: pictures,
           ),
         );
 
-        await _appRouter.push(PreviewPdfResultRoute(parsedJSon: json));
+        // const JsonEncoder encoder =  JsonEncoder.withIndent('  ');
+        final File file = await PdfService.generateCenteredText(
+          const <String>['This', 'is', 'mock', 'data'],
+        );
+
+        await _appRouter.push(
+          PreviewPdfResultRoute(
+            receipt: receipt,
+            previewFilePath: file.path,
+            photoPath: pictures.first,
+          ),
+        );
       }
     } catch (e) {
       _appEventNotifier.notify(
         SnackBarErrorNotification(
           message: e.toString(),
         ),
+      );
+    } finally {
+      emit(
+        state.copyWith(isProcessing: false),
       );
     }
   }

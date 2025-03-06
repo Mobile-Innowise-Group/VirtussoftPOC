@@ -11,9 +11,15 @@ class ScannerScreenContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Center(
-        child: FilledButton(
-          onPressed: () => context.read<ScannerBloc>().add(const OpenScanner()),
-          child: const Text('Scan Document'),
+        child: BlocBuilder<ScannerBloc, ScannerState>(
+          builder: (BuildContext context, ScannerState state) {
+            return state.isProcessing
+                ? const CircularProgressIndicator()
+                : FilledButton(
+                    onPressed: () => context.read<ScannerBloc>().add(const OpenScanner()),
+                    child: const Text('Scan Document'),
+                  );
+          },
         ),
       ),
     );

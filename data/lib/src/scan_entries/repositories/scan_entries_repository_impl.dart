@@ -173,13 +173,15 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> uploadPhotosForRecognition({
+  Future<ReceiptModel> uploadPhotosForRecognition({
     required UploadPhotosForRecognitionPayload payload,
-  }) {
+  }) async {
     final List<File> files = payload.localFilePaths.map(File.new).toList(growable: false);
 
-    return _scanEntriesProvider.uploadPhotos(
+    final ReceiptEntity entity = await _scanEntriesProvider.uploadPhotos(
       request: UploadPhotosRequest(files: files),
     );
+
+    return ReceiptMapper.fromEntity(entity);
   }
 }

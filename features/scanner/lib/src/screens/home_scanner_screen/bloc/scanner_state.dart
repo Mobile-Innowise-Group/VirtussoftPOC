@@ -1,11 +1,19 @@
 part of 'scanner_bloc.dart';
 
 class ScannerState {
-  const ScannerState();
+  final bool isProcessing;
 
-  const ScannerState.initial();
+  const ScannerState({
+    required this.isProcessing,
+  });
 
-  ScannerState copyWith() {
-    return const ScannerState();
+  const ScannerState.initial() : isProcessing = false;
+
+  ScannerState copyWith({
+    bool? isProcessing,
+  }) {
+    return ScannerState(
+      isProcessing: isProcessing ?? this.isProcessing,
+    );
   }
 }

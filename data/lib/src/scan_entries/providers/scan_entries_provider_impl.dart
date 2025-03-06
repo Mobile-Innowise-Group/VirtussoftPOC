@@ -124,7 +124,7 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
   }
 
   @override
-  Future<Map<String, dynamic>> uploadPhotos({
+  Future<ReceiptEntity> uploadPhotos({
     required UploadPhotosRequest request,
   }) async {
     final String? baseUrl = dotenv.env['SUPABASE_URL'];
@@ -165,7 +165,10 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
       final String responseString = await response.transform(utf8.decoder).join();
       final dynamic decoded = jsonDecode(responseString);
 
-      return decoded is Map<String, dynamic> ? decoded : <String, dynamic>{'documents': decoded};
+      final Map<String, dynamic> entity = decoded is List ? decoded.first : decoded;
+      final Map<String, dynamic> data = entity['data']['data'];
+
+      return ReceiptEntity.fromJson(data);
     } finally {
       httpClient.close();
     }

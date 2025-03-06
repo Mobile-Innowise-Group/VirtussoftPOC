@@ -36,7 +36,7 @@ abstract class ScanEntriesProvider {
     required DownloadScanFileRequest request,
   });
 
-  Future<Map<String, dynamic>> uploadPhotos({
+  Future<ReceiptEntity> uploadPhotos({
     required UploadPhotosRequest request,
   });
 }

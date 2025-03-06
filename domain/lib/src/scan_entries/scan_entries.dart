@@ -1,3 +1,5 @@
+export 'models/line_item_model.dart';
+export 'models/receipt_model.dart';
 export 'models/scan_entry_model.dart';
 export 'payloads/create_scan_entry_payload.dart';
 export 'payloads/delete_scan_entry_payload.dart';
