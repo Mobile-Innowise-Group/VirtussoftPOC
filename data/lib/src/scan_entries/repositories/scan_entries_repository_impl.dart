@@ -9,6 +9,7 @@ import '../../auth/entities/user/user_entity.dart';
 import '../../categories/categories.dart';
 import '../../folders/folders.dart';
 import '../requests/get_scan_entries_by_folder_id_request.dart';
+import '../requests/upload_photos_request.dart';
 import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
@@ -47,8 +48,7 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
       ),
     );
 
-    final ScanEntryEntity scanEntryEntity =
-        await _scanEntriesProvider.createScanEntry(
+    final ScanEntryEntity scanEntryEntity = await _scanEntriesProvider.createScanEntry(
       request: CreateScanEntryRequest(
         localPath: payload.scanLocalPath,
         remotePath: scanRemoteLink,
@@ -89,23 +89,20 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   Future<List<ScanEntryModel>> getAllUserScanEntries({
     required GetScanEntriesPayload payload,
   }) async {
-    return _scanEntriesProvider.getAllUserScanEntries(
-        request: GetAllUserScanEntriesRequest());
+    return _scanEntriesProvider.getAllUserScanEntries(request: GetAllUserScanEntriesRequest());
   }
 
   @override
   Future<List<ScanEntryModel>> getScanEntriesByFolderId({
     required GetScanEntriesByFolderIdPayload payload,
   }) async {
-    final List<ScanEntryEntity> scanEntries =
-        await _scanEntriesProvider.getScanEntriesByFolderId(
+    final List<ScanEntryEntity> scanEntries = await _scanEntriesProvider.getScanEntriesByFolderId(
       request: GetScanEntriesByFolderIdRequest(folderId: payload.folder.id),
     );
 
     final List<Future<ScanEntryModel>> futures =
         scanEntries.map((ScanEntryEntity scanEntryEntity) async {
-      final CategoryModel category =
-          await _categoryLocalProvider.getCategoryById(
+      final CategoryModel category = await _categoryLocalProvider.getCategoryById(
         request: GetUserCategoryByIdRequest(
           categoryId: scanEntryEntity.categoryId,
         ),
@@ -127,8 +124,7 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   Future<List<ScanEntryModel>> getScanEntriesByCategory({
     required GetScanEntriesByCategoryPayload payload,
   }) async {
-    final List<ScanEntryEntity> scanEntries =
-        await _scanEntriesProvider.getScanEntriesByCategory(
+    final List<ScanEntryEntity> scanEntries = await _scanEntriesProvider.getScanEntriesByCategory(
       request: GetUserScansByCategoryRequest(payload.category.id),
     );
 
@@ -156,16 +152,14 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
   Future<void> downloadScanFile({
     required DownloadScanFilePayload payload,
   }) async {
-    final Uint8List downloadedData =
-        await _scanEntriesProvider.downloadScanFile(
+    final Uint8List downloadedData = await _scanEntriesProvider.downloadScanFile(
       request: DownloadScanFileRequest(
         remotePath: payload.scan.remotePath,
       ),
     );
 
     final Directory directory = await getApplicationDocumentsDirectory();
-    final Directory folderDirectory =
-        Directory('${directory.path}/${payload.scan.folder.name}');
+    final Directory folderDirectory = Directory('${directory.path}/${payload.scan.folder.name}');
     if (!folderDirectory.existsSync()) {
       await folderDirectory.create();
     }
@@ -176,5 +170,16 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
     await file.create();
 
     await file.writeAsBytes(downloadedData);
+  }
+
+  @override
+  Future<Map<String, dynamic>> uploadPhotosForRecognition({
+    required UploadPhotosForRecognitionPayload payload,
+  }) {
+    final List<File> files = payload.localFilePaths.map(File.new).toList(growable: false);
+
+    return _scanEntriesProvider.uploadPhotos(
+      request: UploadPhotosRequest(files: files),
+    );
   }
 }

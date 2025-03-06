@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:domain/domain.dart';
 
 import '../requests/get_scan_entries_by_folder_id_request.dart';
+import '../requests/upload_photos_request.dart';
 import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
@@ -33,5 +34,9 @@ abstract class ScanEntriesProvider {
 
   Future<Uint8List> downloadScanFile({
     required DownloadScanFileRequest request,
+  });
+
+  Future<Map<String, dynamic>> uploadPhotos({
+    required UploadPhotosRequest request,
   });
 }

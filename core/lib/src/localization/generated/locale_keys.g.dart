@@ -1,20 +1,31 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+// ignore_for_file: constant_identifier_names
+
+abstract class  LocaleKeys {
+  static const auth_welcome! = 'auth.welcome!';
   static const auth_signUp = 'auth.signUp';
   static const auth_login = 'auth.login';
-  static const auth_email = 'auth.email';
+  static const auth_emailAddress = 'auth.emailAddress';
   static const auth_password = 'auth.password';
+  static const auth_notAMember = 'auth.notAMember';
+  static const auth_registerNow = 'auth.registerNow';
+  static const auth_forgotPassword = 'auth.forgotPassword';
   static const auth_enterEmail = 'auth.enterEmail';
   static const auth_enterPassword = 'auth.enterPassword';
   static const auth_createAccount = 'auth.createAccount';
-  static const auth_alreadyCreatedAccount = 'auth.alreadyCreatedAccount';
+  static const auth_alreadyHaveAccount = 'auth.alreadyHaveAccount';
   static const auth_doNotHaveAccount = 'auth.doNotHaveAccount';
   static const auth_loginButton = 'auth.loginButton';
+  static const auth_createPassword = 'auth.createPassword';
+  static const auth_confirmPassword = 'auth.confirmPassword';
+  static const auth_username = 'auth.username';
+  static const auth_createAccountToGetStarted = 'auth.createAccountToGetStarted';
   static const auth_signUpButton = 'auth.signUpButton';
   static const auth = 'auth';
   static const biometrics_pleaseAuthenticate = 'biometrics.pleaseAuthenticate';
   static const biometrics = 'biometrics';
+  static const folder_byFolders = 'folder.byFolders';
   static const folder_createFolder = 'folder.createFolder';
   static const folder_folderName = 'folder.folderName';
   static const folder_enterFolderName = 'folder.enterFolderName';
@@ -23,22 +34,22 @@ abstract class LocaleKeys {
   static const folder_editFolder = 'folder.editFolder';
   static const folder_editFolderMessage = 'folder.editFolderMessage';
   static const folder_noAddedFolders = 'folder.noAddedFolders';
-  static const folder_addFolder = 'folder.addFolder';
+  static const folder_addNewFolder = 'folder.addNewFolder';
   static const folder_privateFolders = 'folder.privateFolders';
   static const folder_makeFolderPrivate = 'folder.makeFolderPrivate';
   static const folder_makeFolderPublic = 'folder.makeFolderPublic';
   static const folder_openFolder = 'folder.openFolder';
   static const folder = 'folder';
+  static const category_byCategory = 'category.byCategory';
   static const category_createCategory = 'category.createCategory';
   static const category_categoryName = 'category.categoryName';
   static const category_enterCategoryName = 'category.enterCategoryName';
   static const category_deleteCategory = 'category.deleteCategory';
-  static const category_deleteCategoryMessage =
-      'category.deleteCategoryMessage';
+  static const category_deleteCategoryMessage = 'category.deleteCategoryMessage';
   static const category_editCategory = 'category.editCategory';
   static const category_editCategoryMessage = 'category.editCategoryMessage';
   static const category_noAddedCategories = 'category.noAddedCategories';
-  static const category_addCategory = 'category.addCategory';
+  static const category_addNewCategory = 'category.addNewCategory';
   static const category = 'category';
   static const common_cancel = 'common.cancel';
   static const common_save = 'common.save';
@@ -68,4 +79,5 @@ abstract class LocaleKeys {
   static const data = 'data';
   static const docScanner_docScanner = 'docScanner.docScanner';
   static const docScanner = 'docScanner';
+
 }

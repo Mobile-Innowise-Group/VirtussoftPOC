@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 
 import '../../domain.dart';
+import '../scan_entries/use_cases/upload_photos_for_recognition_use_case.dart';
 
 abstract class DomainDI {
   static void initDependencies(GetIt locator) {
@@ -116,13 +117,11 @@ abstract class DomainDI {
     );
 
     locator.registerLazySingleton<CreatePrivateFolderUseCase>(
-      () => CreatePrivateFolderUseCase(
-          folderRepository: locator.get<FolderRepository>()),
+      () => CreatePrivateFolderUseCase(folderRepository: locator.get<FolderRepository>()),
     );
 
     locator.registerLazySingleton<ToggleFolderPrivacyUseCase>(
-      () => ToggleFolderPrivacyUseCase(
-          folderRepository: locator.get<FolderRepository>()),
+      () => ToggleFolderPrivacyUseCase(folderRepository: locator.get<FolderRepository>()),
     );
 
     locator.registerLazySingleton<GetScanEntriesByCategoryUseCase>(
@@ -133,6 +132,12 @@ abstract class DomainDI {
 
     locator.registerLazySingleton<DownloadScanFileUseCase>(
       () => DownloadScanFileUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
+
+    locator.registerLazySingleton<UploadPhotosForRecognitionUseCase>(
+      () => UploadPhotosForRecognitionUseCase(
         scanEntriesRepository: locator.get<ScanEntriesRepository>(),
       ),
     );

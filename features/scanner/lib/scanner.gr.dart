@@ -10,25 +10,22 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i5;
-import 'package:scanner/src/screens/home_scanner_screen/scanner_screen.dart'
-    as _i3;
-import 'package:scanner/src/screens/save_scan_screen/preview_pdf_result_screen.dart'
-    as _i1;
+import 'package:scanner/src/screens/home_scanner_screen/scanner_screen.dart' as _i3;
+import 'package:scanner/src/screens/save_scan_screen/preview_pdf_result_screen.dart' as _i1;
 import 'package:scanner/src/screens/save_scan_screen/saving_scan_entry_bottom_sheet_screen.dart'
     as _i2;
 
 /// generated route for
 /// [_i1.PreviewPdfResultScreen]
-class PreviewPdfResultRoute
-    extends _i4.PageRouteInfo<PreviewPdfResultRouteArgs> {
+class PreviewPdfResultRoute extends _i4.PageRouteInfo<PreviewPdfResultRouteArgs> {
   PreviewPdfResultRoute({
-    required String previewFilePath,
+    required Map<String, dynamic> parsedJSon,
     _i5.Key? key,
     List<_i4.PageRouteInfo>? children,
   }) : super(
           PreviewPdfResultRoute.name,
           args: PreviewPdfResultRouteArgs(
-            previewFilePath: previewFilePath,
+            parsedJSon: parsedJSon,
             key: key,
           ),
           initialChildren: children,
@@ -41,7 +38,7 @@ class PreviewPdfResultRoute
     builder: (data) {
       final args = data.argsAs<PreviewPdfResultRouteArgs>();
       return _i1.PreviewPdfResultScreen(
-        previewFilePath: args.previewFilePath,
+        parsedJSon: args.parsedJSon,
         key: args.key,
       );
     },
@@ -50,17 +47,17 @@ class PreviewPdfResultRoute
 
 class PreviewPdfResultRouteArgs {
   const PreviewPdfResultRouteArgs({
-    required this.previewFilePath,
+    required this.parsedJSon,
     this.key,
   });
 
-  final String previewFilePath;
+  final Map<String, dynamic> parsedJSon;
 
   final _i5.Key? key;
 
   @override
   String toString() {
-    return 'PreviewPdfResultRouteArgs{previewFilePath: $previewFilePath, key: $key}';
+    return 'PreviewPdfResultRouteArgs{parsedJSon: $parsedJSon, key: $key}';
   }
 }
 

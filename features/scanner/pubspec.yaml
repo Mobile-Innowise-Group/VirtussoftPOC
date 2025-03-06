@@ -10,7 +10,6 @@ dependencies:
     sdk: flutter
 
   cunning_document_scanner: ^1.2.3
-  google_mlkit_text_recognition: ^0.14.0
   pdfx: ^2.8.0
 
   core:

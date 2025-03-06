@@ -1,3 +1,4 @@
+import '../payloads/upload_photos_for_recognition_payload.dart';
 import '../scan_entries.dart';
 
 abstract class ScanEntriesRepository {
@@ -23,5 +24,9 @@ abstract class ScanEntriesRepository {
 
   Future<void> downloadScanFile({
     required DownloadScanFilePayload payload,
+  });
+
+  Future<Map<String, dynamic>> uploadPhotosForRecognition({
+    required UploadPhotosForRecognitionPayload payload,
   });
 }

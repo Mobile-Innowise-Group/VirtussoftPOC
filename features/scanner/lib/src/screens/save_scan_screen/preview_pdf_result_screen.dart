@@ -1,14 +1,13 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
-import 'package:pdfx/pdfx.dart';
 
 @RoutePage()
 class PreviewPdfResultScreen extends StatefulWidget {
-  final String previewFilePath;
+  final Map<String, dynamic> parsedJSon;
 
   const PreviewPdfResultScreen({
-    required this.previewFilePath,
+    required this.parsedJSon,
     super.key,
   });
 
@@ -17,22 +16,22 @@ class PreviewPdfResultScreen extends StatefulWidget {
 }
 
 class _PreviewPdfResultScreenState extends State<PreviewPdfResultScreen> {
-  late final PdfControllerPinch pdfPinchController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    pdfPinchController = PdfControllerPinch(
-      document: PdfDocument.openFile(widget.previewFilePath),
-    );
-  }
-
-  @override
-  void dispose() {
-    pdfPinchController.dispose();
-    super.dispose();
-  }
+  // late final PdfControllerPinch pdfPinchController;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   pdfPinchController = PdfControllerPinch(
+  //     document: PdfDocument.openFile(widget.previewFilePath),
+  //   );
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   pdfPinchController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -50,20 +49,22 @@ class _PreviewPdfResultScreenState extends State<PreviewPdfResultScreen> {
           Expanded(
             child: Stack(
               children: <Widget>[
-                PdfViewPinch(
-                  controller: pdfPinchController,
-                ),
+                // PdfViewPinch(
+                //   controller: pdfPinchController,
+                // ),
+                Text('${widget.parsedJSon}'),
                 Padding(
                   padding: const EdgeInsets.all(AppDimens.PADDING_16),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton(
                       backgroundColor: Theme.of(context).colorScheme.primary,
-                      onPressed: () => context.router.push(
-                        SavingScanEntryBottomSheetRoute(
-                          previewFilePath: widget.previewFilePath,
-                        ),
-                      ),
+                      // onPressed: () => context.router.push(
+                      //   SavingScanEntryBottomSheetRoute(
+                      //     previewFilePath: widget.previewFilePath,
+                      //   ),
+                      // ),
+                      onPressed: () {},
                       child: const Icon(Icons.save),
                     ),
                   ),
