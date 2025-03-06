@@ -1,4 +1,8 @@
+export 'entities/line_item_entity.dart';
+export 'entities/receipt_entity.dart';
 export 'entities/scan_entry_entiry.dart';
+export 'mappers/line_item_mapper.dart';
+export 'mappers/receipt_mapper.dart';
 export 'mappers/scan_entry_mapper.dart';
 export 'providers/scan_entries_provider.dart';
 export 'providers/scan_entries_provider_impl.dart';

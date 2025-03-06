@@ -1,77 +1,83 @@
+import 'dart:io';
+
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
-import 'package:pdfx/pdfx.dart';
+
+import 'widgets/items_table_widget.dart';
+import 'widgets/receipt_details_table.dart';
 
 @RoutePage()
-class PreviewPdfResultScreen extends StatefulWidget {
+class PreviewPdfResultScreen extends StatelessWidget {
+  final ReceiptModel receipt;
+  final String photoPath;
   final String previewFilePath;
 
   const PreviewPdfResultScreen({
+    required this.receipt,
+    required this.photoPath,
     required this.previewFilePath,
     super.key,
   });
 
   @override
-  State<PreviewPdfResultScreen> createState() => _PreviewPdfResultScreenState();
-}
-
-class _PreviewPdfResultScreenState extends State<PreviewPdfResultScreen> {
-  late final PdfControllerPinch pdfPinchController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    pdfPinchController = PdfControllerPinch(
-      document: PdfDocument.openFile(widget.previewFilePath),
-    );
-  }
-
-  @override
-  void dispose() {
-    pdfPinchController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Preview saving file',
-          style: AppFonts.headingH4,
-        ),
+        title: const Text('Results'),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Stack(
-              children: <Widget>[
-                PdfViewPinch(
-                  controller: pdfPinchController,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(AppDimens.PADDING_16),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      onPressed: () => context.router.push(
-                        SavingScanEntryBottomSheetRoute(
-                          previewFilePath: widget.previewFilePath,
-                        ),
-                      ),
-                      child: const Icon(Icons.save),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppDimens.PADDING_16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Image.file(
+                File(photoPath),
+                frameBuilder: (
+                  BuildContext context,
+                  Widget child,
+                  int? frame,
+                  bool? wasSynchronouslyLoaded,
+                ) {
+                  return ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(AppDimens.BORDER_RADIUS_16),
                     ),
-                  ),
-                )
-              ],
-            ),
+                    child: child,
+                  );
+                },
+              ),
+              const SizedBox(height: AppDimens.SIZE_24),
+              ReceiptDetailsTable(
+                vendorName: receipt.vendorName,
+                address: receipt.address,
+                receiptNumber: receipt.receiptNumber,
+                receiptDate: receipt.receiptDate,
+                totalAmount: receipt.totalAmount,
+                currency: receipt.currency,
+                paymentMethod: receipt.paymentMethod,
+                taxNumber: receipt.taxNumber,
+              ),
+              const SizedBox(height: AppDimens.SIZE_24),
+              ItemsTableWidget(
+                items: receipt.lineItems,
+              ),
+              const SizedBox(height: AppDimens.SIZE_24),
+            ],
           ),
-        ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        onPressed: () => context.router.push(
+          SavingScanEntryBottomSheetRoute(
+            previewFilePath: previewFilePath,
+          ),
+        ),
+        child: const Icon(Icons.save),
       ),
     );
   }

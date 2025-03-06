@@ -24,4 +24,8 @@ abstract class ScanEntriesRepository {
   Future<void> downloadScanFile({
     required DownloadScanFilePayload payload,
   });
+
+  Future<ReceiptModel> uploadPhotosForRecognition({
+    required UploadPhotosForRecognitionPayload payload,
+  });
 }

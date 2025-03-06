@@ -9,25 +9,27 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:flutter/material.dart' as _i5;
-import 'package:scanner/src/screens/home_scanner_screen/scanner_screen.dart'
-    as _i3;
-import 'package:scanner/src/screens/save_scan_screen/preview_pdf_result_screen.dart'
-    as _i1;
+import 'package:domain/domain.dart' as _i5;
+import 'package:flutter/material.dart' as _i6;
+import 'package:scanner/src/screens/home_scanner_screen/scanner_screen.dart' as _i3;
+import 'package:scanner/src/screens/save_scan_screen/preview_pdf_result_screen.dart' as _i1;
 import 'package:scanner/src/screens/save_scan_screen/saving_scan_entry_bottom_sheet_screen.dart'
     as _i2;
 
 /// generated route for
 /// [_i1.PreviewPdfResultScreen]
-class PreviewPdfResultRoute
-    extends _i4.PageRouteInfo<PreviewPdfResultRouteArgs> {
+class PreviewPdfResultRoute extends _i4.PageRouteInfo<PreviewPdfResultRouteArgs> {
   PreviewPdfResultRoute({
+    required _i5.ReceiptModel receipt,
+    required String photoPath,
     required String previewFilePath,
-    _i5.Key? key,
+    _i6.Key? key,
     List<_i4.PageRouteInfo>? children,
   }) : super(
           PreviewPdfResultRoute.name,
           args: PreviewPdfResultRouteArgs(
+            receipt: receipt,
+            photoPath: photoPath,
             previewFilePath: previewFilePath,
             key: key,
           ),
@@ -41,6 +43,8 @@ class PreviewPdfResultRoute
     builder: (data) {
       final args = data.argsAs<PreviewPdfResultRouteArgs>();
       return _i1.PreviewPdfResultScreen(
+        receipt: args.receipt,
+        photoPath: args.photoPath,
         previewFilePath: args.previewFilePath,
         key: args.key,
       );
@@ -50,17 +54,23 @@ class PreviewPdfResultRoute
 
 class PreviewPdfResultRouteArgs {
   const PreviewPdfResultRouteArgs({
+    required this.receipt,
+    required this.photoPath,
     required this.previewFilePath,
     this.key,
   });
 
+  final _i5.ReceiptModel receipt;
+
+  final String photoPath;
+
   final String previewFilePath;
 
-  final _i5.Key? key;
+  final _i6.Key? key;
 
   @override
   String toString() {
-    return 'PreviewPdfResultRouteArgs{previewFilePath: $previewFilePath, key: $key}';
+    return 'PreviewPdfResultRouteArgs{receipt: $receipt, photoPath: $photoPath, previewFilePath: $previewFilePath, key: $key}';
   }
 }
 
@@ -70,7 +80,7 @@ class SavingScanEntryBottomSheetRoute
     extends _i4.PageRouteInfo<SavingScanEntryBottomSheetRouteArgs> {
   SavingScanEntryBottomSheetRoute({
     required String previewFilePath,
-    _i5.Key? key,
+    _i6.Key? key,
     List<_i4.PageRouteInfo>? children,
   }) : super(
           SavingScanEntryBottomSheetRoute.name,
@@ -103,7 +113,7 @@ class SavingScanEntryBottomSheetRouteArgs {
 
   final String previewFilePath;
 
-  final _i5.Key? key;
+  final _i6.Key? key;
 
   @override
   String toString() {

@@ -1,12 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:path/path.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/exceptions/handlers/exception_handler.dart';
 import '../requests/get_scan_entries_by_folder_id_request.dart';
+import '../requests/upload_photos_request.dart';
 import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
@@ -21,12 +25,11 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         _supabaseExceptionHandler = supabaseExceptionHandler;
 
   @override
-  Future<ScanEntryEntity> createScanEntry(
-      {required CreateScanEntryRequest request}) {
+  Future<ScanEntryEntity> createScanEntry({required CreateScanEntryRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response = await _supabaseClient
-            .rpc('create_scan_entry', params: <String, dynamic>{
+        final Map<String, dynamic> response =
+            await _supabaseClient.rpc('create_scan_entry', params: <String, dynamic>{
           'p_user_id': request.userId,
           'p_folder_id': request.folderId,
           'p_category_id': request.categoryId,
@@ -46,17 +49,15 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         final String fileName = PdfService.getFileNameByPath(request.localPath);
 
         await _supabaseClient.storage
-            .from(
-                'files') // TODO(Karatysh): do we have any class to collect supabase configs?
+            .from('files') // TODO(Karatysh): do we have any class to collect supabase configs?
             .upload(
               fileName,
               File(request.localPath),
               fileOptions: const FileOptions(upsert: true),
             );
 
-        final String publicUrl = Supabase.instance.client.storage
-            .from('files')
-            .getPublicUrl(fileName);
+        final String publicUrl =
+            Supabase.instance.client.storage.from('files').getPublicUrl(fileName);
 
         return publicUrl;
       },
@@ -74,8 +75,8 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
       {required GetScanEntriesByFolderIdRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_scan_entries_by_folder', params: <String, dynamic>{
+        final List<Map<String, dynamic>> response =
+            await _supabaseClient.rpc('get_scan_entries_by_folder', params: <String, dynamic>{
           'p_folder_id': request.folderId,
         });
 
@@ -98,8 +99,8 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
   }) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final List<Map<String, dynamic>> response = await _supabaseClient
-            .rpc('get_user_scans_by_category', params: <String, dynamic>{
+        final List<Map<String, dynamic>> response =
+            await _supabaseClient.rpc('get_user_scans_by_category', params: <String, dynamic>{
           'p_category_id': request.categoryId,
         });
 
@@ -116,10 +117,60 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         return _supabaseClient.storage
-            .from(
-                'files') // TODO(Karatysh): do we have any class to collect supabase configs?
+            .from('files') // TODO(Karatysh): do we have any class to collect supabase configs?
             .download(path);
       },
     );
+  }
+
+  @override
+  Future<ReceiptEntity> uploadPhotos({
+    required UploadPhotosRequest request,
+  }) async {
+    final String? baseUrl = dotenv.env['SUPABASE_URL'];
+    final String? secretKey = dotenv.env['SUPABASE_KEY'];
+
+    if (baseUrl == null || secretKey == null) {
+      throw const AppException('Unable to make a request');
+    }
+
+    final File file = request.files.first;
+    final String fileName = basename(file.path);
+    final String fileExtension = extension(file.path);
+    final Uint8List fileBytes = await file.readAsBytes();
+    final Uri requestUri = Uri.parse('$baseUrl/functions/v1/handle_receipt_analysis');
+    final String boundary = '${DateTime.timestamp().millisecondsSinceEpoch}';
+
+    final HttpClient httpClient = HttpClient();
+
+    try {
+      final HttpClientRequest httpRequest = await httpClient.openUrl('POST', requestUri);
+
+      httpRequest.headers
+          .set(HttpHeaders.contentTypeHeader, 'multipart/form-data; boundary=$boundary');
+      httpRequest.headers.set(HttpHeaders.acceptEncodingHeader, 'gzip, deflate, br');
+      httpRequest.headers.set(HttpHeaders.connectionHeader, 'keep-alive');
+      httpRequest.headers.set(HttpHeaders.cacheControlHeader, 'no-cache');
+      httpRequest.headers.set(HttpHeaders.authorizationHeader, 'Bearer $secretKey');
+      httpRequest.headers.set(HttpHeaders.acceptHeader, '*/*');
+
+      httpRequest
+        ..add(utf8.encode('--$boundary\r\n'))
+        ..add(utf8.encode('Content-Disposition: form-data; name="file"; filename="$fileName"\r\n'))
+        ..add(utf8.encode('Content-Type: image/$fileExtension\r\n\r\n'))
+        ..add(fileBytes)
+        ..add(utf8.encode('\r\n--$boundary--\r\n'));
+
+      final HttpClientResponse response = await httpRequest.close();
+      final String responseString = await response.transform(utf8.decoder).join();
+      final dynamic decoded = jsonDecode(responseString);
+
+      final Map<String, dynamic> entity = decoded is List ? decoded.first : decoded;
+      final Map<String, dynamic> data = entity['data']['data'];
+
+      return ReceiptEntity.fromJson(data);
+    } finally {
+      httpClient.close();
+    }
   }
 }

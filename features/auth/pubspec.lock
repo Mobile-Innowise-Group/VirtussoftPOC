@@ -109,14 +109,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.0.0"
-  awesome_snackbar_content:
-    dependency: transitive
-    description:
-      name: awesome_snackbar_content
-      sha256: a99f229d5e9404c69d172d9a6256961743eb9bc68b0a7905185eacd206b27984
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.4"
   barcode:
     dependency: transitive
     description:
@@ -612,22 +604,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  google_mlkit_commons:
+  google_fonts:
     dependency: transitive
     description:
-      name: google_mlkit_commons
-      sha256: "7e9a6d6e66b44aa8cfe944bda9bc3346c52486dd890ca49e5bc98845cda40d7f"
+      name: google_fonts
+      sha256: b1ac0fe2832c9cc95e5e88b57d627c5e68c223b9657f4b96e1487aa9098c7b82
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.0"
-  google_mlkit_text_recognition:
-    dependency: transitive
-    description:
-      name: google_mlkit_text_recognition
-      sha256: e7609cec8de3022680a36ead8a8bafa9fd2360ea018a728feaad12dcb0e3c177
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.14.0"
+    version: "6.2.1"
   gotrue:
     dependency: transitive
     description:
