@@ -44,41 +44,29 @@ class UserCategories extends StatelessWidget {
                       ],
                     ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: TextButton.icon(
-                icon: Icon(
-                  Icons.add,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                label: Text(
-                  'category.addNewCategory'.tr(),
-                  style: AppFonts.actionM.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext _) {
-                      return CreateCategoryDialog(
-                        optionNoCallback: () {
-                          final AppRouter appRouter = appLocator<AppRouter>();
-                          appRouter.maybePop();
-                        },
-                        optionYesCallback: (String categoryName) {
-                          context.read<UserCategoriesBloc>().add(
-                                CreateCategoryEvent(categoryName: categoryName),
-                              );
-                          final AppRouter appRouter = appLocator<AppRouter>();
-                          appRouter.maybePop();
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
-            )
+            CustomMainButton(
+              text: 'category.addNewCategory'.tr(),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext _) {
+                    return CreateCategoryDialog(
+                      optionNoCallback: () {
+                        final AppRouter appRouter = appLocator<AppRouter>();
+                        appRouter.maybePop();
+                      },
+                      optionYesCallback: (String categoryName) {
+                        context.read<UserCategoriesBloc>().add(
+                              CreateCategoryEvent(categoryName: categoryName),
+                            );
+                        final AppRouter appRouter = appLocator<AppRouter>();
+                        appRouter.maybePop();
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           ],
         );
       },

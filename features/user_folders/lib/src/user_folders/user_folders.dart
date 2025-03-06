@@ -46,41 +46,29 @@ class UserFolders extends StatelessWidget {
                       ],
                     ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: TextButton.icon(
-                icon: Icon(
-                  Icons.add,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                label: Text(
-                  'folder.addNewFolder'.tr(),
-                  style: AppFonts.actionM.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext _) {
-                      return CreateFolderDialog(
-                        optionNoCallback: () {
-                          final AppRouter appRouter = appLocator<AppRouter>();
-                          appRouter.maybePop();
-                        },
-                        optionYesCallback: (String folderName) {
-                          context.read<UserFoldersBloc>().add(
-                                CreateFolderEvent(folderName: folderName),
-                              );
-                          final AppRouter appRouter = appLocator<AppRouter>();
-                          appRouter.maybePop();
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
-            )
+            CustomMainButton(
+              text: 'folder.addNewFolder'.tr(),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext _) {
+                    return CreateFolderDialog(
+                      optionNoCallback: () {
+                        final AppRouter appRouter = appLocator<AppRouter>();
+                        appRouter.maybePop();
+                      },
+                      optionYesCallback: (String folderName) {
+                        context.read<UserFoldersBloc>().add(
+                              CreateFolderEvent(folderName: folderName),
+                            );
+                        final AppRouter appRouter = appLocator<AppRouter>();
+                        appRouter.maybePop();
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           ],
         );
       },

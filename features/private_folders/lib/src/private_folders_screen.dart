@@ -94,18 +94,8 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                       ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: TextButton.icon(
-                  icon: Icon(
-                    Icons.add,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  label: Text(
-                    'folder.addNewFolder'.tr(),
-                    style: AppFonts.actionM.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: CustomMainButton(
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -117,8 +107,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                           },
                           optionYesCallback: (String folderName) {
                             context.read<PrivateFoldersBloc>().add(
-                                  CreatePrivateFolderEvent(
-                                      folderName: folderName),
+                                  CreatePrivateFolderEvent(folderName: folderName),
                                 );
                             final AppRouter appRouter = appLocator<AppRouter>();
                             appRouter.maybePop();
@@ -127,8 +116,9 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                       },
                     );
                   },
+                  text: 'folder.addNewFolder'.tr(),
                 ),
-              )
+              ),
             ],
           );
         },

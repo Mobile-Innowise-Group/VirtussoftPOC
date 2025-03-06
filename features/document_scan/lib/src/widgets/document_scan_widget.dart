@@ -39,8 +39,7 @@ class DocumentScanWidget extends StatelessWidget {
           children: <Widget>[
             SvgPicture.asset(
               'assets/icons/file.svg',
-              colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
               width: 40,
               height: 40,
             ),

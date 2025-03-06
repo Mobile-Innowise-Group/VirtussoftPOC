@@ -37,8 +37,7 @@ class UserDataScreen extends StatelessWidget implements AutoRouteWrapper {
             createFolderUseCase: appLocator<CreateFolderUseCase>(),
             deleteFolderUseCase: appLocator<DeleteFolderUseCase>(),
             getFoldersUseCase: appLocator<GetPublicFoldersUseCase>(),
-            toggleFolderPrivacyUseCase:
-                appLocator<ToggleFolderPrivacyUseCase>(),
+            toggleFolderPrivacyUseCase: appLocator<ToggleFolderPrivacyUseCase>(),
           ),
         ),
       ],
@@ -80,8 +79,7 @@ class UserDataScreen extends StatelessWidget implements AutoRouteWrapper {
                   padding: const EdgeInsets.all(4.0),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.secondary,
-                    borderRadius:
-                        BorderRadius.circular(AppDimens.BORDER_RADIUS_16),
+                    borderRadius: BorderRadius.circular(AppDimens.BORDER_RADIUS_16),
                   ),
                   child: Row(
                     children: <Widget>[
@@ -104,22 +102,16 @@ class UserDataScreen extends StatelessWidget implements AutoRouteWrapper {
                             child: Center(
                               child: Text(
                                 'folder.byFolders'.tr(),
-                                style: AppFonts.headingH5.copyWith(
-                                  color: state == 0
-                                      ? Theme.of(context).colorScheme.onSurface
-                                      : AppColors.of(context).textSecondary,
-                                ),
+                                style: state == 0
+                                    ? AppFonts.headingH5.copyWith(
+                                        color: AppColors.of(context).textSecondary,
+                                      )
+                                    : AppFonts.bodyS.copyWith(
+                                        color: AppColors.of(context).textSecondary,
+                                      ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: VerticalDivider(
-                          color: AppColors.of(context).divider,
-                          thickness: 1,
-                          width: 1,
                         ),
                       ),
                       Expanded(
@@ -134,17 +126,18 @@ class UserDataScreen extends StatelessWidget implements AutoRouteWrapper {
                               color: state == 1
                                   ? Theme.of(context).colorScheme.surface
                                   : Theme.of(context).colorScheme.secondary,
-                              borderRadius: BorderRadius.circular(
-                                  AppDimens.BORDER_RADIUS_16),
+                              borderRadius: BorderRadius.circular(AppDimens.BORDER_RADIUS_16),
                             ),
                             child: Center(
                               child: Text(
                                 'category.byCategory'.tr(),
-                                style: AppFonts.headingH5.copyWith(
-                                  color: state == 1
-                                      ? Theme.of(context).colorScheme.onSurface
-                                      : AppColors.of(context).textSecondary,
-                                ),
+                                style: state == 1
+                                    ? AppFonts.headingH5.copyWith(
+                                        color: AppColors.of(context).textSecondary,
+                                      )
+                                    : AppFonts.bodyS.copyWith(
+                                        color: AppColors.of(context).textSecondary,
+                                      ),
                               ),
                             ),
                           ),
