@@ -73,6 +73,18 @@ class PdfService {
     return file;
   }
 
+  static Future<File> createDocument({
+    required Uint8List bytes,
+  }) async {
+    final String name = 'virtussoft_${DateTime.now()}.pdf';
+    final Directory dir = await getApplicationDocumentsDirectory();
+    final File file = File('${dir.path}/$name');
+
+    await file.writeAsBytes(bytes);
+
+    return file;
+  }
+
   static Future<void> openFile(String path) async {
     await OpenFile.open(path);
   }

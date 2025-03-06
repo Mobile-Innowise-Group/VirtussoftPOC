@@ -9,10 +9,10 @@ import 'saving_scan_entry_bottom_sheet_content.dart';
 
 @RoutePage()
 class SavingScanEntryBottomSheetScreen extends StatelessWidget {
-  final String previewFilePath;
+  final ReceiptModel receipt;
 
   const SavingScanEntryBottomSheetScreen({
-    required this.previewFilePath,
+    required this.receipt,
     Key? key,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class SavingScanEntryBottomSheetScreen extends StatelessWidget {
         getUserCategoriesUseCase: appLocator<GetUserCategoriesUseCase>(),
         createScanEntryUseCase: appLocator<CreateScanEntryUseCase>(),
         appEventNotifier: appLocator.get<AppEventNotifier>(),
-        scanPath: previewFilePath,
+        receipt: receipt,
       ),
       child: const BottomSheetLayout(
         child: SavingScanEntryBottomSheetContent(),

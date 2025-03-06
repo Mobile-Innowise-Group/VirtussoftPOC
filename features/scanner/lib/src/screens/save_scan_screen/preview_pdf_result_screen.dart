@@ -73,9 +73,7 @@ class PreviewPdfResultScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () => context.router.push(
-          SavingScanEntryBottomSheetRoute(
-            previewFilePath: previewFilePath,
-          ),
+          SavingScanEntryBottomSheetRoute(receipt: receipt),
         ),
         child: const Icon(Icons.save),
       ),

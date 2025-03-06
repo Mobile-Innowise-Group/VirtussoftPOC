@@ -39,4 +39,8 @@ abstract class ScanEntriesProvider {
   Future<ReceiptEntity> uploadPhotos({
     required UploadPhotosRequest request,
   });
+
+  Future<String> generatePdfInStorage({
+    required GeneratePdfFromJsonRequest request,
+  });
 }

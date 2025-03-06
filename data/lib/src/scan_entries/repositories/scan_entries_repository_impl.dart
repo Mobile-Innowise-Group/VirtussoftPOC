@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,7 +11,6 @@ import '../../categories/categories.dart';
 import '../../folders/folders.dart';
 import '../requests/get_scan_entries_by_folder_id_request.dart';
 import '../requests/upload_photos_request.dart';
-import '../requests/upload_scan_file_request.dart';
 import '../scan_entries.dart';
 
 class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
@@ -39,28 +39,38 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
       // TODO(Karatysh): logout instead
       throw const AppException('no current user');
     }
-    final String userId = userEntity.id;
 
-    final String scanRemoteLink = await _scanEntriesProvider.uploadScanFile(
-      request: UploadScanFileRequest(
-        userId: userId,
-        localPath: payload.scanLocalPath,
+    final ReceiptEntity entity = ReceiptMapper.toEntity(payload.receipt);
+    final Map<String, dynamic> json = entity.toJson();
+
+    final String remotePath = await _scanEntriesProvider.generatePdfInStorage(
+      request: GeneratePdfFromJsonRequest(json: json),
+    );
+
+    final Uint8List bytes = await _scanEntriesProvider.downloadScanFile(
+      request: DownloadScanFileRequest(remotePath: remotePath),
+    );
+
+    final File localFile = await PdfService.createDocument(bytes: bytes);
+
+    final FolderModel folder = await _folderProvider.getUserFolderById(
+      request: GetFolderByIdRequest(
+        folderId: payload.folderId,
       ),
+    );
+
+    await PdfService.transferFile(
+      currentFilePath: localFile.path,
+      newFolderName: folder.name,
     );
 
     final ScanEntryEntity scanEntryEntity = await _scanEntriesProvider.createScanEntry(
       request: CreateScanEntryRequest(
-        localPath: payload.scanLocalPath,
-        remotePath: scanRemoteLink,
+        localPath: localFile.path,
+        remotePath: remotePath,
         folderId: payload.folderId,
         categoryId: payload.categoryId,
         userId: userEntity.id,
-      ),
-    );
-
-    final FolderModel folder = await _folderProvider.getUserFolderById(
-      request: GetFolderByIdRequest(
-        folderId: scanEntryEntity.folderId,
       ),
     );
 
