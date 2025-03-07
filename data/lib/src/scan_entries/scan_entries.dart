@@ -1,3 +1,4 @@
+export 'entities/extended_scan_entry_entity.dart';
 export 'entities/line_item_entity.dart';
 export 'entities/receipt_entity.dart';
 export 'entities/scan_entry_entiry.dart';
