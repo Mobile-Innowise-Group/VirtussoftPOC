@@ -88,4 +88,17 @@ class PdfService {
   static Future<void> openFile(String path) async {
     await OpenFile.open(path);
   }
+
+  static Future<void> rewriteFile({
+    required String path,
+    required Uint8List bytes,
+  }) async {
+    final File file = File(path);
+    await file.writeAsBytes(bytes);
+  }
+
+  static Future<void> deleteFile({required String path}) async {
+    final File file = File(path);
+    await file.delete();
+  }
 }

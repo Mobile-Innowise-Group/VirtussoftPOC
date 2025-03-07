@@ -102,7 +102,7 @@ class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryStat
         await _createScanEntryUseCase.execute(
           CreateScanEntryPayload(
             receipt: _receipt,
-            folderId: folder.id,
+            folder: folder,
             categoryId: categoryId,
           ),
         );

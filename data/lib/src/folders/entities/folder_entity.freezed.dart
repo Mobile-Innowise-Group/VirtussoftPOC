@@ -22,6 +22,7 @@ FolderEntity _$FolderEntityFromJson(Map<String, dynamic> json) {
 mixin _$FolderEntity {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @JsonKey(readValue: _readIsPrivate)
   bool get isPrivate => throw _privateConstructorUsedError;
 
   /// Serializes this FolderEntity to a JSON map.
@@ -40,7 +41,10 @@ abstract class $FolderEntityCopyWith<$Res> {
           FolderEntity value, $Res Function(FolderEntity) then) =
       _$FolderEntityCopyWithImpl<$Res, FolderEntity>;
   @useResult
-  $Res call({String id, String name, bool isPrivate});
+  $Res call(
+      {String id,
+      String name,
+      @JsonKey(readValue: _readIsPrivate) bool isPrivate});
 }
 
 /// @nodoc
@@ -87,7 +91,10 @@ abstract class _$$FolderEntityImplCopyWith<$Res>
       __$$FolderEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, bool isPrivate});
+  $Res call(
+      {String id,
+      String name,
+      @JsonKey(readValue: _readIsPrivate) bool isPrivate});
 }
 
 /// @nodoc
@@ -128,7 +135,9 @@ class __$$FolderEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FolderEntityImpl implements _FolderEntity {
   const _$FolderEntityImpl(
-      {required this.id, required this.name, required this.isPrivate});
+      {required this.id,
+      required this.name,
+      @JsonKey(readValue: _readIsPrivate) required this.isPrivate});
 
   factory _$FolderEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$FolderEntityImplFromJson(json);
@@ -138,6 +147,7 @@ class _$FolderEntityImpl implements _FolderEntity {
   @override
   final String name;
   @override
+  @JsonKey(readValue: _readIsPrivate)
   final bool isPrivate;
 
   @override
@@ -178,9 +188,10 @@ class _$FolderEntityImpl implements _FolderEntity {
 
 abstract class _FolderEntity implements FolderEntity {
   const factory _FolderEntity(
-      {required final String id,
-      required final String name,
-      required final bool isPrivate}) = _$FolderEntityImpl;
+          {required final String id,
+          required final String name,
+          @JsonKey(readValue: _readIsPrivate) required final bool isPrivate}) =
+      _$FolderEntityImpl;
 
   factory _FolderEntity.fromJson(Map<String, dynamic> json) =
       _$FolderEntityImpl.fromJson;
@@ -190,6 +201,7 @@ abstract class _FolderEntity implements FolderEntity {
   @override
   String get name;
   @override
+  @JsonKey(readValue: _readIsPrivate)
   bool get isPrivate;
 
   /// Create a copy of FolderEntity
