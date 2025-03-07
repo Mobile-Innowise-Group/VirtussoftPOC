@@ -19,8 +19,9 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
   @override
   void initState() {
     super.initState();
-    _emailTextEditingController = TextEditingController();
-    _passwordTextEditingController = TextEditingController();
+    // TODO: Rollback
+    _emailTextEditingController = TextEditingController()..text = 'german.perelmuter@innowise.com';
+    _passwordTextEditingController = TextEditingController()..text = '123456789';
     _obscureNotifier = ValueNotifier<bool>(true);
   }
 

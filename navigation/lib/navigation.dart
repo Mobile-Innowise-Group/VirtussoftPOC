@@ -2,6 +2,7 @@ library navigation;
 
 export 'package:auth/auth_navigation.dart';
 export 'package:auto_route/auto_route.dart';
+export 'package:charts/charts.dart';
 export 'package:home_page/home_page.dart';
 export 'package:private_folders/private_folders.dart';
 export 'package:scanner/scanner.dart';

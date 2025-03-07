@@ -17,6 +17,7 @@ class HomeScreenRouter extends RootStackRouter {
             ...UserDataRouter().routes,
             ...ScannerScreenRouter().routes,
             ...PrivateFoldersRouter().routes,
+            ...ChartsRouter().routes,
           ],
         ),
       ];

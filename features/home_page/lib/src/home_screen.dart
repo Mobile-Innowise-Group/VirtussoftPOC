@@ -31,11 +31,13 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
         return Stack(
           children: <Widget>[
             AutoTabsRouter.tabBar(
+              physics: const NeverScrollableScrollPhysics(),
               routes: const <PageRouteInfo>[
                 UserProfileRoute(),
                 UserDataRoute(),
                 PrivateFoldersRoute(),
                 ScannerRoute(),
+                ChartsRoute(),
               ],
               builder: (BuildContext context, Widget child, TabController controller) {
                 final TabsRouter tabsRouter = AutoTabsRouter.of(context);
@@ -150,6 +152,29 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                               ),
                             ),
                             label: 'Scan',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: SvgPicture.asset(
+                              // TODO: Update icon
+                              AppImages.folder,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                AppColors.of(context).unSelectedIcon,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            activeIcon: SvgPicture.asset(
+                              // TODO: Update icon
+                              AppImages.folder,
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.primary,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            label: 'Charts',
                           ),
                         ],
                         onTap: tabsRouter.setActiveIndex,

@@ -29,6 +29,8 @@ dependencies:
     path: ../features/user_folders
   document_scan:
     path: ../features/document_scan
+  charts:
+    path: ../features/charts
 
   auto_route: ^9.2.2
 
