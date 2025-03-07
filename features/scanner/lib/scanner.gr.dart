@@ -82,13 +82,13 @@ class PreviewPdfResultRouteArgs {
 class SavingScanEntryBottomSheetRoute
     extends _i4.PageRouteInfo<SavingScanEntryBottomSheetRouteArgs> {
   SavingScanEntryBottomSheetRoute({
-    required String previewFilePath,
+    required _i5.ReceiptModel receipt,
     _i6.Key? key,
     List<_i4.PageRouteInfo>? children,
   }) : super(
           SavingScanEntryBottomSheetRoute.name,
           args: SavingScanEntryBottomSheetRouteArgs(
-            previewFilePath: previewFilePath,
+            receipt: receipt,
             key: key,
           ),
           initialChildren: children,
@@ -101,7 +101,7 @@ class SavingScanEntryBottomSheetRoute
     builder: (data) {
       final args = data.argsAs<SavingScanEntryBottomSheetRouteArgs>();
       return _i2.SavingScanEntryBottomSheetScreen(
-        previewFilePath: args.previewFilePath,
+        receipt: args.receipt,
         key: args.key,
       );
     },
@@ -110,17 +110,17 @@ class SavingScanEntryBottomSheetRoute
 
 class SavingScanEntryBottomSheetRouteArgs {
   const SavingScanEntryBottomSheetRouteArgs({
-    required this.previewFilePath,
+    required this.receipt,
     this.key,
   });
 
-  final String previewFilePath;
+  final _i5.ReceiptModel receipt;
 
   final _i6.Key? key;
 
   @override
   String toString() {
-    return 'SavingScanEntryBottomSheetRouteArgs{previewFilePath: $previewFilePath, key: $key}';
+    return 'SavingScanEntryBottomSheetRouteArgs{receipt: $receipt, key: $key}';
   }
 }
 

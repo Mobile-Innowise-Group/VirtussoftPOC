@@ -44,8 +44,9 @@ class UserCategories extends StatelessWidget {
                       ],
                     ),
             ),
-            CustomMainButton(
+            AppButton(
               text: 'category.addNewCategory'.tr(),
+              icon: Icons.add,
               onPressed: () {
                 showDialog(
                   context: context,

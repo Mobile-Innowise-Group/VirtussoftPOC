@@ -81,5 +81,21 @@
   },
   "docScanner": {
     "docScanner": "Doc Scanner"
+  },
+  "scanResults": {
+    "title": "Results",
+    "extractedDetails": "Extracted details",
+    "vendor": "Vendor",
+    "address": "Address",
+    "receiptNumber": "Receipt Number",
+    "receiptDate": "Date",
+    "totalAmount": "Total Amount",
+    "currency": "Currency",
+    "paymentMethod": "Payment Method",
+    "taxNumber": "Tax Number",
+    "itemsPurchased": "Items purchased",
+    "description": "Description",
+    "quantity": "Quantity",
+    "unitPrice": "Unit Price"
   }
 }

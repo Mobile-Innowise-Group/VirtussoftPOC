@@ -46,8 +46,9 @@ class UserFolders extends StatelessWidget {
                       ],
                     ),
             ),
-            CustomMainButton(
+            AppButton(
               text: 'folder.addNewFolder'.tr(),
+              icon: Icons.add,
               onPressed: () {
                 showDialog(
                   context: context,

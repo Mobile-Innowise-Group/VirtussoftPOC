@@ -85,9 +85,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                             )
                           : InputDecoration(
                               hintText: 'auth.username'.tr(),
-                              enabledBorder: Theme.of(context)
-                                  .inputDecorationTheme
-                                  .errorBorder,
+                              enabledBorder: Theme.of(context).inputDecorationTheme.errorBorder,
                             ),
                       controller: _usernameTextEditingController,
                     ),
@@ -105,9 +103,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                             )
                           : InputDecoration(
                               hintText: 'auth.emailAddress'.tr(),
-                              enabledBorder: Theme.of(context)
-                                  .inputDecorationTheme
-                                  .errorBorder,
+                              enabledBorder: Theme.of(context).inputDecorationTheme.errorBorder,
                             ),
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailTextEditingController,
@@ -120,8 +116,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                     const SizedBox(height: 8),
                     ValueListenableBuilder<bool>(
                       valueListenable: _obscureNotifier,
-                      builder: (BuildContext context, bool isObscured,
-                          Widget? child) {
+                      builder: (BuildContext context, bool isObscured, Widget? child) {
                         return Column(
                           children: <Widget>[
                             TextField(
@@ -132,13 +127,10 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                                 errorText: state.errorMessage,
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    isObscured
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                    isObscured ? Icons.visibility : Icons.visibility_off,
                                     color: AppColors.of(context).darkIcon,
                                   ),
-                                  onPressed: () => _obscureNotifier.value =
-                                      !_obscureNotifier.value,
+                                  onPressed: () => _obscureNotifier.value = !_obscureNotifier.value,
                                 ),
                               ),
                               controller: _passwordTextEditingController,
@@ -148,7 +140,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                       },
                     ),
                     const SizedBox(height: 24),
-                    FilledButton(
+                    AppButton(
                       onPressed: () => context.read<AuthBloc>().add(
                             SignUpWithCredentials(
                               login: _emailTextEditingController.text,
@@ -156,7 +148,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                               username: _usernameTextEditingController.text,
                             ),
                           ),
-                      child: Text('auth.signUp'.tr()),
+                      text: 'auth.signUp'.tr(),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -167,8 +159,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                           style: AppFonts.bodyS,
                         ),
                         GestureDetector(
-                          onTap: () =>
-                              context.read<AuthBloc>().add(NavigateToLogin()),
+                          onTap: () => context.read<AuthBloc>().add(NavigateToLogin()),
                           child: Text(
                             'auth.login'.tr(),
                             style: AppFonts.actionM.copyWith(

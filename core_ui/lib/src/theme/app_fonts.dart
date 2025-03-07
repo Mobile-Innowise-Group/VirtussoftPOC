@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../core_ui.dart';
-
 abstract class AppFonts {
   static TextStyle actionM = GoogleFonts.inter(
     fontWeight: FontWeight.w600,
@@ -19,6 +17,12 @@ abstract class AppFonts {
   static TextStyle headingH1 = GoogleFonts.inter(
     fontWeight: FontWeight.w800,
     fontSize: 24,
+    color: Colors.black,
+  );
+
+  static TextStyle headingH2 = GoogleFonts.inter(
+    fontWeight: FontWeight.w800,
+    fontSize: 20,
     color: Colors.black,
   );
 

@@ -51,6 +51,10 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
       ),
       body: BlocBuilder<PrivateFoldersBloc, PrivateFoldersState>(
         builder: (BuildContext context, PrivateFoldersState state) {
+          if (!state.didTryToAuthenticate) {
+            return const SizedBox();
+          }
+
           if (!state.isAuthenticated) {
             return Center(
               child: Text(
@@ -70,9 +74,11 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
             children: <Widget>[
               Expanded(
                 child: privateFolders.isEmpty
-                    ? Text(
-                        'folder.noAddedFolders'.tr(),
-                        style: AppFonts.headingH5,
+                    ? Center(
+                        child: Text(
+                          'folder.noAddedFolders'.tr(),
+                          style: AppFonts.headingH5,
+                        ),
                       )
                     : CustomScrollView(
                         slivers: <Widget>[
@@ -95,7 +101,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: CustomMainButton(
+                child: AppButton(
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -117,6 +123,7 @@ class PrivateFoldersScreen extends StatelessWidget implements AutoRouteWrapper {
                     );
                   },
                   text: 'folder.addNewFolder'.tr(),
+                  icon: Icons.add,
                 ),
               ),
             ],

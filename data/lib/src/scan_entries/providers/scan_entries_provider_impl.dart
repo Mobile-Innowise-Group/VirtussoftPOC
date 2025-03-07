@@ -134,10 +134,6 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
       throw const AppException('Unable to make a request');
     }
 
-    final File file = request.files.first;
-    final String fileName = basename(file.path);
-    final String fileExtension = extension(file.path);
-    final Uint8List fileBytes = await file.readAsBytes();
     final Uri requestUri = Uri.parse('$baseUrl/functions/v1/handle_receipt_analysis');
     final String boundary = '${DateTime.timestamp().millisecondsSinceEpoch}';
 
@@ -154,17 +150,27 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
       httpRequest.headers.set(HttpHeaders.authorizationHeader, 'Bearer $secretKey');
       httpRequest.headers.set(HttpHeaders.acceptHeader, '*/*');
 
-      httpRequest
-        ..add(utf8.encode('--$boundary\r\n'))
-        ..add(utf8.encode('Content-Disposition: form-data; name="file"; filename="$fileName"\r\n'))
-        ..add(utf8.encode('Content-Type: image/$fileExtension\r\n\r\n'))
-        ..add(fileBytes)
-        ..add(utf8.encode('\r\n--$boundary--\r\n'));
+      httpRequest.add(utf8.encode('--$boundary\r\n'));
+
+      for (final File file in request.files) {
+        final String name = basename(file.path);
+        final String ext = extension(file.path).replaceAll('.', '');
+        final Uint8List bytes = await file.readAsBytes();
+
+        httpRequest
+          ..add(utf8.encode('Content-Disposition: form-data; name="file"; filename="$name"\r\n'))
+          ..add(utf8.encode('Content-Type: image/$ext\r\n\r\n'))
+          ..add(bytes)
+          ..add(utf8.encode('\r\n--$boundary\r\n'));
+      }
+
+      httpRequest.add(utf8.encode('--$boundary--\r\n'));
 
       final HttpClientResponse response = await httpRequest.close();
       final String responseString = await response.transform(utf8.decoder).join();
       final dynamic decoded = jsonDecode(responseString);
 
+      // TODO(GermanPerelmuter): Process list
       final Map<String, dynamic> entity = decoded is List ? decoded.first : decoded;
       final Map<String, dynamic> data = entity['data']['data'];
 
@@ -172,5 +178,13 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     } finally {
       httpClient.close();
     }
+  }
+
+  @override
+  Future<String> generatePdfInStorage({
+    required GeneratePdfFromJsonRequest request,
+  }) async {
+    // TODO: implement generatePdfFromJson
+    throw UnimplementedError();
   }
 }

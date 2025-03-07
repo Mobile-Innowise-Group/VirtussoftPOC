@@ -6,15 +6,14 @@ import 'package:navigation/navigation.dart';
 part 'saving_scan_entry_event.dart';
 part 'saving_scan_entry_state.dart';
 
-class SavingScanEntryBloc
-    extends Bloc<SavingScanEntryEvent, SavingScanEntryState> {
+class SavingScanEntryBloc extends Bloc<SavingScanEntryEvent, SavingScanEntryState> {
   final AppRouter _appRouter;
   final GetAllFoldersUseCase _getAllFoldersUseCase;
   final GetUserCategoriesUseCase _getUserCategoriesUseCase;
   final CreateScanEntryUseCase _createScanEntryUseCase;
   final AppEventNotifier _appEventNotifier;
 
-  String _scanPath;
+  ReceiptModel _receipt;
 
   SavingScanEntryBloc({
     required AppRouter appRouter,
@@ -22,13 +21,13 @@ class SavingScanEntryBloc
     required GetUserCategoriesUseCase getUserCategoriesUseCase,
     required CreateScanEntryUseCase createScanEntryUseCase,
     required AppEventNotifier appEventNotifier,
-    required String scanPath,
+    required ReceiptModel receipt,
   })  : _appRouter = appRouter,
         _getAllFoldersUseCase = getAllFoldersUseCase,
         _getUserCategoriesUseCase = getUserCategoriesUseCase,
         _createScanEntryUseCase = createScanEntryUseCase,
         _appEventNotifier = appEventNotifier,
-        _scanPath = scanPath,
+        _receipt = receipt,
         super(const SavingScanEntryState.initial()) {
     on<InitEvent>(_onInitEvent);
     on<ChangeSavingFolder>(_onChangeSavingFolder);
@@ -44,8 +43,7 @@ class SavingScanEntryBloc
     Emitter<SavingScanEntryState> emit,
   ) async {
     try {
-      final List<FolderModel> folders =
-          await _getAllFoldersUseCase.execute(GetAllFoldersPayload());
+      final List<FolderModel> folders = await _getAllFoldersUseCase.execute(GetAllFoldersPayload());
       final List<CategoryModel> categories =
           await _getUserCategoriesUseCase.execute(GetUserCategoriesPayload());
 
@@ -101,16 +99,9 @@ class SavingScanEntryBloc
           state.copyWith(isLoading: true),
         );
 
-        final String newScanPath = await PdfService.transferFile(
-          currentFilePath: _scanPath,
-          newFolderName: folder.name,
-        );
-
-        _scanPath = newScanPath;
-
         await _createScanEntryUseCase.execute(
           CreateScanEntryPayload(
-            scanLocalPath: newScanPath,
+            receipt: _receipt,
             folderId: folder.id,
             categoryId: categoryId,
           ),
@@ -133,10 +124,8 @@ class SavingScanEntryBloc
     } else {
       emit(
         state.copyWith(
-          selectedFolderFieldError:
-              folder == null ? 'Folder field is required' : null,
-          selectedCategoryFieldError:
-              categoryId == null ? 'Category field is required' : null,
+          selectedFolderFieldError: folder == null ? 'Folder field is required' : null,
+          selectedCategoryFieldError: categoryId == null ? 'Category field is required' : null,
         ),
       );
     }

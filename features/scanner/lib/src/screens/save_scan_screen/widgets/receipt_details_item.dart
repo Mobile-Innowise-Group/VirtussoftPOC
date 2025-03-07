@@ -17,14 +17,23 @@ class ReceiptDetailsItem extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: AppDimens.SIZE_24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            label,
-            style: AppFonts.actionM,
+          Flexible(
+            flex: 2,
+            child: Text(
+              label,
+              textAlign: TextAlign.start,
+              style: AppFonts.headingH4,
+            ),
           ),
-          Text(
-            value,
-            style: AppFonts.actionM,
+          Flexible(
+            flex: 3,
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: AppFonts.bodyM,
+            ),
           ),
         ],
       ),

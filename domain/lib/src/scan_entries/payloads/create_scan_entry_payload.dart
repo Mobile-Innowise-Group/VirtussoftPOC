@@ -1,10 +1,12 @@
+import '../../../domain.dart';
+
 class CreateScanEntryPayload {
-  final String scanLocalPath;
+  final ReceiptModel receipt;
   final String folderId;
   final String categoryId;
 
   CreateScanEntryPayload({
-    required this.scanLocalPath,
+    required this.receipt,
     required this.folderId,
     required this.categoryId,
   });

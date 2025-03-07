@@ -8,11 +8,9 @@ import 'package:meta/meta.dart';
 import 'package:navigation/navigation.dart';
 
 part 'private_folders_event.dart';
-
 part 'private_folders_state.dart';
 
-class PrivateFoldersBloc
-    extends Bloc<PrivateFoldersEvent, PrivateFoldersState> {
+class PrivateFoldersBloc extends Bloc<PrivateFoldersEvent, PrivateFoldersState> {
   final AppEventNotifier _appEventNotifier;
   final GetPrivateFoldersUseCase _getPrivateFoldersUseCase;
   final ToggleFolderPrivacyUseCase _toggleFolderPrivacyUseCase;
@@ -47,13 +45,19 @@ class PrivateFoldersBloc
     Emitter<PrivateFoldersState> emit,
   ) async {
     if (!await _biometricService.authenticateWithBiometrics()) {
-      emit(state.copyWith(isAuthenticated: false));
+      emit(
+        state.copyWith(
+          isAuthenticated: false,
+          didTryToAuthenticate: true,
+        ),
+      );
       return;
     }
     emit(
       state.copyWith(
         isLoading: true,
         isAuthenticated: true,
+        didTryToAuthenticate: true,
       ),
     );
     try {
@@ -85,8 +89,7 @@ class PrivateFoldersBloc
           isPrivate: true,
         ),
       );
-      final List<FolderModel> folders = List<FolderModel>.from(state.folders)
-        ..add(folder);
+      final List<FolderModel> folders = List<FolderModel>.from(state.folders)..add(folder);
       emit(state.copyWith(isLoading: false, folders: folders));
     } on FailedToCreateRemoteFolderException catch (_) {
       try {
@@ -132,8 +135,7 @@ class PrivateFoldersBloc
         state.copyWith(folders: folders),
       );
     } on FailedToEditRemoteFolderException catch (_) {
-      final List<FolderModel> privateFolders =
-          await _getPrivateFoldersUseCase.execute(
+      final List<FolderModel> privateFolders = await _getPrivateFoldersUseCase.execute(
         GetPrivateFoldersPayload(),
       );
       emit(state.copyWith(folders: privateFolders));

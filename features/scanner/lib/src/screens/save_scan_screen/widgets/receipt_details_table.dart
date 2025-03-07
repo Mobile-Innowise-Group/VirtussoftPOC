@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -33,19 +34,26 @@ class ReceiptDetailsTable extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            'Extracted details',
-            style: AppFonts.headingH1,
+            'scanResults.extractedDetails'.tr(),
+            style: AppFonts.headingH2,
           ),
         ),
         const SizedBox(height: AppDimens.SIZE_12),
-        ReceiptDetailsItem(label: 'Vendor Name', value: vendorName),
-        ReceiptDetailsItem(label: 'Address', value: address),
-        ReceiptDetailsItem(label: 'Receipt Number', value: receiptNumber),
-        ReceiptDetailsItem(label: 'Receipt Date', value: receiptDate),
-        ReceiptDetailsItem(label: 'Total Amount', value: totalAmount),
-        ReceiptDetailsItem(label: 'Currency ', value: currency),
-        ReceiptDetailsItem(label: 'Payment Method ', value: paymentMethod),
-        ReceiptDetailsItem(label: 'Tax Number ', value: taxNumber),
+        ReceiptDetailsItem(label: 'scanResults.vendor'.tr(), value: vendorName),
+        const SizedBox(height: AppDimens.SIZE_2),
+        ReceiptDetailsItem(label: 'scanResults.address'.tr(), value: address),
+        const SizedBox(height: AppDimens.SIZE_2),
+        ReceiptDetailsItem(label: 'scanResults.receiptNumber'.tr(), value: receiptNumber),
+        const SizedBox(height: AppDimens.SIZE_2),
+        ReceiptDetailsItem(label: 'scanResults.receiptDate'.tr(), value: receiptDate),
+        const SizedBox(height: AppDimens.SIZE_2),
+        ReceiptDetailsItem(label: 'scanResults.totalAmount'.tr(), value: totalAmount),
+        const SizedBox(height: AppDimens.SIZE_2),
+        ReceiptDetailsItem(label: 'scanResults.currency'.tr(), value: currency),
+        const SizedBox(height: AppDimens.SIZE_2),
+        ReceiptDetailsItem(label: 'scanResults.paymentMethod'.tr(), value: paymentMethod),
+        const SizedBox(height: AppDimens.SIZE_2),
+        ReceiptDetailsItem(label: 'scanResults.taxNumber'.tr(), value: taxNumber),
       ],
     );
   }

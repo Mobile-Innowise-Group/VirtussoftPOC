@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 
 import '../../domain.dart';
-import '../scan_entries/use_cases/upload_photos_for_recognition_use_case.dart';
 
 abstract class DomainDI {
   static void initDependencies(GetIt locator) {

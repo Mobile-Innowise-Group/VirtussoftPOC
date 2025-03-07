@@ -1,7 +1,6 @@
 import '../../../domain.dart';
 
-class CreateScanEntryUseCase
-    extends FutureUseCase<CreateScanEntryPayload, ScanEntryModel> {
+class CreateScanEntryUseCase extends FutureUseCase<CreateScanEntryPayload, ScanEntryModel> {
   final ScanEntriesRepository _scanEntriesRepository;
 
   CreateScanEntryUseCase({

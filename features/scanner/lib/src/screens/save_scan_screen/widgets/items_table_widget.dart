@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class ItemsTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -19,23 +22,30 @@ class ItemsTableWidget extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            'Items purchased',
-            style: AppFonts.headingH1,
+            'scanResults.itemsPurchased'.tr(),
+            style: AppFonts.headingH2,
           ),
         ),
         const SizedBox(height: AppDimens.SIZE_12),
         DataTable(
-          columnSpacing: 20.0,
-          headingRowColor: WidgetStateProperty.all(Theme.of(context).colorScheme.secondary),
+          columnSpacing: AppDimens.PADDING_20,
+          clipBehavior: Clip.antiAlias,
+          headingTextStyle: AppFonts.bodyM.copyWith(color: Colors.black),
+          dataTextStyle: AppFonts.bodyM.copyWith(color: Colors.black),
+          headingRowColor: WidgetStateProperty.all(colors.secondary),
+          border: TableBorder.all(
+            color: colors.secondary,
+            borderRadius: const BorderRadius.all(Radius.circular(AppDimens.BORDER_RADIUS_12)),
+          ),
           columns: <DataColumn>[
             DataColumn(
-              label: Text('Description', style: AppFonts.actionM),
+              label: Text('scanResults.description'.tr()),
             ),
             DataColumn(
-              label: Text('Quantity', style: AppFonts.actionM),
+              label: Text('scanResults.quantity'.tr()),
             ),
             DataColumn(
-              label: Text('Unit Price', style: AppFonts.actionM),
+              label: Text('scanResults.unitPrice'.tr()),
             ),
           ],
           rows: items
@@ -44,11 +54,11 @@ class ItemsTableWidget extends StatelessWidget {
                   cells: <DataCell>[
                     DataCell(
                       ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 200),
+                        constraints: const BoxConstraints(maxWidth: 150),
                         child: Text(
                           item.description,
-                          style: AppFonts.actionS,
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
                           softWrap: true,
                         ),
                       ),
@@ -56,15 +66,13 @@ class ItemsTableWidget extends StatelessWidget {
                     DataCell(
                       Text(
                         item.quantity,
-                        style: AppFonts.actionS,
                         overflow: TextOverflow.ellipsis,
                         softWrap: true,
                       ),
                     ),
                     DataCell(
                       Text(
-                        item.totalPrice,
-                        style: AppFonts.actionS,
+                        item.unitPrice,
                         overflow: TextOverflow.ellipsis,
                         softWrap: true,
                       ),
@@ -73,10 +81,6 @@ class ItemsTableWidget extends StatelessWidget {
                 ),
               )
               .toList(),
-          border: TableBorder.all(
-            color: Theme.of(context).colorScheme.secondary,
-            borderRadius: const BorderRadius.all(Radius.circular(AppDimens.BORDER_RADIUS_12)),
-          ),
         ),
       ],
     );
