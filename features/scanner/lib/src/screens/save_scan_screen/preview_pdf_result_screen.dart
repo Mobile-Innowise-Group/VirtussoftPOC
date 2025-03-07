@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,10 @@ class PreviewPdfResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Results'),
+        title: Text(
+          'scanResults.title'.tr(),
+          style: AppFonts.headingH4,
+        ),
         centerTitle: true,
       ),
       body: Padding(

@@ -126,16 +126,14 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                             ),
                           ),
                           const SizedBox(height: 24),
-                          FilledButton(
+                          AppButton(
                             onPressed: () => context.read<AuthBloc>().add(
                                   SignInWithCredentials(
                                     login: _emailTextEditingController.text,
                                     password: _passwordTextEditingController.text,
                                   ),
                                 ),
-                            child: Text(
-                              'auth.loginButton'.tr(),
-                            ),
+                            text: 'auth.loginButton'.tr(),
                           ),
                           const SizedBox(height: 16),
                           Row(

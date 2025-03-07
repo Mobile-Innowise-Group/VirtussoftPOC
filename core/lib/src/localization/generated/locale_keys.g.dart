@@ -79,5 +79,20 @@ abstract class  LocaleKeys {
   static const data = 'data';
   static const docScanner_docScanner = 'docScanner.docScanner';
   static const docScanner = 'docScanner';
+  static const scanResults_title = 'scanResults.title';
+  static const scanResults_extractedDetails = 'scanResults.extractedDetails';
+  static const scanResults_vendor = 'scanResults.vendor';
+  static const scanResults_address = 'scanResults.address';
+  static const scanResults_receiptNumber = 'scanResults.receiptNumber';
+  static const scanResults_receiptDate = 'scanResults.receiptDate';
+  static const scanResults_totalAmount = 'scanResults.totalAmount';
+  static const scanResults_currency = 'scanResults.currency';
+  static const scanResults_paymentMethod = 'scanResults.paymentMethod';
+  static const scanResults_taxNumber = 'scanResults.taxNumber';
+  static const scanResults_itemsPurchased = 'scanResults.itemsPurchased';
+  static const scanResults_description = 'scanResults.description';
+  static const scanResults_quantity = 'scanResults.quantity';
+  static const scanResults_unitPrice = 'scanResults.unitPrice';
+  static const scanResults = 'scanResults';
 
 }

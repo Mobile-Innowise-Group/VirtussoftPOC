@@ -38,6 +38,7 @@ class AppDimens {
   static const double MARGIN_16 = 16.0;
   static const double MARGIN_24 = 24.0;
 
+  static const double SIZE_2 = 2.0;
   static const double SIZE_12 = 12.0;
   static const double SIZE_24 = 24.0;
   static const double SIZE_32 = 32.0;

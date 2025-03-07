@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/scanner_bloc.dart';
@@ -15,9 +16,9 @@ class ScannerScreenContent extends StatelessWidget {
           builder: (BuildContext context, ScannerState state) {
             return state.isProcessing
                 ? const CircularProgressIndicator()
-                : FilledButton(
+                : AppButton(
                     onPressed: () => context.read<ScannerBloc>().add(const OpenScanner()),
-                    child: const Text('Scan Document'),
+                    text: 'Scan Document',
                   );
           },
         ),

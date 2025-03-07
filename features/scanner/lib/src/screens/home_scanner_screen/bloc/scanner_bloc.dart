@@ -31,8 +31,11 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   ) async {
     List<String> pictures;
     try {
-      pictures =
-          await CunningDocumentScanner.getPictures(isGalleryImportAllowed: true) ?? <String>[];
+      pictures = await CunningDocumentScanner.getPictures(
+            isGalleryImportAllowed: true,
+            noOfPages: 1,
+          ) ??
+          const <String>[];
 
       if (pictures.isNotEmpty) {
         emit(
@@ -45,7 +48,6 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
           ),
         );
 
-        // const JsonEncoder encoder =  JsonEncoder.withIndent('  ');
         final File file = await PdfService.generateCenteredText(
           const <String>['This', 'is', 'mock', 'data'],
         );
