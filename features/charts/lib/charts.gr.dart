@@ -10,20 +10,20 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:home_page/src/home_screen.dart' as _i1;
+import 'package:charts/src/screen/charts_screen.dart' as _i1;
 
 /// generated route for
-/// [_i1.HomeScreen]
-class HomeRoute extends _i2.PageRouteInfo<void> {
-  const HomeRoute({List<_i2.PageRouteInfo>? children})
-    : super(HomeRoute.name, initialChildren: children);
+/// [_i1.ChartsScreen]
+class ChartsRoute extends _i2.PageRouteInfo<void> {
+  const ChartsRoute({List<_i2.PageRouteInfo>? children})
+    : super(ChartsRoute.name, initialChildren: children);
 
-  static const String name = 'HomeRoute';
+  static const String name = 'ChartsRoute';
 
   static _i2.PageInfo page = _i2.PageInfo(
     name,
     builder: (data) {
-      return _i2.WrappedRoute(child: const _i1.HomeScreen());
+      return const _i1.ChartsScreen();
     },
   );
 }

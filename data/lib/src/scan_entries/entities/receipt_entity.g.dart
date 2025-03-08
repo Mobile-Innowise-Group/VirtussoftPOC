@@ -16,9 +16,10 @@ _$ReceiptEntityImpl _$$ReceiptEntityImplFromJson(Map<String, dynamic> json) =>
       currency: json['currency'] as String,
       paymentMethod: json['paymentMethod'] as String,
       taxNumber: json['taxNumber'] as String,
-      lineItems: (json['lineItems'] as List<dynamic>)
-          .map((e) => LineItemEntity.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      lineItems: (json['lineItems'] as List<dynamic>?)
+              ?.map((e) => LineItemEntity.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <LineItemEntity>[],
     );
 
 Map<String, dynamic> _$$ReceiptEntityImplToJson(_$ReceiptEntityImpl instance) =>

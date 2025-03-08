@@ -140,5 +140,11 @@ abstract class DomainDI {
         scanEntriesRepository: locator.get<ScanEntriesRepository>(),
       ),
     );
+
+    locator.registerLazySingleton<GetAllUserReceiptsUseCase>(
+      () => GetAllUserReceiptsUseCase(
+        scanEntriesRepository: locator.get<ScanEntriesRepository>(),
+      ),
+    );
   }
 }

@@ -31,11 +31,13 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
         return Stack(
           children: <Widget>[
             AutoTabsRouter.tabBar(
+              physics: const NeverScrollableScrollPhysics(),
               routes: const <PageRouteInfo>[
                 UserProfileRoute(),
                 UserDataRoute(),
                 PrivateFoldersRoute(),
                 ScannerRoute(),
+                ChartsRoute(),
               ],
               builder: (BuildContext context, Widget child, TabController controller) {
                 final TabsRouter tabsRouter = AutoTabsRouter.of(context);
@@ -150,6 +152,19 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                               ),
                             ),
                             label: 'Scan',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(
+                              Icons.bar_chart,
+                              size: 24,
+                              color: AppColors.of(context).unSelectedIcon,
+                            ),
+                            activeIcon: Icon(
+                              Icons.bar_chart,
+                              size: 24,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            label: 'Charts',
                           ),
                         ],
                         onTap: tabsRouter.setActiveIndex,

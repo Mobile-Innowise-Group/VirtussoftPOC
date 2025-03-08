@@ -17,7 +17,7 @@ class ReceiptEntity with _$ReceiptEntity {
     required String currency,
     required String paymentMethod,
     required String taxNumber,
-    required List<LineItemEntity> lineItems,
+    @Default(<LineItemEntity>[]) List<LineItemEntity> lineItems,
   }) = _ReceiptEntity;
 
   factory ReceiptEntity.fromJson(Map<String, dynamic> json) => _$ReceiptEntityFromJson(json);

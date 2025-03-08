@@ -1,0 +1,26 @@
+name: charts
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  core:
+    path: ../../core
+  core_ui:
+    path: ../../core_ui
+  domain:
+    path: ../../domain
+  navigation:
+    path: ../../navigation
+
+  fl_chart: ^0.70.2
+
+dev_dependencies:
+  lints: ^2.1.0
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.8
