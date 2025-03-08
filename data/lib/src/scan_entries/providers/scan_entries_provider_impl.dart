@@ -25,19 +25,21 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
         _supabaseExceptionHandler = supabaseExceptionHandler;
 
   @override
-  Future<ScanEntryEntity> createScanEntry({required CreateScanEntryRequest request}) {
+  Future<ExtendedScanEntryEntity> createScanEntry({required CreateScanEntryRequest request}) {
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
-        final Map<String, dynamic> response =
-            await _supabaseClient.rpc('create_scan_entry', params: <String, dynamic>{
-          'p_user_id': request.userId,
-          'p_folder_id': request.folderId,
-          'p_category_id': request.categoryId,
-          'p_local_path': request.localPath,
-          'p_remote_path': request.remotePath,
-        });
+        final FunctionResponse response = await _supabaseClient.functions.invoke(
+          'create_scan_entry',
+          body: <String, dynamic>{
+            'receipt': request.receipt,
+            'userId': request.userId,
+            'folderId': request.folderId,
+            'categoryId': request.categoryId,
+            'localPath': request.localPath,
+          },
+        );
 
-        return ScanEntryEntity.fromJson(response);
+        return ExtendedScanEntryEntity.fromJson(response.data);
       },
     );
   }
@@ -109,11 +111,22 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     );
   }
 
+  static String _extractFileSubPath(String url) {
+    const String keyword = "public/files/";
+    final int index = url.indexOf(keyword);
+
+    if (index != -1) {
+      return url.substring(index + keyword.length);
+    } else {
+      throw Exception("Invalid URL: 'public/files/' not found");
+    }
+  }
+
   @override
   Future<Uint8List> downloadScanFile({
     required DownloadScanFileRequest request,
   }) {
-    final String path = request.remotePath.split('/').last;
+    final String path = _extractFileSubPath(request.remotePath);
     return _supabaseExceptionHandler.safeExecute(
       execute: () async {
         return _supabaseClient.storage
@@ -134,6 +147,10 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
       throw const AppException('Unable to make a request');
     }
 
+    final File file = request.files.first;
+    final String fileName = basename(file.path);
+    final String fileExtension = extension(file.path);
+    final Uint8List fileBytes = await file.readAsBytes();
     final Uri requestUri = Uri.parse('$baseUrl/functions/v1/handle_receipt_analysis');
     final String boundary = '${DateTime.timestamp().millisecondsSinceEpoch}';
 

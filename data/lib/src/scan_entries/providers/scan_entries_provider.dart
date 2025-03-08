@@ -20,7 +20,7 @@ abstract class ScanEntriesProvider {
     required DeleteScanEntryRequest request,
   });
 
-  Future<ScanEntryEntity> createScanEntry({
+  Future<ExtendedScanEntryEntity> createScanEntry({
     required CreateScanEntryRequest request,
   });
 

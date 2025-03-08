@@ -1,15 +1,17 @@
+import '../entities/receipt_entity.dart';
+
 class CreateScanEntryRequest {
   final String userId;
   final String localPath;
-  final String remotePath;
   final String folderId;
   final String categoryId;
+  final ReceiptEntity receipt;
 
   CreateScanEntryRequest({
     required this.userId,
     required this.localPath,
-    required this.remotePath,
     required this.folderId,
     required this.categoryId,
+    required this.receipt,
   });
 }

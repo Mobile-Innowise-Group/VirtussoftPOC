@@ -40,51 +40,48 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
       throw const AppException('no current user');
     }
 
-    final ReceiptEntity entity = ReceiptMapper.toEntity(payload.receipt);
-    final Map<String, dynamic> json = entity.toJson();
+    final File placeholderFile = await PdfService.generateCenteredText(const <String>[]);
 
-    final String remotePath = await _scanEntriesProvider.generatePdfInStorage(
-      request: GeneratePdfFromJsonRequest(json: json),
+    final String localPath = await PdfService.transferFile(
+      currentFilePath: placeholderFile.path,
+      newFolderName: payload.folder.name,
     );
 
-    final Uint8List bytes = await _scanEntriesProvider.downloadScanFile(
-      request: DownloadScanFileRequest(remotePath: remotePath),
-    );
+    try {
+      final ExtendedScanEntryEntity scanEntryEntity = await _scanEntriesProvider.createScanEntry(
+        request: CreateScanEntryRequest(
+          localPath: localPath,
+          folderId: payload.folder.id,
+          categoryId: payload.categoryId,
+          userId: userEntity.id,
+          receipt: ReceiptMapper.toEntity(payload.receipt),
+        ),
+      );
 
-    final File localFile = await PdfService.createDocument(bytes: bytes);
+      final Uint8List generatedPdf = await _scanEntriesProvider.downloadScanFile(
+        request: DownloadScanFileRequest(remotePath: scanEntryEntity.remotePath),
+      );
 
-    final FolderModel folder = await _folderProvider.getUserFolderById(
-      request: GetFolderByIdRequest(
-        folderId: payload.folderId,
-      ),
-    );
+      await PdfService.rewriteFile(
+        path: scanEntryEntity.localPath,
+        bytes: generatedPdf,
+      );
 
-    await PdfService.transferFile(
-      currentFilePath: localFile.path,
-      newFolderName: folder.name,
-    );
+      final CategoryModel category = await _categoryLocalProvider.getCategoryById(
+        request: GetUserCategoryByIdRequest(
+          categoryId: scanEntryEntity.category.id,
+        ),
+      );
 
-    final ScanEntryEntity scanEntryEntity = await _scanEntriesProvider.createScanEntry(
-      request: CreateScanEntryRequest(
-        localPath: localFile.path,
-        remotePath: remotePath,
-        folderId: payload.folderId,
-        categoryId: payload.categoryId,
-        userId: userEntity.id,
-      ),
-    );
-
-    final CategoryModel category = await _categoryLocalProvider.getCategoryById(
-      request: GetUserCategoryByIdRequest(
-        categoryId: scanEntryEntity.categoryId,
-      ),
-    );
-
-    return ScanEntryMapper.toModel(
-      scanEntryEntity: scanEntryEntity,
-      folder: folder,
-      category: category,
-    );
+      return ScanEntryMapper.toModelFromExtended(
+        scanEntryEntity: scanEntryEntity,
+        folder: payload.folder,
+        category: category,
+      );
+    } catch (_) {
+      await PdfService.deleteFile(path: localPath);
+      rethrow;
+    }
   }
 
   @override
