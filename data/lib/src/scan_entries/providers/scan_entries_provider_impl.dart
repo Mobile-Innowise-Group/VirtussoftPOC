@@ -147,10 +147,6 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
       throw const AppException('Unable to make a request');
     }
 
-    final File file = request.files.first;
-    final String fileName = basename(file.path);
-    final String fileExtension = extension(file.path);
-    final Uint8List fileBytes = await file.readAsBytes();
     final Uri requestUri = Uri.parse('$baseUrl/functions/v1/handle_receipt_analysis');
     final String boundary = '${DateTime.timestamp().millisecondsSinceEpoch}';
 
@@ -195,14 +191,6 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     } finally {
       httpClient.close();
     }
-  }
-
-  @override
-  Future<String> generatePdfInStorage({
-    required GeneratePdfFromJsonRequest request,
-  }) async {
-    // TODO: implement generatePdfFromJson
-    throw UnimplementedError();
   }
 
   @override
