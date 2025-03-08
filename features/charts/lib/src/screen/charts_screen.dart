@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
@@ -12,8 +13,11 @@ class ChartsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ChartsBloc>(
-      create: (_) => ChartsBloc()..add(const Initialize()),
-      child: ChartsContent(),
+      create: (_) => ChartsBloc(
+        appEventNotifier: appLocator<AppEventNotifier>(),
+        getAllUserReceiptsUseCase: appLocator<GetAllUserReceiptsUseCase>(),
+      )..add(const LoadData()),
+      child: const ChartsContent(),
     );
   }
 }

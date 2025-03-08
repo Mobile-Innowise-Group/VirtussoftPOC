@@ -187,4 +187,22 @@ class ScanEntriesProviderImpl implements ScanEntriesProvider {
     // TODO: implement generatePdfFromJson
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<ReceiptEntity>> getAllUserReceipts({
+    required GetAllUserReceiptsRequest request,
+  }) {
+    return _supabaseExceptionHandler.safeExecute(
+      execute: () async {
+        final List<Map<String, dynamic>> response = await _supabaseClient.rpc(
+          'get_receipts_by_user',
+          params: <String, dynamic>{
+            'p_user_id': request.userId,
+          },
+        );
+
+        return response.map<ReceiptEntity>(ReceiptEntity.fromJson).toList();
+      },
+    );
+  }
 }

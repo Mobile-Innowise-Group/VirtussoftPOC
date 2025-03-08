@@ -55,15 +55,6 @@ class UserDataScreen extends StatelessWidget implements AutoRouteWrapper {
         ),
         centerTitle: true,
         surfaceTintColor: Colors.transparent,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            onPressed: () {},
-          ),
-        ],
         automaticallyImplyLeading: false,
       ),
       body: Padding(

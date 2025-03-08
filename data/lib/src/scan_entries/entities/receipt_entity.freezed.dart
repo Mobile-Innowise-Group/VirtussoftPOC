@@ -221,7 +221,7 @@ class _$ReceiptEntityImpl implements _ReceiptEntity {
       required this.currency,
       required this.paymentMethod,
       required this.taxNumber,
-      required final List<LineItemEntity> lineItems})
+      final List<LineItemEntity> lineItems = const <LineItemEntity>[]})
       : _lineItems = lineItems;
 
   factory _$ReceiptEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -245,6 +245,7 @@ class _$ReceiptEntityImpl implements _ReceiptEntity {
   final String taxNumber;
   final List<LineItemEntity> _lineItems;
   @override
+  @JsonKey()
   List<LineItemEntity> get lineItems {
     if (_lineItems is EqualUnmodifiableListView) return _lineItems;
     // ignore: implicit_dynamic_type
@@ -320,7 +321,7 @@ abstract class _ReceiptEntity implements ReceiptEntity {
       required final String currency,
       required final String paymentMethod,
       required final String taxNumber,
-      required final List<LineItemEntity> lineItems}) = _$ReceiptEntityImpl;
+      final List<LineItemEntity> lineItems}) = _$ReceiptEntityImpl;
 
   factory _ReceiptEntity.fromJson(Map<String, dynamic> json) =
       _$ReceiptEntityImpl.fromJson;

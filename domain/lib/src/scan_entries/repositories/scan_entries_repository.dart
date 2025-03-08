@@ -28,4 +28,8 @@ abstract class ScanEntriesRepository {
   Future<ReceiptModel> uploadPhotosForRecognition({
     required UploadPhotosForRecognitionPayload payload,
   });
+
+  Future<List<ReceiptModel>> getAllUserReceipts({
+    required GetAllUserReceiptsPayload payload,
+  });
 }

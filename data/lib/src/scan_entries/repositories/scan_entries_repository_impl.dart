@@ -194,4 +194,23 @@ class ScanEntriesRepositoryImpl implements ScanEntriesRepository {
 
     return ReceiptMapper.fromEntity(entity);
   }
+
+  @override
+  Future<List<ReceiptModel>> getAllUserReceipts({
+    required GetAllUserReceiptsPayload payload,
+  }) async {
+    final UserEntity? userEntity = _authorizationProvider.getCurrentUser();
+
+    if (userEntity == null) {
+      throw const AppException('no current user');
+    }
+
+    final List<ReceiptEntity> entities = await _scanEntriesProvider.getAllUserReceipts(
+      request: GetAllUserReceiptsRequest(
+        userId: userEntity.id,
+      ),
+    );
+
+    return entities.map<ReceiptModel>(ReceiptMapper.fromEntity).toList();
+  }
 }

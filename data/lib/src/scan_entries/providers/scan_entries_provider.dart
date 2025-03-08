@@ -43,4 +43,8 @@ abstract class ScanEntriesProvider {
   Future<String> generatePdfInStorage({
     required GeneratePdfFromJsonRequest request,
   });
+
+  Future<List<ReceiptEntity>> getAllUserReceipts({
+    required GetAllUserReceiptsRequest request,
+  });
 }

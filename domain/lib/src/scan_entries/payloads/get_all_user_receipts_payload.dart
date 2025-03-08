@@ -1,0 +1,3 @@
+class GetAllUserReceiptsPayload {
+  const GetAllUserReceiptsPayload();
+}

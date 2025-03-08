@@ -154,25 +154,15 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                             label: 'Scan',
                           ),
                           BottomNavigationBarItem(
-                            icon: SvgPicture.asset(
-                              // TODO: Update icon
-                              AppImages.folder,
-                              width: 24,
-                              height: 24,
-                              colorFilter: ColorFilter.mode(
-                                AppColors.of(context).unSelectedIcon,
-                                BlendMode.srcIn,
-                              ),
+                            icon: Icon(
+                              Icons.bar_chart,
+                              size: 24,
+                              color: AppColors.of(context).unSelectedIcon,
                             ),
-                            activeIcon: SvgPicture.asset(
-                              // TODO: Update icon
-                              AppImages.folder,
-                              width: 24,
-                              height: 24,
-                              colorFilter: ColorFilter.mode(
-                                Theme.of(context).colorScheme.primary,
-                                BlendMode.srcIn,
-                              ),
+                            activeIcon: Icon(
+                              Icons.bar_chart,
+                              size: 24,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                             label: 'Charts',
                           ),

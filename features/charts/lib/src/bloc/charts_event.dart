@@ -4,6 +4,6 @@ sealed class ChartsEvent {
   const ChartsEvent();
 }
 
-final class Initialize extends ChartsEvent {
-  const Initialize();
+final class LoadData extends ChartsEvent {
+  const LoadData();
 }

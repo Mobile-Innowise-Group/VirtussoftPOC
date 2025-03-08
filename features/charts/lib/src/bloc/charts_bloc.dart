@@ -1,6 +1,6 @@
-import 'dart:math';
-
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 
 import '../models/chart_item.dart';
 
@@ -8,33 +8,61 @@ part 'charts_event.dart';
 part 'charts_state.dart';
 
 class ChartsBloc extends Bloc<ChartsEvent, ChartsState> {
-  ChartsBloc() : super(const ChartsState.initial()) {
-    on<Initialize>(_onInitialize);
+  final AppEventNotifier _appEventNotifier;
+  final GetAllUserReceiptsUseCase _getAllUserReceiptsUseCase;
+
+  ChartsBloc({
+    required AppEventNotifier appEventNotifier,
+    required GetAllUserReceiptsUseCase getAllUserReceiptsUseCase,
+  })  : _appEventNotifier = appEventNotifier,
+        _getAllUserReceiptsUseCase = getAllUserReceiptsUseCase,
+        super(const ChartsState.initial()) {
+    on<LoadData>(_onLoadData);
   }
 
-  Future<void> _onInitialize(
-    Initialize event,
+  Future<void> _onLoadData(
+    LoadData event,
     Emitter<ChartsState> emit,
   ) async {
     emit(
-      state.copyWith(
-        isLoading: false,
-        items: _generateMockData(10),
-      ),
+      state.copyWith(isLoading: true),
     );
-  }
 
-  List<ChartItem> _generateMockData(int days) {
-    final Random random = Random();
+    try {
+      final List<ReceiptModel> receipts = await _getAllUserReceiptsUseCase.execute(
+        const GetAllUserReceiptsPayload(),
+      );
 
-    return List<ChartItem>.generate(
-      days,
-      (int index) {
-        return ChartItem(
-          date: DateTime.now().subtract(Duration(days: index)),
-          value: (random.nextDouble() * 100) + 10,
-        );
-      },
-    ).reversed.toList();
+      receipts.sort((ReceiptModel a, ReceiptModel b) => a.receiptDate.compareTo(b.receiptDate));
+
+      final List<ChartItem> items = List<ChartItem>.generate(
+        receipts.length,
+        (int index) {
+          final ReceiptModel receipt = receipts[index];
+          return ChartItem(
+            date: DateTime.parse(receipt.receiptDate),
+            value: double.parse(receipt.totalAmount),
+          );
+        },
+      );
+
+      emit(
+        state.copyWith(
+          items: items,
+          isLoading: false,
+        ),
+      );
+    } catch (e) {
+      _appEventNotifier.notify(
+        SnackBarErrorNotification(message: e.toString()),
+      );
+
+      emit(
+        state.copyWith(
+          isLoading: false,
+          hasError: true,
+        ),
+      );
+    }
   }
 }
